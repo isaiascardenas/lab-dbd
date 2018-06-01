@@ -25,7 +25,9 @@ class VueloController extends Controller
 
 	public function list()
     {
-        return view('vuelo.list');
+    	// $data["vuelos"] = App\Vuelo::all()->toArray();
+
+        return view('vuelo.list', compact("data"));
     }
 
     public function show()

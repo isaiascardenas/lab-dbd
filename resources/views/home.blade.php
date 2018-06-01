@@ -6,8 +6,7 @@
 			<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 				<a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-plane"></i> Reserva Vuelo</a>
 				<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-building"></i> Hoteler&iacute;a</a>
-				<a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-				<a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+				<!-- a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a -->
 			</div>
 		</div>
 		<div class="col-9">
@@ -15,50 +14,56 @@
 				<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 					<h2><i class="fas fa-plane"></i> Reserva tu vuelo</h2>
 					<form action="/vuelo/list" method="post">
-						<div class="form-group form-row">
-							<div class="col">
+						<div class="form-group form-row align-items-end">
+							<div class="col-5">
 								<label for="id_origen">Origen</label>
 								<select id="id_origen" name="id_origen" class="form-control" placeholder="Origen">
-									@foreach ($data["ciudades"] as $ciudad)
-									<option value="{{ $ciudad["id"] }}">{{ $ciudad["pais"] . ", " . $ciudad["nombre"] }}</option>
+									@foreach ($data["localizacion"] as $localizacion)
+									<option value="{{ $localizacion["id"] }}">{{ $localizacion["pais"] . ", " . $localizacion["nombre"] }}</option>
 									@endforeach
 								</select>
 							</div>
-							<div class="col">
+							<div class="col-2 text-center">
+								<i class="fas fa-arrow-right fa-2x"></i>
+							</div>
+							<div class="col-5">
 								<label for="id_destino">Destino</label>
 								<select id="id_destino" name="id_destino" class="form-control" placeholder="Destino">
-									@foreach ($data["ciudades"] as $ciudad)
-									<option value="{{ $ciudad["id"] }}">{{ $ciudad["pais"] . ", " . $ciudad["nombre"] }}</option>
+									@foreach ($data["localizacion"] as $localizacion)
+									<option value="{{ $localizacion["id"] }}">{{ $localizacion["pais"] . ", " . $localizacion["nombre"] }}</option>
 									@endforeach
 								</select>
 							</div>
 						</div>
-						<div class="form-group form-row">
-							<div class="form-check form-check-inline">
-								<input type="radio" class="form-check-input" name="tipo_vuelo" id="vuelo_ida_vuelta">
+						<div class="form-group form-row align-items-end">
+							<div class="col-3 form-check form-check-inline">
+								<input type="radio" class="form-check-input" name="tipo_vuelo" id="vuelo_ida_vuelta" checked>
 								<label for="vuelo_ida_vuelta" class="form-check-label">Ida y vuelta</label>
 							</div>
-							<div class="form-check form-check-inline">
+							<div class="col-3 form-check form-check-inline">
 								<input type="radio" class="form-check-input" name="tipo_vuelo" id="vuelo_solo_ida">
 								<label for="vuelo_solo_ida" class="form-check-label">Solo ida</label>
 							</div>
 						</div>
-						<div class="form-group form-row">
-							<div class="col">
+						<div class="form-group form-row align-items-end">
+							<div class="col-5">
 								<label for="">Fecha Ida</label>
 								<input type="text" class="form-control gijgo-datepicker">
 							</div>
-							<div class="col">
+							<div class="col-2 text-center">
+								<i class="fas fa-arrow-right fa-2x"></i>
+							</div>
+							<div class="col-5">
 								<label for="">Fecha Vuelta</label>
 								<input type="text" class="form-control gijgo-datepicker">
 							</div>
 						</div>
-						<div class="form-group form-row">
-							<div class="col">
+						<div class="form-group form-row align-items-end">
+							<div class="col-5">
 								<label for="">Pasajeros</label>
 								<input type="text" class="form-control">
 							</div>
-							<div class="col">
+							<div class="offset-2 col-5">
 								<label for="">Tipo Pasaje</label>
 								<select name="tipo_pasaje" class="form-control">
 									@foreach ($data["tipoPasaje"] as $pasaje)
@@ -79,16 +84,16 @@
 							<div class="col">
 								<label for="id_origen">Ciudad</label>
 								<select id="id_origen" name="id_origen" class="form-control" placeholder="Origen">
-									@foreach ($data["ciudades"] as $ciudad)
-									<option value="{{ $ciudad["id"] }}">{{ $ciudad["pais"] . ", " . $ciudad["nombre"] }}</option>
+									@foreach ($data["localizacion"] as $localizacion)
+									<option value="{{ $localizacion["id"] }}">{{ $localizacion["pais"] . ", " . $localizacion["nombre"] }}</option>
 									@endforeach
 								</select>
 							</div>
 							<div class="col">
 								<label for="id_destino">Destino</label>
 								<select id="id_destino" name="id_destino" class="form-control" placeholder="Destino">
-									@foreach ($data["ciudades"] as $ciudad)
-									<option value="{{ $ciudad["id"] }}">{{ $ciudad["pais"] . ", " . $ciudad["nombre"] }}</option>
+									@foreach ($data["localizacion"] as $localizacion)
+									<option value="{{ $localizacion["id"] }}">{{ $localizacion["pais"] . ", " . $localizacion["nombre"] }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -98,13 +103,12 @@
 						</div>
 					</form>
 				</div>
-				<div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-				<div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+				<!-- div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div -->
 			</div>
 		</div>
 	</div>
 
-	<h3>Paquetes</h3>
+	<h3><i class="fas fa-cubes"></i> Paquetes</h3>
 	<div id="carouselPaquetes" class="carousel slide" data-ride="carousel">
 		<ol class="carousel-indicators">
 			<li data-target="#carouselPaquetes" data-slide-to="0" class="active"></li>
