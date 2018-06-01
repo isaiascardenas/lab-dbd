@@ -14,18 +14,18 @@ class VueloController extends Controller
      */
     public function index()
     {
-    	$ciudades = [
-    		["id"=> 1, "pais" => "Chile", "nombre" => "Santiago"],
-    		["id"=> 2, "pais" => "Chile", "nombre" => "Melipilla"],
-    		["id"=> 3, "pais" => "Chile", "nombre" => "Maipu"]
-    	];
+        $ciudades = [
+            ["id"=> 1, "pais" => "Chile", "nombre" => "Santiago"],
+            ["id"=> 2, "pais" => "Chile", "nombre" => "Melipilla"],
+            ["id"=> 3, "pais" => "Chile", "nombre" => "Maipu"]
+        ];
 
         return view('vuelo.index', compact("ciudades"));
     }
 
-	public function list()
+    public function list()
     {
-    	// $data["vuelos"] = App\Vuelo::all()->toArray();
+        // $data["vuelos"] = App\Vuelo::all()->toArray();
 
         return view('vuelo.list', compact("data"));
     }
