@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class TipoPasajesSeeder extends Seeder
@@ -13,9 +14,9 @@ class TipoPasajesSeeder extends Seeder
     {
         DB::table('tipo_pasajes')->delete();
         DB::table('tipo_pasajes')->insert([
-        	['descripcion' => 'Económico'],
-        	['descripcion' => 'Turista'],
-        	['descripcion' => 'Ejecutivo']
+        	['descripcion' => 'Económico', 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
+        	['descripcion' => 'Turista', 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
+        	['descripcion' => 'Ejecutivo', 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')]
         ]);
     }
 }

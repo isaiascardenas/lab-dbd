@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\TipoPasaje;
 
 class HomeController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-    	$data["tipoPasaje"] = \App\TipoPasaje::all();
+    	$data["tipoPasaje"] = TipoPasaje::all();
 
     	// $data["localizacion"] = \App\Localizacion::all();
 
     	// $data["paquetes"] = \App\Paquetes::all();
     	$data["localizacion"] = [
-    		["id"=> 1, "pais" => "Chile", "nombre" => "Santiago"],
-    		["id"=> 2, "pais" => "Chile", "nombre" => "Melipilla"],
-    		["id"=> 3, "pais" => "Chile", "nombre" => "Maipu"]
+    		["id"=> 1, "ciudad" => "Santiago, Chile", "aeropuerto" => "SCL, ..."],
+    		["id"=> 2, "ciudad" => "Melipilla, Chile", "aeropuerto" => "MLP, ..."],
+    		["id"=> 3, "ciudad" => "Maipu, Chile", "aeropuerto" => "MPU, ..."]
     	];
 
     	$data["paquetes"] = [
@@ -31,5 +27,12 @@ class HomeController extends Controller
     	];
 
         return view('home', compact("data"));
+    }
+
+    public function cart()
+    {
+    	$data = [];
+    	
+    	return view('cart', compact("data"));
     }
 }
