@@ -13,16 +13,16 @@
 		<div class="col-9">
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="vuelo" role="tabpanel" aria-labelledby="vuelo-tab">
-					@include('modulos.vuelo.form')
+					@include('modulos.ReservaVuelo.form')
 				</div>
 				<div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
-					{{-- @include('modulos.hotel.form'); --}}
+					{{-- @include('modulos.ReservaHotel.form'); --}}
 				</div>
 				<div class="tab-pane fade" id="auto" role="tabpanel" aria-labelledby="auto-tab">
-					{{-- @include('modulos.auto.form'); --}}
+					{{-- @include('modulos.ReservaAuto.form'); --}}
 				</div>
 				<div class="tab-pane fade" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
-					{{-- @include('modulos.actividad.form'); --}}
+					{{-- @include('modulos.ReservaActividad.form'); --}}
 				</div>
 			</div>
 		</div>
