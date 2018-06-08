@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAutosTable extends Migration
+class CreateSucursalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateAutosTable extends Migration
      */
     public function up()
     {
-        Schema::create('autos', function (Blueprint $table) {
+        Schema::create('sucursales', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('patente')->unique();
-            $table->string('modelo');
-            $table->integer('precio_hora');
-            $table->integer('capacidad');
-            $table->integer('id_sucursal');
-            $table->foreign('id_sucursal')
+            $table->integer('id_compania');
+            $table->foreign('id_compania')
                 ->references('id')
-                ->on('sucursales')
+                ->on('companias')
+                ->onDelete('cascade');
+            $table->integer('id_localizacion');
+            $table->foreign('id_localizacion')
+                ->references('id')
+                ->on('localizaciones')
                 ->onDelete('cascade');
             $table->timestamps();
         });
@@ -35,6 +36,6 @@ class CreateAutosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('autos');
+        Schema::dropIfExists('sucursales');
     }
 }
