@@ -15,13 +15,11 @@ Auth::routes();
 
 
 Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
-
+Route::get('/cart', 'HomeController@cart');
 
 /**
  * Reservas de vuelo
  */
-Route::get('/vuelo/', 			'VueloController@index');
 Route::post('/vuelo/list/', 	'VueloController@list');
-Route::get('/vuelo/show/', 		'VueloController@show');
+Route::get('/vuelo/show/{tramo}', 	'VueloController@show');
 Route::post('/vuelo/reserva', 	'VueloController@reserva');

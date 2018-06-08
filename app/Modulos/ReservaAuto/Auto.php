@@ -12,7 +12,7 @@ class Auto extends Model
      * @var array
      */
     protected $fillable = [
-        'patente',
+        'patente'->unique(),
         'modelo',
         'precio_hora',
         'capacidad',
