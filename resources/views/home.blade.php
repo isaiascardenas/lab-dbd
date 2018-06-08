@@ -22,7 +22,7 @@
 					{{-- @include('modulos.ReservaAuto.form'); --}}
 				</div>
 				<div class="tab-pane fade" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
-					{{-- @include('modulos.ReservaActividad.form'); --}}
+					@include('modulos.ReservaActividad.form')
 				</div>
 			</div>
 		</div>
