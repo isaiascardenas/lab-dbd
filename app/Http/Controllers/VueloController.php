@@ -20,7 +20,7 @@ class VueloController extends Controller
 
     	];
 
-        return view('modulos.vuelo.list', compact("data"));
+        return view('modulos.ReservaVuelo.list', compact("data"));
     }
 
 
@@ -28,7 +28,7 @@ class VueloController extends Controller
     {
     	$vuelo = Tramo::find($id);
 
-        return view('modulos.vuelo.show', compact("vuelo"));
+        return view('modulos.ReservaVuelo.show', compact("vuelo"));
     }
 
 
