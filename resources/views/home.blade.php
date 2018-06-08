@@ -67,6 +67,8 @@
             uiLibrary: 'bootstrap4'
         });
 
+        $('.select2').select2();
+
 		$("[data-hide-target]").on('change', function(){
 			console.log('asdf');
 			var $target = $($(this).data('hide-target'));
