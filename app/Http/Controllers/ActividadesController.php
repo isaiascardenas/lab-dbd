@@ -13,7 +13,7 @@ class ActividadesController extends Controller
      */
     public function index()
     {
-        //
+        return view("modulos.ReservaActividad.form");
     }
 
     /**
