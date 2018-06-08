@@ -15,6 +15,12 @@ class CreateReservaActividadesTable extends Migration
     {
         Schema::create('reserva_actividades', function (Blueprint $table) {
             $table->increments('id');
+            $table->dateTime('fecha_reserva');
+            $table->integer('capacidad_ninos');
+            $table->integer('capacidad_adultos');
+            $table->integer('id_actividad');
+            $table->integer('id_orden_compra');
+
             $table->timestamps();
         });
     }

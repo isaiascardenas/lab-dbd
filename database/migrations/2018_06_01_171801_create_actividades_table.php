@@ -15,6 +15,15 @@ class CreateActividadesTable extends Migration
     {
         Schema::create('actividades', function (Blueprint $table) {
             $table->increments('id');
+            $table->dateTime('fecha_inicio'); 
+            $table->dateTime('fecha_termino');
+            $table->string('descripcion', 255);
+            $table->integer('max_ninos');
+            $table->integer('max_adultos');
+            $table->integer('precio_nino');
+            $table->integer('precio_adulto');
+            $table->integer('id_localizacion');
+
             $table->timestamps();
         });
     }
