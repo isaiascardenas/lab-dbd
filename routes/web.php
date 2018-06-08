@@ -17,9 +17,25 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/cart', 'HomeController@cart');
 
+
 /**
- * Reservas de vuelo
+ * Reservas de actividades
  */
-Route::post('/vuelo/list/', 	'VueloController@list');
-Route::get('/vuelo/show/{tramo}', 	'VueloController@show');
-Route::post('/vuelo/reserva', 	'VueloController@reserva');
+Route::post('/actividad/', 				'ActividadesController@index');
+
+/**
+ * Reservas de hoteles
+ */
+Route::post('/hotel/', 				'HotelesController@index');
+
+/**
+ * Reservas de autos
+ */
+Route::post('/auto/', 				'AutosController@index');
+
+/**
+ *  Reservas vuelos
+ */
+Route::post('/vuelo/', 				'VuelosController@index');
+Route::get('/vuelo/show/{tramo}', 	'VuelosController@show');
+Route::post('/vuelo/reserva', 		'VuelosController@reserva');

@@ -3,7 +3,7 @@
 		<h2><i class="fas fa-plane"></i> Reserva tu vuelo</h2>
 	</div>
 	<div class="card-body">
-		<form action="/vuelo/list" method="post">
+		<form action="/vuelo" method="post">
 			{{ csrf_field() }}
 			
 			<div class="form-group form-row align-items-end">
