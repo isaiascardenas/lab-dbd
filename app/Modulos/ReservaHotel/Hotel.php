@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class hotel extends Model
+class Hotel extends Model
 {
     protected $fillable = [
         'estrellas',
@@ -12,4 +12,6 @@ class hotel extends Model
         'descripcion',
         'id_locacion',
     ];
+
+    protected $table = 'hoteles';
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class habitacion extends Model
+class Habitacion extends Model
 {
     protected $fillable = [
         'descripcion',
@@ -13,4 +13,6 @@ class habitacion extends Model
         'precio_por_noche',
         'id_hotel',
     ];
+
+    protected $table = 'habitaciones';
 }

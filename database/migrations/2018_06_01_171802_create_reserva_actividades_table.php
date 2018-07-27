@@ -19,6 +19,10 @@ class CreateReservaActividadesTable extends Migration
             $table->integer('capacidad_ninos');
             $table->integer('capacidad_adultos');
             $table->integer('id_actividad');
+            $table->foreign('id_actividad')
+                ->references('id')
+                ->on('actividades')
+                ->onDelete('cascade');
             $table->integer('id_orden_compra');
 
             $table->timestamps();

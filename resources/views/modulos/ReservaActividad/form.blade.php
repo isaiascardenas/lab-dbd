@@ -1,6 +1,6 @@
 <div class="card bg-light">
 	<div class="card-header">
-		<h2><i class="fas fa-plane"></i> Reserva tu vuelo</h2>
+		<h2><i class="fas fa-plane"></i> Reserva tu actividad</h2>
 	</div>
 	<div class="card-body">
 		<form action="/vuelo" method="post">
