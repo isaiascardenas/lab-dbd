@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class reservaHotel extends Model
+class ReservaHotel extends Model
 {
     protected $fillable = [
         'fecha_inicio',
@@ -13,4 +13,6 @@ class reservaHotel extends Model
         'id_habitacion',
         'id_orden_compra',
     ];
+
+    protected $table = 'reserva_hoteles';
 }

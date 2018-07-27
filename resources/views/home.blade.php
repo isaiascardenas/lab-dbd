@@ -16,13 +16,13 @@
 					@include('modulos.ReservaVuelo.vuelos.form')
 				</div>
 				<div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
-					{{-- @include('modulos.ReservaHotel.form'); --}}
+					@include('modulos.ReservaHotel.form');
 				</div>
 				<div class="tab-pane fade" id="auto" role="tabpanel" aria-labelledby="auto-tab">
 					{{-- @include('modulos.ReservaAuto.form'); --}}
 				</div>
 				<div class="tab-pane fade" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
-					{{-- @include('modulos.ReservaActividad.form'); --}}
+					@include('modulos.ReservaActividad.form')
 				</div>
 			</div>
 		</div>
