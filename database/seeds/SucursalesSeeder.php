@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Modulos\ReservaAuto\Auto;
 
-class AutosSeeder extends Seeder
+class SucursalesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +11,6 @@ class AutosSeeder extends Seeder
      */
     public function run()
     {
-        factory(Auto::class, 50)->create();
+        //
     }
 }
