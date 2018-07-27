@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function cart()
     {
     	$data = [];
-    	
+
     	return view('cart', compact("data"));
     }
 }
