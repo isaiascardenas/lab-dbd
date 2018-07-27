@@ -3,16 +3,16 @@
 		<h2><i class="fas fa-plane"></i> Reserva tu vuelo</h2>
 	</div>
 	<div class="card-body">
-		<form action="/vuelo" method="post">
+		<form action="/vuelos/" method="post">
 			{{ csrf_field() }}
 			
 			<div class="form-group form-row align-items-end">
 				<div class="col">
-					<label for="id_origen">Origen</label>
+					<label for="origen_id">Origen</label>
 					<div class="form-group">
-						<select id="id_origen" name="id_origen" class="form-control select2" placeholder="Origen">
-							@foreach ($data["localizacion"] as $localizacion)
-							<option value="{{ $localizacion["id"] }}">{{ $localizacion["ciudad"] . ", " . $localizacion["aeropuerto"] }}</option>
+						<select id="origen_id" name="origen_id" class="form-control selectpicker" title="Origen" data-live-search="true">
+							@foreach ($data["aeropuertos"] as $aeropuerto)
+							<option value="{{ $aeropuerto->id }}">{{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->localizacion->ciudad . ", " . $aeropuerto->nombre }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -23,11 +23,11 @@
 				</div>
 				
 				<div class="col">
-					<label for="id_destino">Destino</label>
+					<label for="destino_id">Destino</label>
 					<div class="form-group">
-						<select id="id_destino" name="id_destino" class="form-control select2" placeholder="Destino">
-							@foreach ($data["localizacion"] as $localizacion)
-							<option value="{{ $localizacion["id"] }}">{{ $localizacion["ciudad"] . ", " . $localizacion["aeropuerto"] }}</option>
+						<select id="destino_id" name="destino_id" class="form-control selectpicker" title="Destino" data-live-search="true">
+							@foreach ($data["aeropuertos"] as $aeropuerto)
+							<option value="{{ $aeropuerto->id }}">{{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->localizacion->ciudad . ", " . $aeropuerto->nombre }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -41,24 +41,34 @@
 				</div>
 				
 				<div class="col-3 form-check form-check-inline">
-					<input type="radio" class="form-check-input" name="tipo_vuelo" id="vuelo_solo_ida" value="0" data-hide-target=".vuelo-vuelta">
+					<input type="radio" class="form-check-input" name="tipo_vuelo" id="vuelo_solo_ida" value="0">
 					<label for="vuelo_solo_ida" class="form-check-label">Solo ida</label>
 				</div>
 			</div>
 			
-			<div class="form-group form-row align-items-end">
+			<div id="fechas_vuelo" class="form-group form-row align-items-end">
 				<div class="col">
 					<label for="fecha_ida">Fecha Ida</label>
-					<input type="text" id="fecha_ida" name="fecha_ida" class="form-control gijgo-datepicker">
+					<div class="input-group">
+						<input type="text" id="fecha_ida" name="fecha_ida" class="form-control text-center datepicker" readonly="readonly">
+						<span class="input-group-append">
+							<span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+						</span>
+					</div>
 				</div>
 				
-				<div class="col-1 text-center vuelo-vuelta">
-					<i class="fas fa-arrow-right fa-2x"></i>
+				<div class="col-1 text-center">
+					<i class="fas fa-arrow-right fa-2x vuelo-vuelta"></i>
 				</div>
 				
-				<div class="col vuelo-vuelta">
-					<label for="fecha_vuelta">Fecha Vuelta</label>
-					<input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control gijgo-datepicker">
+				<div class="col">
+					<label for="fecha_vuelta" class="vuelo-vuelta">Fecha Vuelta</label>
+					<div class="input-group">
+						<input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control text-center datepicker vuelo-vuelta" readonly="readonly">
+						<span class="input-group-append">
+							<span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+						</span>
+					</div>
 				</div>
 			</div>
 			
@@ -67,13 +77,13 @@
 					<label>Pasajeros</label>
 					<div class="row">
 						<div class="col input-group">
-							<input type="number" name="pasajeros" class="form-control text-right" value="1">
+							<input type="number" name="pasajeros_adultos" class="form-control text-right" value="1">
 							<div class="input-group-append">
 								<span class="input-group-text">Adultos</span>
 							</div>
 						</div>
 						<div class="col input-group">
-							<input type="number" name="pasajeros" class="form-control text-right" value="0">
+							<input type="number" name="pasajeros_ninos" class="form-control text-right" value="0">
 							<div class="input-group-append">
 								<span class="input-group-text">Ni&ntilde;os</span>
 							</div>

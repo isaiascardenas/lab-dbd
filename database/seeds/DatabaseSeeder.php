@@ -11,6 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(TipoPasajesSeeder::class);
+        $this->call(AerolineasSeeder::class);
+        $this->call(AeropuertosSeeder::class);
+        $this->call(AsientosSeeder::class);
+        $this->call(AvionesSeeder::class);
+        $this->call(LocalizacionesSeeder::class);
+        $this->call(TipoAsientosSeeder::class);
+        $this->call(TramosSeeder::class);
     }
 }

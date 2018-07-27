@@ -23,14 +23,11 @@
 
 	<!-- Datepicker -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-    <!-- Select2 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-	<script>
-		$.fn.select2.defaults.set("width", "100%");
-	</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <!-- Bootstrap Select -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
+	<script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -89,7 +86,7 @@
             @yield('content')
         </main>
 
-        <footer class="container">
+        <footer class="container mt-3">
         	&copy; 2018 {{ config('app.name', 'Trivago') }} Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
         </footer>
     </div>
