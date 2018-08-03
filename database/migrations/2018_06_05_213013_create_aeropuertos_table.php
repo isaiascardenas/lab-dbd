@@ -18,7 +18,7 @@ class CreateAeropuertosTable extends Migration
             $table->string('codigo')->unique();
             $table->string('nombre');
             $table->string('direccion');
-            $table->integer('id_localizacion');
+            $table->integer('localizacion_id');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@
 		<div class="col-9">
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="vuelo" role="tabpanel" aria-labelledby="vuelo-tab">
-					@include('modulos.ReservaVuelo.form')
+					@include('modulos.ReservaVuelo.vuelos.form')
 				</div>
 				<div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
 					@include('modulos.ReservaHotel.form');
@@ -63,22 +63,28 @@
 
 @section('script')
 	<script>
-		$('.gijgo-datepicker').datepicker({
-            uiLibrary: 'bootstrap4'
+        $('select.selectpicker').selectpicker({
+        	noneSelectedText: 'No se ha seleccionado nada',
+        	noneResultsText: 'Ningún resultado coincide con {0}',
+			selectOnTab: true
         });
 
-        $('.select2').select2();
+        $('#fechas_vuelo').datepicker({
+        	autoclose: true,
+        	clearBtn: true,
+        	endDate: '',
+        	format: 'dd-mm-yyyy',
+        	inputs: $('.datepicker'),
+        	todayHighlight: true
+        });
 
-		$("[data-hide-target]").on('change', function(){
-			console.log('asdf');
-			var $target = $($(this).data('hide-target'));
-
-			if ($(this).is(':checked')){
+		$("input[name=tipo_vuelo]").change(function(){
+			var $target = $(".vuelo-vuelta");
+			if(this.value == "0"){
 				$target.hide();
 			} else {
 				$target.show();
 			}
-			
 		});
 	</script>
 @endsection

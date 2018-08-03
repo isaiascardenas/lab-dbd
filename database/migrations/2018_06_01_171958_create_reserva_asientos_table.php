@@ -15,9 +15,9 @@ class CreateReservaAsientosTable extends Migration
     {
         Schema::create('reserva_asientos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_asiento');
-            $table->integer('id_reserva_vuelo');
-            $table->integer('id_tramo');
+            $table->integer('asiento_id');
+            $table->integer('reserva_vuelo_id');
+            $table->integer('tramo_id');
             $table->timestamps();
         });
     }
