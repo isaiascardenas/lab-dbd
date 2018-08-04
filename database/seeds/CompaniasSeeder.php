@@ -1,9 +1,9 @@
 <?php
 
-use App\Localizacion;
 use Illuminate\Database\Seeder;
+use App\Modulos\ReservaAuto\Compania;
 
-class LocalizacionesSeeder extends Seeder
+class CompaniasSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class LocalizacionesSeeder extends Seeder
      */
     public function run()
     {
-        factory(Localizacion::class, 150)->create();
+        factory(Compania::class, 50)->create();
     }
 }

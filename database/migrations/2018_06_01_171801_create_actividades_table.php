@@ -27,7 +27,6 @@ class CreateActividadesTable extends Migration
                 ->references('id')
                 ->on('localizaciones')
                 ->onDelete('cascade');
-
             $table->timestamps();
         });
     }
