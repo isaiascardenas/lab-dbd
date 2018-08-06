@@ -14,7 +14,8 @@ class HomeController extends Controller
     		"tipoPasaje" 	=> TipoAsiento::all(),
     		"aeropuertos" 	=> Aeropuerto::all(),
     		// "paquetes"		=> Paquetes::all()
-    		"paquetes"		=> []
+    		"paquetes"		=> [],
+            "localizacion"      => []
     	];
 
         return view('home', compact("data"));

@@ -17,7 +17,7 @@ class CreateAsientosTable extends Migration
             $table->increments('id');
             $table->integer('costo');
             $table->string('codigo_asiento');
-            $table->integer('tipo_asiento_id');
+            /*$table->integer('tipo_asiento_id');*/
             $table->integer('avion_id');
             $table->timestamps();
         });
