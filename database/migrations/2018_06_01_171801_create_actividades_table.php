@@ -22,8 +22,8 @@ class CreateActividadesTable extends Migration
             $table->integer('max_adultos');
             $table->integer('precio_nino');
             $table->integer('precio_adulto');
-            $table->integer('id_localizacion');
-            $table->foreign('id_localizacion')
+            $table->integer('localizacion_id');
+            $table->foreign('localizacion_id')
                 ->references('id')
                 ->on('localizaciones')
                 ->onDelete('cascade');
