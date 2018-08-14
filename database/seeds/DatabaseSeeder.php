@@ -13,7 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             LocalizacionesSeeder::class,
-            ActividadesSeeder::class
+            ActividadesSeeder::class,
+            HotelesSeeder::class,
+            HabitacionesSeeder::class,
+            ReservaHotelesSeeder::class,
             // CompaniasSeeder::class,
             // Agregar aqui las clases Seeder
         ]);

@@ -1,10 +1,10 @@
 <?php
 
-use Faker\Factory as Faker;
-use Illuminate\Database\Seeder;
-use App\Actividad;
 
-class ActividadesSeeder extends Seeder
+use Illuminate\Database\Seeder;
+use App\Habitacion;
+
+class HabitacionesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class ActividadesSeeder extends Seeder
      */
     public function run()
     {
-       //factory(Actividad::class, 50)->create();    
+         factory(Habitacion::class, 50)->create();
     }
 }

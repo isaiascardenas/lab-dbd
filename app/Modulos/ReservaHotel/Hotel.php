@@ -10,8 +10,12 @@ class Hotel extends Model
         'estrellas',
         'nombre',
         'descripcion',
-        'id_locacion',
+        'localizacion_id',
     ];
 
     protected $table = 'hoteles';
+
+    public function habitaciones(){
+    	return $this->hasMany(Habitacion::class);
+    }
 }

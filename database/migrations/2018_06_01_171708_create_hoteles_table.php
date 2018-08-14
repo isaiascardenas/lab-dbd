@@ -19,7 +19,10 @@ class CreateHotelesTable extends Migration
             $table->string('nombre');
             $table->integer('estrellas');
             $table->string('descripcion');
-            $table->integer('id_locacion');
+            $table->integer('localizacion_id');
+            $table->foreign('localizacion_id')
+                  ->references('id')->on('localizaciones')
+                  ->onDelete('cascade');
 
             $table->timestamps();
         });

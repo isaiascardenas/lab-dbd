@@ -18,8 +18,11 @@ class CreateReservaHotelesTable extends Migration
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_termino');
             $table->float('descuento');
-            $table->integer('id_habitacion');
-            $table->integer('id_orden_compra');
+            $table->integer('habitacion_id');
+            $table->foreign('habitacion_id')
+                  ->references('id')->on('habitaciones')
+                  ->onDelete('cascade');
+            $table->integer('orden_compra_id');
             $table->timestamps();
         });
     }
