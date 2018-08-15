@@ -15,16 +15,14 @@ class CreateSucursalesTable extends Migration
     {
         Schema::create('sucursales', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_compania');
-            $table->foreign('id_compania')
+            $table->integer('compania_id');
+            $table->foreign('compania_id')
                 ->references('id')
-                ->on('companias')
-                ->onDelete('cascade');
-            $table->integer('id_localizacion');
-            $table->foreign('id_localizacion')
+                ->on('companias');
+            $table->integer('ciudad_id');
+            $table->foreign('ciudad_id')
                 ->references('id')
-                ->on('localizaciones')
-                ->onDelete('cascade');
+                ->on('ciudades');
             $table->timestamps();
         });
     }

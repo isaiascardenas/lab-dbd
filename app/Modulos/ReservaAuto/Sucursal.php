@@ -9,17 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sucursal extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'id_compania',
-        'id_localizacion',
-    ];
-
     protected $table = 'sucursales';
+
+    protected $fillable = [
+        'compania_id',
+        'ciudad_id',
+    ];
 
     public function autos()
     {
