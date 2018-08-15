@@ -11,8 +11,8 @@
 					<label for="origen_id">Origen</label>
 					<div class="form-group">
 						<select id="origen_id" name="origen_id" class="form-control selectpicker" title="Origen" data-live-search="true">
-							@foreach ($data["aeropuertos"] as $aeropuerto)
-							<option value="{{ $aeropuerto->id }}">{{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->localizacion->ciudad . ", " . $aeropuerto->nombre }}</option>
+							@foreach ($aeropuertos as $aeropuerto)
+							<option value="{{ $aeropuerto->id }}">{{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->ciudad->nombre . ", " . $aeropuerto->nombre }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -26,8 +26,8 @@
 					<label for="destino_id">Destino</label>
 					<div class="form-group">
 						<select id="destino_id" name="destino_id" class="form-control selectpicker" title="Destino" data-live-search="true">
-							@foreach ($data["aeropuertos"] as $aeropuerto)
-							<option value="{{ $aeropuerto->id }}">{{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->localizacion->ciudad . ", " . $aeropuerto->nombre }}</option>
+							@foreach ($aeropuertos as $aeropuerto)
+							<option value="{{ $aeropuerto->id }}">{{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->ciudad->nombre . ", " . $aeropuerto->nombre }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -94,7 +94,7 @@
 				<div class="col">
 					<label for="">Tipo Pasaje</label>
 					<select name="tipo_pasaje" class="form-control">
-						@foreach ($data["tipoPasaje"] as $pasaje)
+						@foreach ($tipoPasaje as $pasaje)
 						<option value="{{ $pasaje["id"] }}">{{ $pasaje["descripcion"] }}</option>
 						@endforeach
 					</select>
