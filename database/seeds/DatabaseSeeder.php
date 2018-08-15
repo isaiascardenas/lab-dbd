@@ -20,9 +20,12 @@ class DatabaseSeeder extends Seeder
         UserRolSeeder::class,
         PaisesSeeder::class,
         CiudadesSeeder::class,
+        TipoCuentasSeeder::class,
+        BancosSeeder::class,
+        CuentasSeeder::class,
 
         /* Actividades */
-        // ActividadesSeeder::class,
+        ActividadesSeeder::class,
 
         /* Autos */
         CompaniasSeeder::class,
@@ -30,7 +33,8 @@ class DatabaseSeeder extends Seeder
         AutosSeeder::class,
 
         /* Hoteles */
-        // CompaniasSeeder::class,
+        HotelesSeeder::class,
+        HabitacionesSeeder::class,
 
         /* Vuelos */
         AeropuertosSeeder::class,
@@ -38,8 +42,11 @@ class DatabaseSeeder extends Seeder
         AvionesSeeder::class,
         TipoAsientosSeeder::class,
         AsientosSeeder::class, 
-        AsientoAvionSeeder::class, 
-        TramosSeeder::class
+        AsientoAvionSeeder::class,
+        TramosSeeder::class,
+
+        /* Traslados */
+        TrasladosSeeder::class,
     ]);
   }
 }

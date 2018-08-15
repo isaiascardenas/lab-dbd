@@ -1,5 +1,6 @@
- <?php
+<?php
 
+use App\Cuenta;
 use Illuminate\Database\Seeder;
 
 class CuentasSeeder extends Seeder
@@ -11,6 +12,6 @@ class CuentasSeeder extends Seeder
      */
     public function run()
     {
-        //factory(Actividad::class, 50)->create(); 
-    } 
+        factory(Cuenta::class, 5)->create();
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Actividad;
+use App\Modulos\ReservaActividad\Actividad;
 use Faker\Generator as Faker;
 
 

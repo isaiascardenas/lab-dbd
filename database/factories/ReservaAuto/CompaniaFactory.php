@@ -5,6 +5,6 @@ use App\Modulos\ReservaAuto\Compania;
 
 $factory->define(Compania::class, function (Faker $faker) {
     return [
-        'nombre' => $faker->company,
+        'nombre' => $faker->unique()->company,
     ];
 });

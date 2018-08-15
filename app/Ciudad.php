@@ -6,6 +6,7 @@ use App\Pais;
 use App\Modulos\ReservaHotel\Hotel;
 use App\Modulos\ReservaAuto\Sucursal;
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\ReservaActividad\Actividad;
 
 class Ciudad extends Model
 {
@@ -23,11 +24,15 @@ class Ciudad extends Model
 
     public function sucursal()
     {
-        return $this->belongsTo(Sucursal::class);
+        return $this->hasMany(Sucursal::class);
     }
 
     public function hoteles()
     {
         return $this->hasMany(Hotel::class);
-    }
+    } 
+    public function actividades()
+    {
+        return $this->hasMany(Actividad::class);
+    } 
 }

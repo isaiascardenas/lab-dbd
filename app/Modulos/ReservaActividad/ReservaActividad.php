@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Modulos\ReservaActividad; 
+namespace App\Modulos\ReservaActividad;
 
 use App\OrdenCompra;
 use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaActividad\Actividad;
 
-class Reserva_actividad extends Model
+class ReservaActividad extends Model
 {
-	protected $table = 'reserva_actividades';
+    protected $table = 'reserva_actividades';
 
     protected $fillable = [
         'fecha_reserva',
@@ -20,6 +20,7 @@ class Reserva_actividad extends Model
         'actividad_id',
         'orden_compra_id',
     ];
+
     public function ordenCompra()
     {
         return $this->belongsTo(OrdenCompra::class);

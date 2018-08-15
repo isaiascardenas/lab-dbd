@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modulos\ReservaActividad;    
+namespace App\Modulos\ReservaActividad;
 
 use App\Ciudad;
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +8,7 @@ use App\Modulos\ReservaActividad\ReservaActividad;
 
 class Actividad extends Model
 {
-	protected $table = 'actividades';
+    protected $table = 'actividades';
 
     protected $fillable = [
         'fecha_inicio',
@@ -30,5 +30,4 @@ class Actividad extends Model
     {
         return $this->belongsTo(Ciudad::class);
     }
-
-} 
+}
