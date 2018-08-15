@@ -6,27 +6,28 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateTipoAsientosTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('tipo_asientos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('descripcion');
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('tipo_asientos', function (Blueprint $table) {
+      $table->increments('id');
+      $table->float('factor_costo');
+      $table->string('descripcion');
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('tipo_asientos');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('tipo_asientos');
+  }
 }

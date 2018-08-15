@@ -4,28 +4,36 @@
 	<h2><i class="fas fa-plane"></i> Selecciona tu vuelo</h2>
 
 	<div id="list-accordion">
-		@foreach($data["vuelos"] as $vuelo)
+		@foreach($vuelos as $vuelo)
 		<div class="card">
-			<a class="card-header" data-toggle="collapse" href="#vuelo-{{ $vuelo->id }}" style="font-size: 30px;">
-				<div class="row text-center">
-					<div class="col-5">
-						<span class="font-weight-bold">{{ $vuelo->horaPartida() }}</span>
-						<span class="text-muted">{{ "(" . $vuelo->origen->codigo . ") " . $vuelo->origen->nombre }}</span>
-						<i class="fas fa-angle-right"></i>
-						<span class="font-weight-bold">{{ $vuelo->horaLlegada() }}</span>
-						<span class="text-muted">{{ "(" . $vuelo->destino->codigo . ") " . $vuelo->destino->nombre }}</span>
+			<a class="card-header" data-toggle="collapse" href="#vuelo-{{ $vuelo->id }}">
+				<div class="row text-left">
+					<div class="col-7">
+            <div class="row">
+              <div class="col">
+						    <span class="font-weight-bold">{{ $vuelo->horaPartida() }}</span>
+						    <span class="text-muted">{{ "(" . $vuelo->origen->codigo . ") " . $vuelo->origen->nombre }}</span>
+              </div>
+						  <div class="col-1">
+                <i class="fas fa-angle-right"></i>
+              </div>
+              <div class="col">
+						    <span class="font-weight-bold">{{ $vuelo->horaLlegada() }}</span>
+						    <span class="text-muted">{{ "(" . $vuelo->destino->codigo . ") " . $vuelo->destino->nombre }}</span>
+              </div>
+            </div>
 					</div>
 
 					<div class="col-2 text-muted">
 						{{ $vuelo->duracion() }}
 					</div>
 
-					<div class="col-2 text-muted">
-						{{ "--ESCALAS--" }}
+					<div class="col-1 text-muted">
+						{{ $vuelo->escalas() }}
 					</div>
 					
-					<div class="col-3 font-weight-bold">
-						"-- PRECIO --"
+					<div class="col-2 text-right font-weight-bold">
+						{{ $vuelo->precio(TRUE) }}
 					</div>
 				</div>
 			</a>
@@ -35,9 +43,10 @@
 					<h5 class="card-title">{{ $vuelo->codigo }}</h5>
 					<h6 class="card-subtitle mb-2 text-muted">{{ $vuelo->avion->aerolinea->nombre }}</h6>
 					<div class="text-right">
-						<form action="/vuelo/details/" method="post">
-							<input type="hidden" name="tramo[]" value="{{ "id_tramo_1" }}">
-							<input type="hidden" name="tramo[]" value="{{ "id_tramo_2" }}">
+						<form action="/vuelos/details/" method="post">
+              {{ csrf_field() }}
+							<input type="hidden" name="tramo[]" value="{{ random_int(0,100) }}">
+							<input type="hidden" name="tramo[]" value="{{ random_int(0,100) }}">
 							<button type="submit" class="btn btn-primary">Continuar</button>
 						</form>
 					</div>

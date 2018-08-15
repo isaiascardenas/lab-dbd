@@ -15,8 +15,11 @@ class CreateAvionesTable extends Migration
     {
         Schema::create('aviones', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('modelo');
+            $table->string('descripcion');
             $table->integer('aerolinea_id');
+            $table->foreign('aerolinea_id')
+                      ->references('id')
+                      ->on('aerolineas');
             $table->timestamps();
         });
     }

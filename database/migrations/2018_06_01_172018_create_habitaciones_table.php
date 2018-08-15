@@ -21,8 +21,7 @@ class CreateHabitacionesTable extends Migration
             $table->string('descripcion');
             $table->integer('hotel_id');
             $table->foreign('hotel_id')
-                  ->references('id')->on('hoteles')
-                  ->onDelete('cascade');
+                  ->references('id')->on('hoteles');
             $table->timestamps();
         });
     }

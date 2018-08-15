@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
-use Faker\Factory as Faker;
+use App\Modulos\ReservaVuelo\Avion;
 
 class AvionesSeeder extends Seeder
 {
@@ -13,19 +12,6 @@ class AvionesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('aviones')->delete();
-    	DB::statement('ALTER SEQUENCE aviones_id_seq RESTART WITH 1');
-    	// DB::table('aviones')->truncate();
-
-        $faker = Faker::create();
-
-        for ($i=0; $i < 100; $i++) { 
-        	DB::table('aviones')->insert([
-        		'modelo' 		=> $faker->unique()->regexify('[A-Z]{6}[0-9]{3}'),
-        		'aerolinea_id' 	=> $faker->numberBetween(1, 10),
-        		'created_at' 	=> $faker->dateTime(),
-        		'updated_at' 	=> $faker->dateTime()
-        	]);
-        }
+      factory(Avion::class, 100)->create();
     }
 }

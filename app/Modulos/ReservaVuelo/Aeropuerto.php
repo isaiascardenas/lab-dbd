@@ -6,15 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aeropuerto extends Model
 {
+  protected $table = 'aeropuertos';
+
 	protected $fillable = [
 		'codigo',
 		'nombre',
 		'direccion',
-		'localizacion_id'
+		'ciudad_id'
 	];
 
-	public function localizacion()
+	public function ciudad()
 	{
-		return $this->belongsTo(Localizacion::class);
+		return $this->belongsTo(Ciudad::class);
 	}
+
+  // public function tramos()
+  // {
+  //   return $this->hasMany(Tramo::class);
+  // }
 }

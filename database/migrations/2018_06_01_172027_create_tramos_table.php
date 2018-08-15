@@ -21,6 +21,15 @@ class CreateTramosTable extends Migration
             $table->integer('avion_id');
             $table->integer('origen_id');
             $table->integer('destino_id');
+            $table->foreign('avion_id')
+                    ->references('id')
+                    ->on('aviones');
+            $table->foreign('origen_id')
+                    ->references('id')
+                    ->on('aeropuertos');
+            $table->foreign('destino_id')
+                    ->references('id')
+                    ->on('aeropuertos');
             $table->timestamps();
         });
     }

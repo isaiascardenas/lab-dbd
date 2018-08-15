@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-	<h2><i class="fas fa-map-marker-alt"></i> Nuevo Tramo</h2>
+	<h2>
+    <i class="fas fa-map-marker-alt"></i> Nuevo Tramo
+  </h2>
 	
 	<hr>
 	
@@ -81,8 +83,12 @@
 			</div>
 		</div>
 		<div class="text-right">
-			<a href="/tramos/" class="btn btn-info"><i class="fas fa-ban"></i> Cancelar</a>
-			<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
+			<a href="/tramos/" class="btn btn-info">
+        <i class="fas fa-ban"></i> Cancelar
+      </a>
+			<button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> Guardar
+      </button>
 		</div>
 	</form>
 @endsection
