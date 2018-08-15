@@ -22,14 +22,12 @@ class CreateReservaActividadesTable extends Migration
             $table->integer('actividad_id');
             $table->foreign('actividad_id')
                 ->references('id')
-                ->on('actividades')
-                ->onDelete('cascade');
+                ->on('actividades');
             $table->integer('orden_compra_id');
             /*
             $table->foreign('orden_compra_id')
                 ->references('id')
-                ->on('orden_compras')
-                ->onDelete('cascade');
+                ->on('orden_compras');
             */
             $table->timestamps();
         });

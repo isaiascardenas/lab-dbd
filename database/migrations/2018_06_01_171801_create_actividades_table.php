@@ -25,8 +25,7 @@ class CreateActividadesTable extends Migration
             $table->integer('ciudad_id');
             $table->foreign('ciudad_id')
                 ->references('id')
-                ->on('ciudades')
-                ->onDelete('cascade');
+                ->on('ciudades');
             $table->timestamps();
         });
     }
