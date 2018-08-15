@@ -40,11 +40,11 @@ class HabitacionesController extends Controller
         $habitacionesData = $this->validate($request, [
             
 
-            'descripcion' => 'requerid'|'string',
-            'capacidad_nino' => 'requerid'|'integer',
-            'capacidad_adulto' => 'requerid'|'integer',
-            'precio_por_noche' => 'requerid'|'integer',
-            'hotel_id' => 'requerid'|'integer'
+            'descripcion' => 'requerid|string',
+            'capacidad_nino' => 'requerid|integer',
+            'capacidad_adulto' => 'requerid|integer',
+            'precio_por_noche' => 'requerid|integer',
+            'hotel_id' => 'requerid|integer'
         ]);
 
         return Habitacion::create($habitacionesData);
@@ -58,8 +58,9 @@ class HabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Habitacion $habitacion)
+    public function show($id)
     {
+        $habitacion = Habitacion::find($id);
         return $habitacion;
     }
 
@@ -81,16 +82,18 @@ class HabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Habitacion $habitacion)
+    public function update(Request $request, $id)
     {
+        $habitaciones = Habitaciones::find($id);
+
         $this->validate($request, [
             
 
-            'descripcion' => 'requerid'|'string',
-            'capacidad_nino' => 'requerid'|'integer',
-            'capacidad_adulto' => 'requerid'|'integer',
-            'precio_por_noche' => 'requerid'|'integer',
-            'hotel_id' => 'requerid'|'integer'
+            'descripcion' => 'requerid|string',
+            'capacidad_nino' => 'requerid|integer',
+            'capacidad_adulto' => 'requerid|integer',
+            'precio_por_noche' => 'requerid|integer',
+            'hotel_id' => 'requerid|integer'
         ]);
 
         $habitacion->descripcion = $request->get('descripcion');
@@ -100,6 +103,8 @@ class HabitacionesController extends Controller
         $habitacion->hotel_id = $request->get('hotel_id');
 
         $habitacion->save();
+
+        return $habitacion;
 
         
     }

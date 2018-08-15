@@ -30,18 +30,19 @@ Route::resources([
 /**
  * Reservas de hoteles
  */
-/*Route::resources([
-    'hoteles' => 'ReservaHabitacion\ReservaHabitacionesController',
-    'habitaciones' => 'ReservaHabitacion\ReservaHabitacionesController',
-    'ReservaHabitacion' => 'ReservaHabitacion\ReservaHabitacionesController',
+Route::resources([
+    'hoteles' => 'ReservaHabitacion\HotelesController',
+    //'habitaciones' => 'ReservaHabitacion\ReservaHabitacionesController',
+    //'ReservaHabitacion' => 'ReservaHabitacion\ReservaHabitacionesController',
     // 'reserva', 'ReservaAuto\AutosController',
-]);*/
+]);
+/*
 Route::get('hoteles','ReservaHabitacion\HotelesController@index');
 Route::get('hoteles/{id}','ReservaHabitacion\HotelesController@show');
 Route::put('hoteles/{id}','ReservaHabitacion\HotelesController@update');
 Route::delete('hoteles/{id}','ReservaHabitacion\HotelesController@destroy');
 Route::post('hoteles','ReservaHabitacion\HotelesController@store');
-
+*/
 /**
  * Reservas de autos
  */

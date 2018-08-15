@@ -85,10 +85,10 @@ class HotelesController extends Controller
         $hotel = Hotel::find($id);
         $this->validate($request , [
 
-        'estrellas' => 'required'| 'integer',
-        'nombre' => 'required' | 'string',
-        'descripcion' => 'required' | 'string',
-        'ciudad_id' => 'required'| 'integer' 
+        'estrellas' => 'required|integer',
+        'nombre' => 'required|string',
+        'descripcion' => 'required|string',
+        'ciudad_id' => 'required|integer' 
         ]);
 
 
