@@ -16,7 +16,7 @@ class CreateReservaBoletosTable extends Migration
         Schema::create('reserva_boletos', function (Blueprint $table) {
             $table->increments('id');
             $table->datetime('fecha_reserva');
-            $talbe->float('descuento');
+            $table->float('descuento');
             $table->integer('costo');
             $table->integer('avion_asiento_id');
             $table->foreign('avion_asiento_id')
