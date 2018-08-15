@@ -32,4 +32,9 @@ class Vuelo
   {
     return $this->tramos;
   }
+
+  public function escalas()
+  {
+    return count($this->tramos);
+  }
 }

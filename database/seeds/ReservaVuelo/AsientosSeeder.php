@@ -26,7 +26,7 @@ class AsientosSeeder extends Seeder
       ];
 
       $asientoCol++;
-      if ($asientoCol == 10) {
+      if ($asientoCol <= 10) {
         $asientoCol = 1;
         $asientoFila++;
       }

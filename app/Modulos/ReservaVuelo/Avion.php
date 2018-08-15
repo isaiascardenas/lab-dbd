@@ -13,10 +13,10 @@ class Avion extends Model
 		'aerolinea_id'
 	];
 
-  // public function asientos()
-  // {
-  // 	return $this->hasMany(Asiento::class);
-  // }
+  public function asientos()
+  {
+  	return $this->belongsToMany(Asiento::class);
+  }
 
   public function tramos()
   {

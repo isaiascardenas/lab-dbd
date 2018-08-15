@@ -18,10 +18,10 @@ class CreateReservaBoletosTable extends Migration
             $table->datetime('fecha_reserva');
             $table->float('descuento');
             $table->integer('costo');
-            $table->integer('avion_asiento_id');
-            $table->foreign('avion_asiento_id')
+            $table->integer('asiento_avion_id');
+            $table->foreign('asiento_avion_id')
                       ->references('id')
-                      ->on('avion_asiento');
+                      ->on('asiento_avion');
             $table->integer('tramo_id');
             $table->foreign('tramo_id')
                       ->references('id')

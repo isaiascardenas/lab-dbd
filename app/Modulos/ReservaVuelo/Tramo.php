@@ -36,10 +36,15 @@ class Tramo extends Model
     return $this->belongsTo(Avion::class);
   }
 
-  // public function asientos()
-  // {
-  //  return $this->avion->asientos();
-  // }
+  public function reservaBoleto()
+  {
+    return $this->hasMany(ReservaBoleto::class);
+  }
+
+  public function asientos()
+  {
+   return $this->avion->asientos();
+  }
 
   /* Atributos en fomato 'humano' */
 
@@ -123,11 +128,6 @@ class Tramo extends Model
   	$plane .= '</table>';
 
   	return $plane;
-  }
-
-  public function escalas()
-  {
-    return random_int(0, 3);
   }
 
   public function precio($formato = FALSE)

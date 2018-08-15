@@ -20,16 +20,16 @@ class ReservaBoleto extends Model
   /* Relaciones */
   public function tramo()
   {
-    $this->belongsTo(Tramo::class);
+    return $this->belongsTo(Tramo::class);
   }
 
-  // public function asiento()
-  // {
-  //   $this->belongsTo(Avion::class);
-  // }
+  public function asiento()
+  {
+    return $this->belongsTo(Avion::class);
+  }
 
   public function ordenCompra()
   {
-    $this->belongsTo(OrdenCompra::class);
+    return $this->belongsTo(OrdenCompra::class);
   }
 }

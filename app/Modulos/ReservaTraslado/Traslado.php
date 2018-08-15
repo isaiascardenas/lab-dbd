@@ -20,16 +20,16 @@ class Traslado extends Model
 
   public function aeropuerto()
   {
-    $this->belongsTo(Aeropuerto::class);
+    return $this->belongsTo(Aeropuerto::class);
   }
 
   public function hotel()
   {
-    $this->belongsTo(Hotel::class);
+    return $this->belongsTo(Hotel::class);
   }
 
   public function reservas()
   {
-    $this->hasMany(ReservaTraslado::class);
+    return $this->hasMany(ReservaTraslado::class);
   }
 }

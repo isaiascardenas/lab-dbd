@@ -13,12 +13,12 @@ class Asiento extends Model
   	'tipo_asiento_id'
   ];
 
-  // public function avion()
-  // {
-  // 	return $this->belongsTo(Avion::class);
-  // }
+  public function avion()
+  {
+  	return $this->belongsToMany(Avion::class);
+  }
 
-  public function tipo()
+  public function tipoAsiento()
   {
   	return $this->belongsTo(TipoAsiento::class);
   }

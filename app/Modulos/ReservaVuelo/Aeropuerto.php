@@ -3,6 +3,7 @@
 namespace App\Modulos\ReservaVuelo;
 
 use App\Ciudad;
+use App\Modulos\ReservaTraslado\Traslado;
 use Illuminate\Database\Eloquent\Model;
 
 class Aeropuerto extends Model
