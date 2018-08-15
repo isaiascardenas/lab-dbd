@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\TipoAsiento;
-use App\Aeropuerto;
+use App\Modulos\ReservaVuelo\TipoAsiento;
+use App\Modulos\ReservaVuelo\Aeropuerto;
 
 class HomeController extends Controller
 {

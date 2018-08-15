@@ -27,7 +27,8 @@ Route::post('/actividad/',      'ActividadesController@index');
 /**
  * Reservas de hoteles
  */
-Route::post('/hotel/',        'HotelesController@index');
+Route::get('hoteles','ReservaHabitacion\HotelesController@index');
+
 
 /**
  * Reservas de autos

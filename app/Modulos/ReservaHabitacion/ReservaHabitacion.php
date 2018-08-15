@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modulos\ReservaHotel;
+namespace App\Modulos\ReservaHabitacion;
 
             
 use Illuminate\Database\Eloquent\Model;
 
-class ReservaHotel extends Model
+class ReservaHabitacion extends Model
 {
     protected $table = 'reserva_hoteles';
 

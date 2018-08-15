@@ -3,7 +3,7 @@
 
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use App\Modulos\ReservaHotel\ReservaHotel;
+use App\Modulos\ReservaHabitacion\ReservaHabitacion;
 
 class ReservaHabitacionesSeeder extends Seeder
 {
