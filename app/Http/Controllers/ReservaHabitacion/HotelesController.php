@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ReservaHabitacion;
 
 use Illuminate\Http\Request;
-use app\Modulos\ReservaHotel\Hotel;
+use App\Http\Controllers\Controller;
+use App\Modulos\ReservaHabitacion\Hotel;
 
 class HotelesController extends Controller
 {
@@ -14,7 +15,7 @@ class HotelesController extends Controller
      */
     public function index()
     {
-        
+        return Hotel::all();
     }
 
     /**
@@ -35,7 +36,17 @@ class HotelesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hotelData = $this->validate($request , [
+
+        'estrellas' => 'required'| 'integer',
+        'nombre' => 'required' | 'string',
+        'descripcion' => 'required' | 'string',
+        'ciudad_id' => 'required'| 'integer' 
+        ]);
+
+        return Hotel::create($hotelData);
+
+        //return redirect('/hoteles/')->with('success', 'Creado con éxito');
     }
 
     /**
@@ -44,9 +55,9 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Hotel $hotel)
     {
-        //
+        return $hotel;
     }
 
     /**
@@ -67,9 +78,25 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Hotel $hotel)
     {
-        //
+        $this->validate($request , [
+
+        'estrellas' => 'required'| 'integer',
+        'nombre' => 'required' | 'string',
+        'descripcion' => 'required' | 'string',
+        'ciudad_id' => 'required'| 'integer' 
+        ]);
+
+
+        $hotel->estrellas = $request->get('estrellas');
+        $hotel->nombre = $request->get('nombre');
+        $hotel->descripcion = $request->get('descripcion');
+        $hotel->ciudad_id = $request->get('ciudad_id');
+
+        $hotel->save();
+
+        
     }
 
     /**
@@ -78,8 +105,9 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Hotel $hotel)
     {
-        //
+        $hotel->delete();
+        return Hotel::all();
     }
 }
