@@ -2,7 +2,7 @@
 
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use App\Actividad;
+use App\Modulos\ReservaActividad\Actividad;
 
 class ActividadesSeeder extends Seeder
 {

@@ -1,6 +1,5 @@
 <?php
 
-use App\TipoCuenta
 use Illuminate\Database\Seeder;
 
 class TipoCuentasSeeder extends Seeder
@@ -12,7 +11,7 @@ class TipoCuentasSeeder extends Seeder
      */
     public function run()
     {
-        TipoCuenta::create([
+        DB::table('tipo_cuentas')->insert([
 			['descripcion' => 'Cuenta Corriente'],
 			['descripcion' => 'Cuenta Vista'],
 			['descripcion' => 'Credito'],	

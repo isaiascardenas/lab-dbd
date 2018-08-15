@@ -4,6 +4,7 @@ use App\PaqueteVueloAuto;
 use Faker\Generator as Faker;
 
 $factory->define(PaqueteVueloAuto::class, function (Faker $faker) {
+	
     return [
         
         'descripcion'=>$faker->realText(),

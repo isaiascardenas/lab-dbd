@@ -1,8 +1,9 @@
 <?php
 
+
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use App\ReservaHotel;
+use App\Modulos\ReservaHotel\ReservaHotel;
 
 class ReservaHabitacionesSeeder extends Seeder
 {
