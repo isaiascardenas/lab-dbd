@@ -14,9 +14,9 @@ class TipoAsientosSeeder extends Seeder
   public function run()
   {
     TipoAsiento::insert([
-    	['id' => 1, 'descripcion' => 'Económico'],
-    	['id' => 2, 'descripcion' => 'Turista'],
-    	['id' => 3, 'descripcion' => 'Ejecutivo']
+    	['id' => 1, 'descripcion' => 'Económico', 'factor_costo' => 1],
+    	['id' => 2, 'descripcion' => 'Turista', 'factor_costo' => 1.2],
+    	['id' => 3, 'descripcion' => 'Ejecutivo', 'factor_costo' => 1.5]
     ]);
   }
 }

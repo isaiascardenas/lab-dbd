@@ -14,14 +14,14 @@ class AvionAsientoSeeder extends Seeder
     $asientos = DB::table('asientos')->select('id')->get();
     $aviones = DB::table('aviones')->select('id')->get();
 
-    $avion_asiento = [];
 
-    foreach ($aviones as $avionId) {
-      foreach ($asientos as $asientoId) {
-        $avion_asiento[] = ['avion_id' => $avionId, 'asiento_id' => $asientoId];
+    foreach ($aviones as $avion) {
+      $avion_asiento = [];
+      foreach ($asientos as $asiento) {
+        $avion_asiento[] = ['avion_id' => $avion->id, 'asiento_id' => $asiento->id];
       }
+      DB::table('avion_asiento')->insert($avion_asiento);
     }
-    // dd($avion_asiento);
-    DB::table('avion_asiento')->insert($avion_asiento);
+
   }
 }

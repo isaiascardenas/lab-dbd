@@ -1,9 +1,8 @@
-<?php
+ <?php
 
 use Illuminate\Database\Seeder;
-use App\Modulos\ReservaAuto\Sucursal;
 
-class SucursalesSeeder extends Seeder
+class CuentasSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +11,6 @@ class SucursalesSeeder extends Seeder
      */
     public function run()
     {
-        factory(Sucursal::class, 100)->create();
-    }
+        //factory(Actividad::class, 50)->create(); 
+    } 
 }

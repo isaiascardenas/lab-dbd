@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Modulos\ReservaAuto\Sucursal;
 
-class SucursalesSeeder extends Seeder
+class UserRolSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +11,8 @@ class SucursalesSeeder extends Seeder
      */
     public function run()
     {
-        factory(Sucursal::class, 100)->create();
+        DB::table('user_rol')->insert([
+            ['user_id' => 1, 'rol_id' => 1],
+        ]);
     }
 }

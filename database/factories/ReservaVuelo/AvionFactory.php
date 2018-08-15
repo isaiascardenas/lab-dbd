@@ -8,7 +8,7 @@ $factory->define(Avion::class, function (Faker $faker) {
     $aerolineas = DB::table('aerolineas')->select('id')->get();
     
     return [
-        'modelo' => $faker->unique()->regexify('[A-Z]{6}[0-9]{3}'),
+        'descripcion' => $faker->realText(100),
         'aerolinea_id' => $aerolineas->random()->id
     ];
 });

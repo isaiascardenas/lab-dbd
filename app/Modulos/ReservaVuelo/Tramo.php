@@ -19,6 +19,30 @@ class Tramo extends Model
     'destino_id'
   ];
 
+  /* Relaciones */
+
+  public function origen()
+  {
+    return $this->belongsTo(Aeropuerto::class);
+  }
+
+  public function destino()
+  {
+    return $this->belongsTo(Aeropuerto::class);
+  }
+
+  public function avion()
+  {
+    return $this->belongsTo(Avion::class);
+  }
+
+  // public function asientos()
+  // {
+  //  return $this->avion->asientos();
+  // }
+
+  /* Atributos en fomato 'humano' */
+
   public function horarioPartida()
 	{
 		return Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_partida)->format('d-m-Y H:i');
@@ -71,28 +95,6 @@ class Tramo extends Model
     return $diff;
 
   }
-
-  /* Relaciones */
-
-  public function origen()
-  {
-  	return $this->belongsTo(Aeropuerto::class);
-  }
-
-  public function destino()
-  {
-  	return $this->belongsTo(Aeropuerto::class);
-  }
-
-  public function avion()
-  {
-  	return $this->belongsTo(Avion::class);
-  }
-
-  // public function asientos()
-  // {
-  // 	return $this->avion->asientos();
-  // }
 
   /* Funcionalidades */
 

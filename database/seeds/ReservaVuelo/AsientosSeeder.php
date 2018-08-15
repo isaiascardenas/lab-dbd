@@ -18,20 +18,21 @@ class AsientosSeeder extends Seeder
     $asientoCol = 1;
 
     $asientos = [];
-    for ($i=0; $i < 100; $i++) { 
+    for ($i=1; $i <= 100; $i++) { 
       $asientos[] = [
+        'id' => $i,
         'codigo'=> $asientoFila.$asientoCol,
-        'tipo_asiento_id' => $tipoAsientos->random()->id()
+        'tipo_asiento_id' => $tipoAsientos->random()->id
       ];
 
       $asientoCol++;
-      if ($asientoCol == 5) {
+      if ($asientoCol == 10) {
         $asientoCol = 1;
         $asientoFila++;
       }
 
       // 5 filas con 4 asientos por fila => 20 asientos por avion
-      if ($asientoFila == 'F') {
+      if ($asientoFila == 'J') {
         $asientoFila = 'A';
       }
     }

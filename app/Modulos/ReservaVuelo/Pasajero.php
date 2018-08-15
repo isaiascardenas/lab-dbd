@@ -15,7 +15,7 @@ class Pasajero extends Model
   ];
 
   /* Relaciones */
-  public function reserva()
+  public function reservaBoleto()
   {
     return $this->hasOne(ReservaBoleto::class);
   }

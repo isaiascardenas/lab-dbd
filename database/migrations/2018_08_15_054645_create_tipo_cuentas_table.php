@@ -13,9 +13,9 @@ class CreateTipoCuentasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo__cuentas', function (Blueprint $table) {
+        Schema::create('tipo_cuentas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion', 255);
+            $table->string('descripcion', 255)->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateTipoCuentasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo__cuentas');
+        Schema::dropIfExists('tipo_cuentas');
     }
 }
