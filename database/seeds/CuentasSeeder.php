@@ -1,4 +1,4 @@
- <?php
+<?php
 
 use App\Cuenta;
 use Illuminate\Database\Seeder;

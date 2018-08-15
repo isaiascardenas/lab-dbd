@@ -42,8 +42,8 @@ class DatabaseSeeder extends Seeder
         AerolineasSeeder::class,
         AvionesSeeder::class,
         TipoAsientosSeeder::class,
-        AsientosSeeder::class, 
-        AvionAsientoSeeder::class, 
+        AsientosSeeder::class,
+        AvionAsientoSeeder::class,
         TramosSeeder::class,
 
         /* Traslados */
