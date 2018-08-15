@@ -2,7 +2,9 @@
 
 namespace App\Modulos\ReservaAuto;
 
+use App\Modulos\ReservaAuto\Sucursal;
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\ReservaAuto\ReservaAuto;
 
 class Auto extends Model
 {
@@ -18,4 +20,14 @@ class Auto extends Model
         'capacidad',
         'id_sucursal',
     ];
+
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursal::class);
+    }
+
+    public function reservaAuto()
+    {
+        return $this->hasMany(ReservaAuto::class);
+    }
 }
