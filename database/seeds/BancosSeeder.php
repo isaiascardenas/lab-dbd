@@ -1,8 +1,9 @@
 <?php
 
+use App\Banco;
 use Illuminate\Database\Seeder;
 
-class bancosSeeder extends Seeder
+class BancosSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,6 @@ class bancosSeeder extends Seeder
      */
     public function run()
     {
-        //factory(Banco::class, 50)->create(); 
+        factory(Banco::class, 50)->create(); 
     }
 }

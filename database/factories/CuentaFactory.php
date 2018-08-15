@@ -11,7 +11,7 @@ $factory->define(App\Cuenta::class, function (Faker $faker) {
         'numero_cuenta' =>  $faker->bankAccountNumber,
         'saldo' => $faker->numberBetween(0,1000000),
         'tipo_cuenta_id' => $tipo_cuentas_id->random()->id,
-        'banco_id' => $bancos_id->random()->id(),
-        'user_id' => $users_id->random()->id(),
+        'banco_id' => $bancos_id->random()->id,
+        'user_id' => $users_id->random()->id,
     ]; 
 });

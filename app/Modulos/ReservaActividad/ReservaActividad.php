@@ -6,7 +6,7 @@ use App\OrdenCompra;
 use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaActividad\Actividad;
 
-class Reserva_actividad extends Model
+class ReservaActividad extends Model
 {
 	protected $table = 'reserva_actividades';
 

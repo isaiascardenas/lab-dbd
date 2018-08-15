@@ -20,8 +20,12 @@ class DatabaseSeeder extends Seeder
         UserRolSeeder::class,
         PaisesSeeder::class,
         CiudadesSeeder::class,
+        TipoCuentasSeeder::class,
+        BancosSeeder::class,
+        CuentasSeeder::class,
 
         /* Actividades */
+        ActividadesSeeder::class,
         // ActividadesSeeder::class,
 
         /* Autos */
