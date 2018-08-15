@@ -75,7 +75,7 @@ class CuentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cuenta = Banco::find($id);
+        $cuenta = Cuenta::find($id);
         $cuenta->numero_cuenta = $request->numero_cuenta;
         $cuenta->saldo = $request->saldo;
         $cuenta->tipo_cuenta_id = $request->tipo_cuenta_id;
