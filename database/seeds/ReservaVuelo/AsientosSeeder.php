@@ -1,20 +1,28 @@
 <?php
 
-use Faker\Generator as Faker;
+use Illuminate\Database\Seeder;
 use App\Modulos\ReservaVuelo\Asiento;
 
-$factory->define(Asiento::class, function (Faker $faker) {
-    $tipoAsientos = DB::table('tipo_asiento')->select('id')->get();
+class AsientosSeeder extends Seeder
+{
+  /**
+   * Run the database seeds.
+   *
+   * @return void
+   */
+  public function run()
+  {
+    $tipoAsientos = DB::table('tipo_asientos')->select('id')->get();
 
     $asientoFila = 'A';
     $asientoCol = 1;
 
     $asientos = [];
-    for ($i=0; $i < 2000; $i++) { 
+    for ($i=0; $i < 100; $i++) { 
       $asientos[] = [
         'codigo'=> $asientoFila.$asientoCol,
         'tipo_asiento_id' => $tipoAsientos->random()->id()
-      ]);
+      ];
 
       $asientoCol++;
       if ($asientoCol == 5) {
@@ -28,5 +36,6 @@ $factory->define(Asiento::class, function (Faker $faker) {
       }
     }
 
-    return $asientos;
-});
+    DB::table('asientos')->insert($asientos);
+  }
+}

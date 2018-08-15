@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Modulos\ReservaVuelo;
 
 use Illuminate\Database\Eloquent\Model;
 
