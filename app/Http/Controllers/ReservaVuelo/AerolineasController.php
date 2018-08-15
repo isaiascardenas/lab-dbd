@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\ReservaVuelo;
 
+use App\Aerolinea;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-use App\Aerolinea;
 
 class AerolineasController extends Controller
 {
@@ -84,10 +83,10 @@ class AerolineasController extends Controller
     $this->validate($request, [
       'nombre' => 'required'
     ]);
-    
+
     $aerolinea->nombre = $request->get('nombre');
-  
-    $aerolinea->save(); 
+
+    $aerolinea->save();
 
     return redirect('/aerolineas/')->with('success', 'Actualizado con éxito');
   }

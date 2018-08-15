@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
-class ActividadesController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class ActividadesController extends Controller
      */
     public function index()
     {
-        return view("modulos.ReservaActividad.form");
+        return User::all();
     }
 
     /**
@@ -34,7 +35,12 @@ class ActividadesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return User::create([$this->validate($request, [
+            'rut' => 'required',
+            'nombre' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ])]);
     }
 
     /**
@@ -43,9 +49,9 @@ class ActividadesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return $user;
     }
 
     /**
@@ -66,9 +72,16 @@ class ActividadesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $user->fill([$this->validate($request, [
+            'rut' => 'required',
+            'nombre' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ])])->save();
+
+        return $user;
     }
 
     /**
@@ -77,8 +90,8 @@ class ActividadesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        return $user->destroy();
     }
 }
