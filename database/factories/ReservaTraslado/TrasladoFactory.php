@@ -12,9 +12,9 @@ $factory->define(Traslado::class, function (Faker $faker) {
     $fechaLlegada = Carbon::createFromFormat('Y-m-d H:i:s', $fechaPartida)->addHours(mt_rand(1,3));
 
     return [
-        'tipo' =>  str_random(4) . rand(10, 99),
-        'fecha_partida' => $fechaPartida,
-        'fecha_llegada' => $fechaLlegada,
+        'tipo' => rand(0, 1),
+        'fecha_inicio' => $fechaPartida,
+        'fecha_termino' => $fechaLlegada,
         'aeropuerto_id' => $aeropuertos_id->random()->id,
         'hotel_id' => $hoteles_id->random()->id,
     ];

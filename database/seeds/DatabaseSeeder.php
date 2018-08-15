@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
         AutosSeeder::class,
 
         /* Hoteles */
-        // CompaniasSeeder::class,
+        HotelesSeeder::class,
+        HabitacionesSeeder::class,
 
         /* Vuelos */
         AeropuertosSeeder::class,
