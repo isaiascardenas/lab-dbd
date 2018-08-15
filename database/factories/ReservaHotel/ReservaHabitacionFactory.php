@@ -9,7 +9,7 @@ $factory->define(ReservaHabitacion::class, function (Faker $faker) {
         'fecha_termino'=> dateTimeBetween($startDate = '+2 weeks', $endDate = '+4 weeks', $timezone = null),
         'fecha_reserva'=> $faker->date($format= 'd-m-Y'),
         'costo'->rand(50000,200000),
-        'descuento'=>rand(0,70),
+        'descuento'=>rand(0,0.7),
         'habitacion_id'=>rand(1,50),
         'orden_compra_id'=>rand(1,50)
     ];

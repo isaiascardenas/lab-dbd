@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Modulos\ReservaActividad; 
 
-
+use App\OrdenCompra;
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\ReservaActividad\Actividad;
 
 class Reserva_actividad extends Model
 {
@@ -19,4 +20,13 @@ class Reserva_actividad extends Model
         'actividad_id',
         'orden_compra_id',
     ];
+    public function ordenCompra()
+    {
+        return $this->belongsTo(OrdenCompra::class);
+    }
+
+    public function actividad()
+    {
+        return $this->belongsTo(Actividad::class);
+    }
 }
