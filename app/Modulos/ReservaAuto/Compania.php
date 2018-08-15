@@ -7,11 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compania extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    protected $table = 'companias';
+
     protected $fillable = [
         'nombre',
     ];

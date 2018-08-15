@@ -19,8 +19,7 @@ class CreateCiudadesTable extends Migration
             $table->int('pais_id');
             $table->foreign('pais_id')
                 ->references('id')
-                ->on('paises')
-                ->onDelete('cascade');
+                ->on('paises');
             $table->timestamps();
         });
     }

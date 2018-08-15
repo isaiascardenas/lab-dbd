@@ -7,17 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReservaAuto extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    protected $table = 'reserva_autos';
+
     protected $fillable = [
         'fecha_inicio',
         'fecha_termino',
-        'precio',
-        'id_auto',
-        'id_orden_compra',
+        'fecha_reserva',
+        'descuento',
+        'costo',
+        'auto_id',
+        'orden_compra_id',
     ];
 
     public function auto()

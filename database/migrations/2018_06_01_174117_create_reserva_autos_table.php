@@ -17,13 +17,14 @@ class CreateReservaAutosTable extends Migration
             $table->increments('id');
             $table->datetime('fecha_inicio');
             $table->datetime('fecha_termino');
-            $table->integer('precio');
-            $table->integer('id_auto');
-            $table->foreign('id_auto')
+            $table->datetime('fecha_reserva');
+            $table->integer('costo');
+            $table->integer('descuento');
+            $table->integer('auto_id');
+            $table->foreign('auto_id')
                 ->references('id')
-                ->on('autos')
-                ->onDelete('cascade');
-            $table->integer('id_compra');
+                ->on('autos');
+            $table->integer('orden_compra_id');
             $table->timestamps();
         });
     }

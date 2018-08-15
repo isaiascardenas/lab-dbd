@@ -16,14 +16,13 @@ class CreateAutosTable extends Migration
         Schema::create('autos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('patente')->unique();
-            $table->string('modelo');
+            $table->string('descripcion');
             $table->integer('precio_hora');
             $table->integer('capacidad');
-            $table->integer('id_sucursal');
-            $table->foreign('id_sucursal')
+            $table->integer('sucursal_id');
+            $table->foreign('sucursal_id')
                 ->references('id')
-                ->on('sucursales')
-                ->onDelete('cascade');
+                ->on('sucursales');
             $table->timestamps();
         });
     }
