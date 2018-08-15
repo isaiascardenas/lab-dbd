@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ReservaActividad;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Modulos\ReservaActividad\ReservaActividad;
 
-class ActividadesController extends Controller
+class ReservaActividadesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,7 @@ class ActividadesController extends Controller
      */
     public function index()
     {
-        return view("modulos.ReservaActividad.form");
+        return ReservaActividad::all();
     }
 
     /**
@@ -34,7 +36,16 @@ class ActividadesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return ReservaActividad::create([$this->validate($request, [
+            'capacidad_ninos' => 'required',
+            'capacidad_adultos' => 'required',
+            'fecha_reserva' => 'required',
+            'descuento' => 'required',
+            'costo' => 'required',
+            'actividad_id' => 'required',
+            'orden_compra_id' => 'required',
+        ])]);
+        
     }
 
     /**
@@ -45,7 +56,7 @@ class ActividadesController extends Controller
      */
     public function show($id)
     {
-        //
+        return ReservaActividad::find($id);
     }
 
     /**
@@ -68,7 +79,12 @@ class ActividadesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $reservaactividad = ReservaActividad::find($id);
+        $reservaactividad->capacidad_ninos = $request->capacidad_ninos;
+        $reservaactividad->capacidad_adultos = $request->capacidad_adultos;
+        $reservaactividad->fecha_reserva = $request->fecha_reserva;
+        $reservaactividad->save();
+        return $reservaactividad;
     }
 
     /**
@@ -79,6 +95,8 @@ class ActividadesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $reservaactividad = ReservaActividad::find($id);
+        $reservaactividad->delete();
+        return ReservaActividad::all();
     }
 }

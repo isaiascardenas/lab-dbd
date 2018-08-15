@@ -21,7 +21,10 @@ Route::get('/cart', 'HomeController@cart');
 /**
  * Reservas de actividades
  */
-Route::post('/actividad/',      'ActividadesController@index');
+Route::resources([
+	'actividades'			=> 'ReservaActividad\ActividadesController',
+	'reservaactividades'	=> 'ReservaActividad\ReservaActividadesController'
+]);
 
 /**
  * Reservas de hoteles
@@ -49,6 +52,14 @@ Route::resources([
   'reserva_boletos' => 'ReservaVuelo\ReservaBoletosController',
   'tipo_asientos'   => 'ReservaVuelo\TipoAsientosController',
   'tramos'          => 'ReservaVuelo\TramosController',
+]);
+
+
+/* CRUD Cuentas de usuario*/
+Route::resources([
+  'cuentas'      => 'CuentasController',
+  'tipocuentas'  => 'TipoCuentasController',
+  'banco'        => 'BancosController',
 ]);
 
 
