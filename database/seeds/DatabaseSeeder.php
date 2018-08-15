@@ -33,12 +33,13 @@ class DatabaseSeeder extends Seeder
         // CompaniasSeeder::class,
 
         /* Vuelos */
-        // AeropuertosSeeder::class,
-        // AerolineasSeeder::class,
-        // AsientosSeeder::class, 
-        // AvionesSeeder::class,
-        // TipoAsientosSeeder::class,
-        // TramosSeeder::class
+        AeropuertosSeeder::class,
+        AerolineasSeeder::class,
+        AvionesSeeder::class,
+        TipoAsientosSeeder::class,
+        AsientosSeeder::class, 
+        AvionAsientoSeeder::class, 
+        TramosSeeder::class
     ]);
   }
 }

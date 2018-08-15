@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Modulos\ReservaVuelo\Asiento;
+use App\Modulos\ReservaVuelo\Tramo;
 
-class AsientosSeeder extends Seeder
+class TramosSeeder extends Seeder
 {
   /**
    * Run the database seeds.
@@ -12,6 +12,6 @@ class AsientosSeeder extends Seeder
    */
   public function run()
   {
-    factory(Asiento::class, 1)->create();
+    factory(Tramo::class, 1000)->create();
   }
 }

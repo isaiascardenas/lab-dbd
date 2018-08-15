@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Modulos\ReservaVuelo;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +18,30 @@ class Tramo extends Model
     'origen_id',
     'destino_id'
   ];
+
+  /* Relaciones */
+
+  public function origen()
+  {
+    return $this->belongsTo(Aeropuerto::class);
+  }
+
+  public function destino()
+  {
+    return $this->belongsTo(Aeropuerto::class);
+  }
+
+  public function avion()
+  {
+    return $this->belongsTo(Avion::class);
+  }
+
+  // public function asientos()
+  // {
+  //  return $this->avion->asientos();
+  // }
+
+  /* Atributos en fomato 'humano' */
 
   public function horarioPartida()
 	{
@@ -71,28 +95,6 @@ class Tramo extends Model
     return $diff;
 
   }
-
-  /* Relaciones */
-
-  public function origen()
-  {
-  	return $this->belongsTo(Aeropuerto::class);
-  }
-
-  public function destino()
-  {
-  	return $this->belongsTo(Aeropuerto::class);
-  }
-
-  public function avion()
-  {
-  	return $this->belongsTo(Avion::class);
-  }
-
-  // public function asientos()
-  // {
-  // 	return $this->avion->asientos();
-  // }
 
   /* Funcionalidades */
 

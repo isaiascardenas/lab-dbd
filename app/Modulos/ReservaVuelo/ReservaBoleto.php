@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReservaBoleto extends Model
 {
-  protected $table = 'reserva_boleto';
+  protected $table = 'reserva_boletos';
 
   protected $fillable = [
     'fecha_reserva',
@@ -23,13 +23,13 @@ class ReservaBoleto extends Model
     $this->belongsTo(Tramo::class);
   }
 
-  // public function avion()
+  // public function asiento()
   // {
   //   $this->belongsTo(Avion::class);
   // }
 
-  // public function ordenCompra()
-  // {
-  //   $this->belongsTo(OrdenCompra::class);
-  // }
+  public function ordenCompra()
+  {
+    $this->belongsTo(OrdenCompra::class);
+  }
 }

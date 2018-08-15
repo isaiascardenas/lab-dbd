@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Modulos\ReservaVuelo;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,7 @@ class Pasajero extends Model
   ];
 
   /* Relaciones */
-  public function reserva()
+  public function reservaBoleto()
   {
     return $this->hasOne(ReservaBoleto::class);
   }
