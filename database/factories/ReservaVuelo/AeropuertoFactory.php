@@ -8,6 +8,6 @@ $factory->define(Aeropuerto::class, function (Faker $faker) {
         'codigo' => $faker->unique()->regexify('[A-Z]{3}'),
         'nombre' => $faker->name,
         'direccion' => $faker->address,
-        'localizacion_id' => $faker->numberBetween(1, 150)
+        'ciudad_id' => $faker->numberBetween(1, 150)
     ];
 });

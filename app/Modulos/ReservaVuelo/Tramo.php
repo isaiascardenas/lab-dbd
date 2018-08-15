@@ -8,7 +8,17 @@ use Carbon\Carbon;
 
 class Tramo extends Model
 {
-    
+  protected $table = 'tramos';
+
+  protected $fillable = [
+    'codigo',
+    'fecha_partida',
+    'fecha_llegada',
+    'avion_id',
+    'origen_id',
+    'destino_id'
+  ];
+
   public function horarioPartida()
 	{
 		return Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_partida)->format('d-m-Y H:i');
@@ -58,7 +68,6 @@ class Tramo extends Model
     $diff .= $fechaPartida->diffInMinutes($fechaLlegada);
     $diff .= 'm';
 
-    echo $diff;
     return $diff;
 
   }
@@ -80,10 +89,12 @@ class Tramo extends Model
   	return $this->belongsTo(Avion::class);
   }
 
-  public function asientos()
-  {
-  	return $this->avion->asientos();
-  }
+  // public function asientos()
+  // {
+  // 	return $this->avion->asientos();
+  // }
+
+  /* Funcionalidades */
 
   public function printPlane()
   {

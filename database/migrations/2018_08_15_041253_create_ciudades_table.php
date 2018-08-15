@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTipoReservasTable extends Migration
+class CreateCiudadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreateTipoReservasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_reservas', function (Blueprint $table) {
+        Schema::create('ciudades', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion');
+            $table->string('nombre');
+            $table->int('pais_id');
+            $table->foreign('pais_id')
+                ->references('id')
+                ->on('paises')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +32,6 @@ class CreateTipoReservasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_reservas');
+        Schema::dropIfExists('ciudades');
     }
 }

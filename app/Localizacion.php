@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Modulos\ReservaAuto\Sucursal;
 use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaHotel\Hotel;
 
@@ -14,8 +15,13 @@ class Localizacion extends Model
         'ciudad'
     ];
 
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursal::class);
+    }
+
     public function hoteles()
     {
-    	return $this->hasMany(Hotel::class);
+        return $this->hasMany(Hotel::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Modulos\ReservaAuto;
 
+use App\Modulos\ReservaAuto\Auto;
 use Illuminate\Database\Eloquent\Model;
 
 class ReservaAuto extends Model
@@ -18,4 +19,9 @@ class ReservaAuto extends Model
         'id_auto',
         'id_orden_compra',
     ];
+
+    public function auto()
+    {
+        return $this->belongsTo(Auto::class);
+    }
 }
