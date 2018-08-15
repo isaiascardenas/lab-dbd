@@ -36,12 +36,13 @@ class HotelesController extends Controller
      */
     public function store(Request $request)
     {
-        $hotelData = $this->validate($request , [
+        $hotelData = $this->validate($request , 
+            [
 
-        'estrellas' => 'required'| 'integer',
-        'nombre' => 'required' | 'string',
-        'descripcion' => 'required' | 'string',
-        'ciudad_id' => 'required'| 'integer' 
+        'estrellas' => 'required',
+        'nombre' => 'required' ,
+        'descripcion' => 'required',
+        'ciudad_id' => 'required' 
         ]);
 
         return Hotel::create($hotelData);
@@ -55,9 +56,9 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Hotel $hotel)
+    public function show($id)
     {
-        return $hotel;
+        return Hotel::find($id);
     }
 
     /**
@@ -78,8 +79,10 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Hotel $hotel)
+    public function update(Request $request,$id)
     {
+
+        $hotel = Hotel::find($id);
         $this->validate($request , [
 
         'estrellas' => 'required'| 'integer',
@@ -95,6 +98,8 @@ class HotelesController extends Controller
         $hotel->ciudad_id = $request->get('ciudad_id');
 
         $hotel->save();
+
+        return $hotel;
 
         
     }
