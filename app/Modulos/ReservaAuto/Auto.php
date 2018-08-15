@@ -24,20 +24,6 @@ class Auto extends Model
     }
 
     public function reservaAuto()
-    protected $fillable = [
-        'patente',
-        'descripcion',
-        'precio_hora',
-        'capacidad',
-        'sucursal_id',
-    ];
-
-    public function sucursal()
-    {
-        return $this->belongsTo(Sucursal::class);
-    }
-
-    public function reservaAuto()
     {
         return $this->hasMany(ReservaAuto::class);
     }
