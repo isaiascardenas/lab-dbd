@@ -10,9 +10,18 @@ class ReservaHotel extends Model
         'fecha_inicio',
         'fecha_termino',
         'descuento',
-        'id_habitacion',
-        'id_orden_compra',
+        'habitacion_id',
+        'orden_compra_id',
     ];
 
     protected $table = 'reserva_hoteles';
+
+    public function habitaciones(){
+    	return $this->belongsTo(Habitacion::class);
+    }
+    /*
+    public funcion ordenCompra(){
+		return $this->belongsTo(OrdenCompra::class);
+    }
+    */
 }

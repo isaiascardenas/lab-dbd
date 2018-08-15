@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReservaAsientosTable extends Migration
+class CreatePaisesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateReservaAsientosTable extends Migration
      */
     public function up()
     {
-        Schema::create('reserva_asientos', function (Blueprint $table) {
+        Schema::create('paises', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('asiento_id');
-            $table->integer('reserva_vuelo_id');
-            $table->integer('tramo_id');
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateReservaAsientosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reserva_asientos');
+        Schema::dropIfExists('paises');
     }
 }
