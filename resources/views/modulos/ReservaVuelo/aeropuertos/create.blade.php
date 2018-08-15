@@ -1,13 +1,15 @@
 @extends('layouts.admin')
 
 @section('content')
-	<h2><i class="fas fa-map-marker-alt"></i> Nuevo Aeropuerto</h2>
+	<h2>
+    <i class="fas fa-map-marker-alt"></i> Nuevo Aeropuerto
+  </h2>
 	
 	<hr>
 	
 	@include('layouts.messages')
 
-	<form method="post" action="/aeropuertos/" method="post">
+	<form method="post" action="{{ action('ReservaVuelo\AeropuertosController@store') }}" method="post">
 		{{ csrf_field() }}
 		
 		<div class="form-group row">
@@ -43,8 +45,12 @@
 		</div>
 
 		<div class="text-right">
-			<a href="/aeropuertos/" class="btn btn-info"><i class="fas fa-ban"></i> Cancelar</a>
-			<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
+			<a href="/aeropuertos/" class="btn btn-info">
+        <i class="fas fa-ban"></i> Cancelar
+      </a>
+			<button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> Guardar
+      </button>
 		</div>
 	</form>
 @endsection

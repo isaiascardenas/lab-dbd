@@ -9,22 +9,22 @@ class Avion extends Model
 	protected $table = 'aviones';
 
 	protected $fillable = [
-		'modelo',
+		'descripcion',
 		'aerolinea_id'
 	];
 
-    public function asientos()
-    {
-    	return $this->hasMany(Asiento::class);
-    }
+  // public function asientos()
+  // {
+  // 	return $this->hasMany(Asiento::class);
+  // }
 
-    public function tramos()
-    {
-    	return $this->hasMany(Tramo::class);
-    }
+  public function tramos()
+  {
+  	return $this->hasMany(Tramo::class);
+  }
 
-    public function aerolinea()
-    {
-    	return $this->belongsTo(Aerolinea::class);
-    }
+  public function aerolinea()
+  {
+  	return $this->belongsTo(Aerolinea::class);
+  }
 }

@@ -9,33 +9,27 @@ class Vuelo
 	/**
 	 * Array de Tramos
 	 */
-    public $tramos = [];
+  private $tramos = [];
 
-    public function __construct($tramos_id = [])
-    {
-    	foreach ($tramos_id as $id) {
-    		$this->tramos[] = Tramo::find($id);
-    	}
-    }
+  public function __construct($tramosId = [])
+  {
+  	foreach ($tramosId as $id) {
+  		$this->tramos[] = Tramo::find($id);
+  	}
+  }
 
-    public function fechaInicio()
-    {
-    	return $this->tramos[0]->fechaInicio;
-    }
+  public function origen()
+  {
+    return $this->tramos[0];
+  }
 
-    public function fechaTermino()
-    {
-    	return $this->tramos[-1]->fechaTermino;
-    }
+  public function destino()
+  {
+    return end($this->tramos);
+  }
 
-    public function aeropuertoOrigen()
-    {
-    	return $this->tramos[0]->origen->nombre;
-    }
-
-    public function aeropuertoDestino()
-    {
-    	return $this->tramos[-1]->destino->nombre;
-    }
-    
+  public function itinerario()
+  {
+    return $this->tramos;
+  }
 }
