@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modulos\ReservaHotel;
+namespace App\Modulos\ReservaHabitacion;
 
 use App\Ciudad;
 use Illuminate\Database\Eloquent\Model;
-use App\Modulos\ReservaHotel\Habitacion;
 use App\Modulos\ReservaTraslado\Traslado;
+
 
 class Hotel extends Model
 {
@@ -20,7 +20,7 @@ class Hotel extends Model
 
 
     public function habitaciones(){
-    	return $this->hasMany(Habitacion::class);
+        return $this->hasMany(Habitacion::class);
     }
 
     public function ciudad(){

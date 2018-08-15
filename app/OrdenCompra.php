@@ -6,10 +6,9 @@ use App\User;
 use App\ReservaAuto\ReservaAuto;
 use App\Paquetes\PaqueteVueloAuto;
 use App\Paquetes\PaqueteVueloHotel;
-use App\ReservaHotel\ReservaHabitacion;
 use App\ReservaTraslado\ReservaTraslado;
 use App\ReservaActividad\ReservaActividad;
-
+use App\Modulos\ReservaHabitacion\ReservaHabitacion;
 
 use Illuminate\Database\Eloquent\Model;
 

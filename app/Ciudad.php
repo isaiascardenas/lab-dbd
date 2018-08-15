@@ -3,10 +3,12 @@
 namespace App;
 
 use App\Pais;
-use App\Modulos\ReservaHotel\Hotel;
 use App\Modulos\ReservaAuto\Sucursal;
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\ReservaHabitacion\Hotel;
 use App\Modulos\ReservaActividad\Actividad;
+
+
 
 class Ciudad extends Model
 {

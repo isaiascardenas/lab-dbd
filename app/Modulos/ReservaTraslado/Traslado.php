@@ -2,9 +2,11 @@
 
 namespace App\Modulos\ReservaTraslado;
 
-use App\ReservaHotel\Hotel;
+
 use App\ReservaVuelo\Aeropuerto;
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\ReservaHabitacion\Habitacion;
+
 
 class Traslado extends Model
 {

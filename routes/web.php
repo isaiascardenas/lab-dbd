@@ -30,7 +30,8 @@ Route::resources([
 /**
  * Reservas de hoteles
  */
-Route::post('/hotel/',        'HotelesController@index');
+Route::get('hoteles','ReservaHabitacion\HotelesController@index');
+
 
 /**
  * Reservas de autos
