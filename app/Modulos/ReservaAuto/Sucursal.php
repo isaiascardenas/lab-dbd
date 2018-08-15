@@ -2,7 +2,7 @@
 
 namespace App\Modulos\ReservaAuto;
 
-use App\Localizacion;
+use App\Ciudad;
 use App\Modulos\ReservaAuto\Auto;
 use App\Modulos\ReservaAuto\Compania;
 use Illuminate\Database\Eloquent\Model;
@@ -26,8 +26,8 @@ class Sucursal extends Model
         return $this->belongsTo(Compania::class);
     }
 
-    public function localizacion()
+    public function ciudad()
     {
-        return $this->localizacion('App\Phone');
+        return $this->belongsTo(Ciudad::class);
     }
 }

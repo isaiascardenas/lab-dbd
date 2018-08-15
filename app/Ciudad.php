@@ -23,7 +23,7 @@ class Ciudad extends Model
 
     public function sucursal()
     {
-        return $this->belongsTo(Sucursal::class);
+        return $this->hasMany(Sucursal::class);
     }
 
     public function hoteles()
