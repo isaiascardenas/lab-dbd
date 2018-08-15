@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\ReservaVuelo;
 
+use App\Ciudad;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modulos\ReservaVuelo\Aeropuerto;
 
-use App\Aeropuerto;
-use App\Localizacion;
 
 class AeropuertosController extends Controller
 {
@@ -17,9 +17,12 @@ class AeropuertosController extends Controller
    */
   public function index()
   {
-    $aeropuertos = Aeropuerto::paginate(20);
+    $aeropuertos = Aeropuerto::all();
 
-    return view('modulos.ReservaVuelo.aeropuertos.index', compact('aeropuertos'));
+    return $aeropuertos;
+    // $aeropuertos = Aeropuerto::paginate(20);
+
+    // return view('modulos.ReservaVuelo.aeropuertos.index', compact('aeropuertos'));
   }
 
   /**
@@ -29,9 +32,9 @@ class AeropuertosController extends Controller
    */
   public function create()
   {
-    $localizaciones = Localizacion::all();
+    // $ciudades = Ciudad::all();
 
-    return view('modulos.ReservaVuelo.aeropuertos.create', compact('localizaciones'));
+    // return view('modulos.ReservaVuelo.aeropuertos.create', compact('ciudades'));
   }
 
   /**
@@ -56,7 +59,7 @@ class AeropuertosController extends Controller
       'localizacion_id'
     ]));
 
-    return redirect('/aeropuertos/')->with('success', 'Creado con éxito');
+    // return redirect('/aeropuertos/')->with('success', 'Creado con éxito');
   }
 
   /**
@@ -67,7 +70,8 @@ class AeropuertosController extends Controller
    */
   public function show(Aeropuerto $aeropuerto)
   {
-    return view('modulos.ReservaVuelo.aeropuertos.show', compact('aeropuerto'));
+    return $aeropuerto;
+    // return view('modulos.ReservaVuelo.aeropuertos.show', compact('aeropuerto'));
   }
 
   /**
@@ -78,9 +82,9 @@ class AeropuertosController extends Controller
    */
   public function edit(Aeropuerto $aeropuerto)
   {
-    $localizaciones = Localizacion::all();
+    // $ciudades = Ciudad::all();
 
-    return view('modulos.ReservaVuelo.aeropuertos.edit', compact('aeropuerto', 'localizaciones'));
+    // return view('modulos.ReservaVuelo.aeropuertos.edit', compact('aeropuerto', 'ciudades'));
   }
 
   /**
@@ -96,17 +100,17 @@ class AeropuertosController extends Controller
       'codigo' => 'required',
       'nombre' => 'required',
       'direccion' => 'required',
-      'localizacion_id' => 'required|integer'
+      'ciudad_id' => 'required|integer'
     ]);
     
     $aeropuerto->codigo = $request->get('codigo');
     $aeropuerto->nombre = $request->get('nombre');
     $aeropuerto->direccion = $request->get('direccion');
-    $aeropuerto->localizacion_id = $request->get('localizacion_id');
+    $aeropuerto->ciudad_id = $request->get('ciudad_id');
 
     $aeropuerto->save(); 
 
-    return redirect('/aeropuertos/')->with('success', 'Actualizado con éxtio');
+    // return redirect('/aeropuertos/')->with('success', 'Actualizado con éxito');
   }
 
   /**
@@ -119,6 +123,6 @@ class AeropuertosController extends Controller
   {
     $aeropuerto->delete();
 
-    return redirect('/aeropuertos/')->with('success', 'Removido con éxito');
+    // return redirect('/aeropuertos/')->with('success', 'Removido con éxito');
   }
 }

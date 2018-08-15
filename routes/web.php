@@ -41,11 +41,31 @@ Route::resource('compania', 'ReservaAuto\CompaniasController')->except(['create'
 Route::post('/vuelos/',             'ReservaVuelo\VuelosController@index');   // POST => filtros
 Route::post('/vuelos/details/',     'ReservaVuelo\VuelosController@show');    // POST => [tramo_1, tramo_2]
 Route::post('/vuelos/reserva/',     'ReservaVuelo\VuelosController@reserva'); // POST => [tramo_1, tramo_2] tras confirmacion en /vuelos/details/
-/* CRUD Tramos */
-Route::resource('tramos', 'ReservaVuelo\TramosController');
-/* CRUD Aerolineas */
-Route::resource('aerolineas', 'ReservaVuelo\AerolineasController');
-/* CRUD Aeropuerto */
-Route::resource('aeropuertos', 'ReservaVuelo\AeropuertosController');
-/* CRUD Aviones */
-Route::resource('aviones', 'ReservaVuelo\AvionesController');
+/* CRUD Reservas Vuelos */
+Route::resources([
+  'aerolineas'      => 'ReservaVuelo\AerolineasController',
+  'aeropuertos'     => 'ReservaVuelo\AeropuertosController',
+  'asientos'        => 'ReservaVuelo\AsientosController',
+  'aviones'         => 'ReservaVuelo\AvionesController',
+  'pasajeros'       => 'ReservaVuelo\PasajerosController',
+  'reserva_boletos' => 'ReservaVuelo\ReservaBoletosController',
+  'tipo_asientos'   => 'ReservaVuelo\TipoAsientosController',
+  'tramos'          => 'ReservaVuelo\TramosController',
+]);
+
+
+// Route::get('/aerolineas/',         'AerolineasController@index');
+// Route::get('/aerolineas/create',         'AerolineasController@index');
+
+
+
+
+
+
+
+
+
+
+
+
+

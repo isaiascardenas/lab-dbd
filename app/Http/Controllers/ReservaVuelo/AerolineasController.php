@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\ReservaVuelo;
 
-use App\Aerolinea;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modulos\ReservaVuelo\Aerolinea;
 
 class AerolineasController extends Controller
 {
@@ -15,9 +15,12 @@ class AerolineasController extends Controller
    */
   public function index()
   {
-    $aerolineas = Aerolinea::paginate(20);
+    $aerolineas = Aerolinea::all();
 
-    return view('modulos.ReservaVuelo.aerolineas.index', compact('aerolineas'));
+    return $aerolineas;
+
+    // $aerolineas = Aerolinea::paginate(20);
+    // return view('modulos.ReservaVuelo.aerolineas.index', compact('aerolineas'));
   }
 
   /**
@@ -27,7 +30,7 @@ class AerolineasController extends Controller
    */
   public function create()
   {
-    return view('modulos.ReservaVuelo.aerolineas.create');
+    // return view('modulos.ReservaVuelo.aerolineas.create');
   }
 
   /**
@@ -46,7 +49,7 @@ class AerolineasController extends Controller
       'nombre'
     ]));
 
-    return redirect('/aerolineas/')->with('success', 'Creado con éxito');
+    // return redirect('/aerolineas/')->with('success', 'Creado con éxito');
   }
 
   /**
@@ -57,7 +60,8 @@ class AerolineasController extends Controller
    */
   public function show(Aerolinea $aerolinea)
   {
-    return view('modulos.ReservaVuelo.aerolineas.show', compact('aerolinea'));
+    return $aerolinea;
+    // return view('modulos.ReservaVuelo.aerolineas.show', compact('aerolinea'));
   }
 
   /**
@@ -68,7 +72,7 @@ class AerolineasController extends Controller
    */
   public function edit(Aerolinea $aerolinea)
   {
-    return view('modulos.ReservaVuelo.aerolineas.edit', compact('aerolinea'));
+    // return view('modulos.ReservaVuelo.aerolineas.edit', compact('aerolinea'));
   }
 
   /**
@@ -88,7 +92,7 @@ class AerolineasController extends Controller
 
     $aerolinea->save();
 
-    return redirect('/aerolineas/')->with('success', 'Actualizado con éxito');
+    // return redirect('/aerolineas/')->with('success', 'Actualizado con éxito');
   }
 
   /**
@@ -101,6 +105,6 @@ class AerolineasController extends Controller
   {
     $aerolinea->delete();
 
-    return redirect('/aerolineas/')->with('success', 'Removido con éxito');
+    // return redirect('/aerolineas/')->with('success', 'Removido con éxito');
   }
 }
