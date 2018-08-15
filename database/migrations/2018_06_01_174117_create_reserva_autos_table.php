@@ -19,7 +19,7 @@ class CreateReservaAutosTable extends Migration
             $table->datetime('fecha_termino');
             $table->datetime('fecha_reserva');
             $table->integer('costo');
-            $table->integer('descuento');
+            $table->float('descuento');
             $table->integer('auto_id');
             $table->foreign('auto_id')
                 ->references('id')
