@@ -24,6 +24,7 @@ class CreateReservaHabitacionesTable extends Migration
             $table->foreign('habitacion_id')
                   ->references('id')
                   ->on('habitaciones');
+            $table->integer('orden_compra_id');
             $table->timestamps();
         });
     }
