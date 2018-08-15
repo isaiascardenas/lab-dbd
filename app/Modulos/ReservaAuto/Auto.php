@@ -8,17 +8,28 @@ use App\Modulos\ReservaAuto\ReservaAuto;
 
 class Auto extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    protected $table = 'autos';
+
     protected $fillable = [
         'patente',
-        'modelo',
+        'descripcion',
         'precio_hora',
         'capacidad',
-        'id_sucursal',
+        'sucursal_id',
+    ];
+
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursal::class);
+    }
+
+    public function reservaAuto()
+    protected $fillable = [
+        'patente',
+        'descripcion',
+        'precio_hora',
+        'capacidad',
+        'sucursal_id',
     ];
 
     public function sucursal()
