@@ -39,7 +39,10 @@ class DatabaseSeeder extends Seeder
         TipoAsientosSeeder::class,
         AsientosSeeder::class, 
         AvionAsientoSeeder::class, 
-        TramosSeeder::class
+        TramosSeeder::class,
+
+        /* Traslados */
+        TrasladosSeeder::class,
     ]);
   }
 }
