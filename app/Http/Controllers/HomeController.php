@@ -8,23 +8,20 @@ use App\Aeropuerto;
 class HomeController extends Controller
 {
 
-    public function index()
-    {
-    	$data = [
-    		"tipoPasaje" 	=> TipoAsiento::all(),
-    		"aeropuertos" 	=> Aeropuerto::all(),
-    		// "paquetes"		=> Paquetes::all()
-    		"paquetes"		=> [],
-            "localizacion"      => []
-    	];
+  public function index()
+  {
+		$tipoPasaje = TipoAsiento::all();
+		$aeropuertos = Aeropuerto::all();
+		// "paquetes"		=> Paquetes::all()
+		$paquetes	= [];
 
-        return view('home', compact("data"));
-    }
+    return view('home', compact('tipoPasaje', 'aeropuertos', 'paquetes'));
+  }
 
-    public function cart()
-    {
-    	$data = [];
+  public function cart()
+  {
+  	$data = [];
 
-    	return view('cart', compact("data"));
-    }
+  	return view('cart', compact("data"));
+  }
 }
