@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\ReservaVuelo;
 
 use Illuminate\Http\Request;
+use App\Modulos\ReservaVuelo\Avion;
 use App\Http\Controllers\Controller;
-
-use App\Avion;
-use App\Aerolinea;
+use App\Modulos\ReservaVuelo\Aerolinea;
 
 class AvionesController extends Controller
 {
@@ -17,9 +16,12 @@ class AvionesController extends Controller
    */
   public function index()
   {
-    $aviones = Avion::paginate(20);
+    $aviones = Avion::all();
 
-    return view('modulos.ReservaVuelo.aviones.index', compact('aviones'));
+    return $aviones;
+    // $aviones = Avion::paginate(20);
+
+    // return view('modulos.ReservaVuelo.aviones.index', compact('aviones'));
   }
 
   /**
@@ -29,7 +31,7 @@ class AvionesController extends Controller
    */
   public function create()
   {
-    return view('modulos.ReservaVuelo.aviones.create');
+    // return view('modulos.ReservaVuelo.aviones.create');
   }
 
   /**
@@ -41,16 +43,16 @@ class AvionesController extends Controller
   public function store(Request $request)
   {
     $this->validate($request, [
-      'modelo'    => 'required',
-      'aerolinea_id'  => 'required|integer'
+      'descripcion' => 'required',
+      'aerolinea_id' => 'required|integer'
     ]);
 
     Aerolinea::create(request([
-      'modelo',
+      'descripcion',
       'aerolinea_id'
     ]));
 
-    return redirect('/aviones/')->with('success', 'Creado con éxito');
+    // return redirect('/aviones/')->with('success', 'Creado con éxito');
   }
 
   /**
@@ -61,7 +63,8 @@ class AvionesController extends Controller
    */
   public function show(Avion $avion)
   {
-    return view('modulos.ReservaVuelo.aviones.show', compact('avion'));
+    return $avion;
+    // return view('modulos.ReservaVuelo.aviones.show', compact('avion'));
   }
 
   /**
@@ -72,9 +75,9 @@ class AvionesController extends Controller
    */
   public function edit(Avion $avion)
   {
-    $aerolineas = Aerolinea::all();
+    // $aerolineas = Aerolinea::all();
 
-    return view('modulos.ReservaVuelo.aviones.edit', compact('avion', 'aerolineas'));
+    // return view('modulos.ReservaVuelo.aviones.edit', compact('avion', 'aerolineas'));
   }
 
   /**
@@ -87,16 +90,16 @@ class AvionesController extends Controller
   public function update(Request $request, Avion $avion)
   {
     $this->validate($request, [
-      'modelo' => 'required',
+      'descripcion' => 'required',
       'aerolinea_id' => 'required|integer'
     ]);
     
-    $avion->modelo     = $request->get('modelo');
+    $avion->descripcion = $request->get('descripcion');
     $avion->aerolinea_id = $request->get('aerolinea_id');
   
     $avion->save(); 
 
-    return redirect('/aviones/')->with('success', 'Actualizado con éxtio');
+    // return redirect('/aviones/')->with('success', 'Actualizado con éxtio');
   }
 
   /**
@@ -109,6 +112,6 @@ class AvionesController extends Controller
   {
     $avion->delete();
 
-    return redirect('/aviones/')->with('success', 'Removido con éxito');
+    // return redirect('/aviones/')->with('success', 'Removido con éxito');
   }
 }

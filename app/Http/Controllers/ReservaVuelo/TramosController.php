@@ -20,9 +20,12 @@ class TramosController extends Controller
    */
   public function index()
   {
-    $tramos = Tramo::paginate(20);
+    $tramos = Tramo::all();
 
-    return view('modulos.ReservaVuelo.tramos.index', compact("tramos"));
+    return $tramos;
+    // $tramos = Tramo::paginate(20);
+
+    // return view('modulos.ReservaVuelo.tramos.index', compact("tramos"));
   }
 
   /**
@@ -32,11 +35,11 @@ class TramosController extends Controller
    */
   public function create()
   {
-    $aviones = Avion::all();
-    $aeropuertos = Aeropuerto::all();
-    $aerolineas = Aerolinea::all();
+    // $aviones = Avion::all();
+    // $aeropuertos = Aeropuerto::all();
+    // $aerolineas = Aerolinea::all();
 
-    return view('modulos.ReservaVuelo.tramos.create', compact(['aerolineas', 'aeropuertos', 'aviones']));
+    // return view('modulos.ReservaVuelo.tramos.create', compact(['aerolineas', 'aeropuertos', 'aviones']));
   }
 
   /**
@@ -65,7 +68,7 @@ class TramosController extends Controller
       'destino_id'
     ]));
 
-    return redirect('/tramos/');
+    // return redirect('/tramos/');
   }
 
   /**
@@ -76,7 +79,8 @@ class TramosController extends Controller
    */
   public function show(Tramo $tramo)
   {
-    return view('modulos.ReservaVuelo.tramos.show', compact('tramo'));
+    return $tramo;
+    // return view('modulos.ReservaVuelo.tramos.show', compact('tramo'));
   }
 
   /**
@@ -87,11 +91,11 @@ class TramosController extends Controller
    */
   public function edit(Tramo $tramo)
   {
-    $aviones = Avion::all();
-    $aeropuertos = Aeropuerto::all();
-    $aerolineas = Aerolinea::all();
+    // $aviones = Avion::all();
+    // $aeropuertos = Aeropuerto::all();
+    // $aerolineas = Aerolinea::all();
 
-    return view('modulos.ReservaVuelo.tramos.edit', compact(['aerolineas', 'aeropuertos', 'aviones', 'tramo']));
+    // return view('modulos.ReservaVuelo.tramos.edit', compact(['aerolineas', 'aeropuertos', 'aviones', 'tramo']));
   }
 
   /**
@@ -121,7 +125,7 @@ class TramosController extends Controller
   
     $tramo->save(); 
 
-    redirect('/tramos/');
+    // return redirect('/tramos/')->with('success', 'Actualizado con éxito');
   }
 
   /**
@@ -134,6 +138,6 @@ class TramosController extends Controller
   {
     $tramo->delete();
 
-    redirect('/tramos/');
+    // return redirect('/tramos/')->with('success', 'Removido con éxito');
   }
 }
