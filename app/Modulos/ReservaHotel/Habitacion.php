@@ -11,8 +11,15 @@ class Habitacion extends Model
         'capacidad_nino',
         'capacidad_adulto',
         'precio_por_noche',
-        'id_hotel',
+        'hotel_id',
     ];
 
     protected $table = 'habitaciones';
+
+    public function hotel(){
+    	return $this->belongsTo(Hotel::class);
+    }
+    public function reservaHotel(){
+    	return $this->hasMany(ReservaHotel::class);
+    }
 }

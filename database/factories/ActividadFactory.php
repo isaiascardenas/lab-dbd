@@ -1,6 +1,6 @@
 <?php
 
-use App\Modulos\ReservaActividad\actividad;
+use App\Actividad;
 use Faker\Generator as Faker;
 
 $factory->define(Actividad::class, function (Faker $faker) {

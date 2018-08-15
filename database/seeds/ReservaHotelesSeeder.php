@@ -2,9 +2,9 @@
 
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use App\Actividad;
+use App\ReservaHotel;
 
-class ActividadesSeeder extends Seeder
+class ReservaHotelesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class ActividadesSeeder extends Seeder
      */
     public function run()
     {
-       //factory(Actividad::class, 50)->create();    
+      factory(ReservaHotel::class, 50)->create();   
     }
 }
