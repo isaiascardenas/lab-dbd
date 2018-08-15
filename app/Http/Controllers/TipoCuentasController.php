@@ -35,9 +35,8 @@ class TipoCuentasController extends Controller
      */
     public function store(Request $request)
     {
-        return TipoCuenta::create([$this->validate($request, [
-            'descripcion' => 'required',
-        ])]);
+        $data = $this->validate($request, ['descripcion' => 'required',]);
+        return TipoCuenta::create($data);
     }
 
     /**
