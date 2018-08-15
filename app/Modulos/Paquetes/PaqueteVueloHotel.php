@@ -4,6 +4,8 @@ namespace App\Modulos\Paquetes;
 
 use App\OrdenCompra;
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\ReservaHabitacion\ReservaHabitacion;
+
 
 class PaqueteVueloHotel extends Model
 {
@@ -18,7 +20,7 @@ class PaqueteVueloHotel extends Model
     ];
 
     public function reservaHabitacion(){
-    	return $this->hasOne(reservaHabitacion::class);
+    	return $this->hasOne(ReservaHabitacion::class);
     }
 
     public function ordenCompra()

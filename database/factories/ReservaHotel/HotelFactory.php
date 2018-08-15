@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Modulos\ReservaHotel\Hotel;
+use App\Modulos\ReservaHabitacion\Hotel;
 
 $factory->define(Hotel::class, function (Faker $faker) {
 	$ciudad_id = DB::table('ciudades')->select('id')->get();
