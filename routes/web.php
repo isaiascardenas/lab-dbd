@@ -17,7 +17,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/cart', 'HomeController@cart');
 
-Route::resource('user', 'UserController')->except(['create', 'edit']);
+Route::resource('users', 'UserController')->except(['create', 'edit']);
 
 /**
  * Reservas de actividades
@@ -32,8 +32,12 @@ Route::post('/hotel/',        'HotelesController@index');
 /**
  * Reservas de autos
  */
-Route::resource('autos', 'ReservaAuto\AutosController')->except(['create', 'edit']);
-Route::resource('compania', 'ReservaAuto\CompaniasController')->except(['create', 'edit']);
+Route::resources([
+    'autos' => 'ReservaAuto\AutosController',
+    'companias' => 'ReservaAuto\AutosController',
+    'sucursales' => 'ReservaAuto\AutosController',
+    // 'reserva', 'ReservaAuto\AutosController',
+]);
 
 /**
  *  Reservas vuelos

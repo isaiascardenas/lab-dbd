@@ -65,7 +65,7 @@ class TrasladosController extends Controller
      */
     public function show(Traslado $traslado)
     {
-      return $traslado;
+        return $traslado;
     }
 
     /**

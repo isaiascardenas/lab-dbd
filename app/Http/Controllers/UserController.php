@@ -35,12 +35,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        return User::create([$this->validate($request, [
+        $data = $this->validate($request, [
             'rut' => 'required',
             'nombre' => 'required',
             'email' => 'required',
             'password' => 'required',
-        ])]);
+        ]);
+        return User::create($data);
     }
 
     /**
@@ -74,14 +75,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->fill([$this->validate($request, [
+        $user = $user->fill([$this->validate($request, [
             'rut' => 'required',
             'nombre' => 'required',
             'email' => 'required',
             'password' => 'required',
         ])])->save();
 
-        return $user;
+        return User::find($user->id);
     }
 
     /**
@@ -92,6 +93,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return $user->destroy();
+        $user->delete();
+        return User::all();
     }
 }
