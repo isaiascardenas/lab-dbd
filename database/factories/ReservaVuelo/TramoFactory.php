@@ -5,15 +5,18 @@ use Faker\Generator as Faker;
 use App\Modulos\ReservaVuelo\Tramo;
 
 $factory->define(Tramo::class, function (Faker $faker) {
-    $fecha_partida = Carbon::now();
-    $fecha_llegada = $faker->addDays();
+    $aeropuetos = DB::table('aeropuetos')->select('id')->get();
+    $aviones = DB::table('aviones')->select('id')->get();
+
+    $fechaPartida = Carbon::createFromTimeStamp($faker->dateTimeBetween('+10 days', '+100 days')->getTimestamp());
+    $fechaLlegada = Carbon::createFromFormat('Y-m-d H:i:s', $fechaPartida)->addHour();
 
     return [
         'codigo'    => $faker->unique()->regexify('[A-Z]{2}[0-9]{3}'),
-        'fecha_partida' => $fecha_partida,
-        'fecha_llegada' => $fecha_llegada,
-        'avion_id'    => $faker->numberBetween(1, 100),
-        'origen_id'   => $faker->numberBetween(1, 200),
-        'destino_id'  => $faker->numberBetween(1, 200)
+        'fecha_partida' => $fechaPartida,
+        'fecha_llegada' => $fechaLlegada,
+        'avion_id'    => $aviones->random()->id(),
+        'origen_id'   => $aeropuetos->random()->id(),
+        'destino_id'  => $aeropuetos->random()->id()
     ];
 });
