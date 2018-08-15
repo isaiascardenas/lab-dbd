@@ -22,9 +22,9 @@ class ReservaHotel extends Model
     public function habitacion(){
     	return $this->belongsTo(Habitacion::class);
     }
-    /*
-    public funcion ordenCompra(){
+    
+    public function ordenCompra(){
 		return $this->belongsTo(OrdenCompra::class);
     }
-    */
+    
 }

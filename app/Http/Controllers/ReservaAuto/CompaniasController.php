@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ReservaAuto;
 
 use Illuminate\Http\Request;
-use app\Modulos\ReservaHotel\Hotel;
+use App\Http\Controllers\Controller;
+use App\Modulos\ReservaAuto\Compania;
 
-class HotelesController extends Controller
+class CompaniasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class HotelesController extends Controller
      */
     public function index()
     {
-        
+        return Compania::all();
     }
 
     /**
@@ -35,7 +36,9 @@ class HotelesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Compania::create([$this->validate($request, [
+            'nombre' => 'required',
+        ])]);
     }
 
     /**
@@ -44,9 +47,9 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Compania $compania)
     {
-        //
+        return $compania;
     }
 
     /**
@@ -67,9 +70,13 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Compania $compania)
     {
-        //
+        $compania->fill([$this->validate($request, [
+            'nombre' => 'required',
+        ])])->save();
+
+        return $compania;
     }
 
     /**
@@ -78,8 +85,8 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Compania $compania)
     {
-        //
+        $compania->destroy();
     }
 }
