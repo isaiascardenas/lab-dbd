@@ -15,9 +15,9 @@ class CreateReservaHabitacionesTable extends Migration
     {
         Schema::create('reserva_habitaciones', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps('fecha_inicio');
-            $table->timestamps('fecha_termino');
-            $table->timestamps('fecha_reserva');
+            $table->datetime('fecha_inicio');
+            $table->datetime('fecha_termino');
+            $table->datetime('fecha_reserva');
             $table->integer('costo');
             $table->float('descuento');
             $table->integer('habitacion_id');

@@ -16,7 +16,7 @@ class CreateReservaBoletosTable extends Migration
         Schema::create('reserva_boletos', function (Blueprint $table) {
             $table->increments('id');
             $table->datetime('fecha_reserva');
-            $talbe->float('descuento');
+            $table->float('descuento');
             $table->integer('costo');
             $table->integer('avion_asiento_id');
             $table->foreign('avion_asiento_id')
@@ -25,11 +25,11 @@ class CreateReservaBoletosTable extends Migration
             $table->integer('tramo_id');
             $table->foreign('tramo_id')
                       ->references('id')
-                      ->on('tramo');
+                      ->on('tramos');
             $table->integer('orden_compra_id');
-            $table->foreign('orden_compra_id')
-                      ->references('id')
-                      ->on('orden_compra');
+            // $table->foreign('orden_compra_id')
+            //           ->references('id')
+            //           ->on('orden_compra');
             $table->timestamps();
         });
     }

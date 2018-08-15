@@ -1,9 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\ReservaHotel;
+use App\ReservaHabitacion;
 
-$factory->define(ReservaHotel::class, function (Faker $faker) {
+$factory->define(ReservaHabitacion::class, function (Faker $faker) {
     return [
         'fecha_inicio'=> $faker->date($format= 'd-m-Y'),
         'fecha_termino'=> $faker->date($format= 'd-m-Y'),
