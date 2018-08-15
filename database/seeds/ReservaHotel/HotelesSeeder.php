@@ -2,7 +2,7 @@
 
 
 use Illuminate\Database\Seeder;
-use App\Hotel;
+use App\Modulos\ReservaHotel\Hotel;
 
 class HotelesSeeder extends Seeder
 {
