@@ -13,22 +13,32 @@ class DatabaseSeeder extends Seeder
   {
     $this->call([
         /* General */
-        LocalizacionesSeeder::class,
+        UsersSeeder::class,
+        PermisosSeeder::class,
+        RolesSeeder::class,
+        RolPermisoSeeder::class,
+        UserRolSeeder::class,
+        PaisesSeeder::class,
+        CiudadesSeeder::class,
+
         /* Actividades */
-        ActividadesSeeder::class,
+        // ActividadesSeeder::class,
 
         /* Autos */
+        CompaniasSeeder::class,
+        SucursalesSeeder::class,
+        AutosSeeder::class,
 
         /* Hoteles */
         // CompaniasSeeder::class,
 
-        /* Vuelo */
-        AeropuertosSeeder::class,
-        AerolineasSeeder::class,
-        AsientosSeeder::class, 
-        AvionesSeeder::class,
-        TipoAsientosSeeder::class,
-        TramosSeeder::class
+        /* Vuelos */
+        // AeropuertosSeeder::class,
+        // AerolineasSeeder::class,
+        // AsientosSeeder::class, 
+        // AvionesSeeder::class,
+        // TipoAsientosSeeder::class,
+        // TramosSeeder::class
     ]);
   }
 }

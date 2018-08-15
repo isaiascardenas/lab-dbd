@@ -14,7 +14,7 @@ $factory->define(Asiento::class, function (Faker $faker) {
       $asientos[] = [
         'codigo'=> $asientoFila.$asientoCol,
         'tipo_asiento_id' => $tipoAsientos->random()->id()
-      ]);
+      ];
 
       $asientoCol++;
       if ($asientoCol == 5) {
