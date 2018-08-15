@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hotel extends Model
 {
+    protected $table = 'hoteles';
+
     protected $fillable = [
         'estrellas',
         'nombre',
@@ -13,7 +15,6 @@ class Hotel extends Model
         'ciudad_id',
     ];
 
-    protected $table = 'hoteles';
 
     public function habitaciones(){
     	return $this->hasMany(Habitacion::class);

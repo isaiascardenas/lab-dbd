@@ -8,7 +8,7 @@ $factory->define(Hotel::class, function (Faker $faker) {
         'nombre' =>$faker->name,
         'estrellas' =>rand(1,5),
         'descripcion' =>$faker->realText(),
-        'localizacion_id' =>rand(1,150)
+        'ciudad_id' =>rand(1,150)
     ];
 });
 
