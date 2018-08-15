@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Tramo extends Model
 {
     
-    public function horarioPartida()
+  public function horarioPartida()
 	{
 		return Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_partida)->format('d-m-Y H:i');
 	}
@@ -30,93 +30,125 @@ class Tramo extends Model
 	}
 
 	public function duracion()
-    {
-    	$fechaPartida = Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_partida);
-    	$fechaLlegada = Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_llegada);
+  {
+  	$fechaPartida = Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_partida);
+  	$fechaLlegada = Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_llegada);
 
-    	$diff = '';
+  	$diff = '';
 
-    	$diff .= $fechaLlegada->diffInHours($fechaPartida);
-    	$diff .= 'h';
-    	$diff .= ' ';
-    	$diff .= $fechaLlegada->diffInMinutes($fechaPartida);
-    	$diff .= 'm';
+  	$diff .= $fechaLlegada->diffInHours($fechaPartida);
+  	$diff .= 'h';
+  	$diff .= ' ';
+  	$diff .= $fechaLlegada->diffInMinutes($fechaPartida);
+  	$diff .= 'm';
 
-    	return $diff;
-    }
+  	return $diff;
+  }
 
-    public function origen()
-    {
-    	return $this->belongsTo(Aeropuerto::class);
-    }
+  public function tiempoEscala(Tramo $tramo)
+  {
+    $fechaLlegada = Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_llegada);
+    $fechaPartida = Carbon::createFromFormat('Y-m-d H:i:s', $tramo->fecha_partida);
 
-    public function destino()
-    {
-    	return $this->belongsTo(Aeropuerto::class);
-    }
+    $diff = '';
 
-    public function avion()
-    {
-    	return $this->belongsTo(Avion::class);
-    }
+    $diff .= $fechaPartida->diffInHours($fechaLlegada);
+    $diff .= 'h';
+    $diff .= ' ';
+    $diff .= $fechaPartida->diffInMinutes($fechaLlegada);
+    $diff .= 'm';
 
-    public function asientos()
-    {
-    	return $this->avion->asientos();
-    }
+    echo $diff;
+    return $diff;
 
-    public function printPlane()
-    {
-    	$plane = '';
+  }
 
-    	$plane .= '<table class="table table-bordered">';
-    	$plane .= '	<tbody>';
-    	
-    	$asientos = $this->asientos;
-    	$a = 0;
-    	for ($i=0; $i < 5; $i++) {
-    		$plane .= '<tr>';
-    		for ($j=0; $j < 4; $j++) { 
-    			$asiento = $asientos[$a++];
-    		
-	    		$bg = $asiento->disponible($this->id) ? '' : 'bg-info';
+  /* Relaciones */
 
-	    		$plane .= '<td class="'.$bg.'">'.$asiento->codigo_asiento.'</td>';
-	    	}
-	    	$plane .= '</tr>';
+  public function origen()
+  {
+  	return $this->belongsTo(Aeropuerto::class);
+  }
+
+  public function destino()
+  {
+  	return $this->belongsTo(Aeropuerto::class);
+  }
+
+  public function avion()
+  {
+  	return $this->belongsTo(Avion::class);
+  }
+
+  public function asientos()
+  {
+  	return $this->avion->asientos();
+  }
+
+  public function printPlane()
+  {
+  	$plane = '';
+
+  	$plane .= '<table class="table table-bordered">';
+  	$plane .= '	<tbody>';
+  	
+  	$asientos = $this->asientos;
+  	$a = 0;
+  	for ($i=0; $i < 5; $i++) {
+  		$plane .= '<tr>';
+  		for ($j=0; $j < 4; $j++) { 
+  			$asiento = $asientos[$a++];
+  		
+    		$bg = $asiento->disponible($this->id) ? '' : 'bg-info';
+
+    		$plane .= '<td class="'.$bg.'">'.$asiento->codigo_asiento.'</td>';
     	}
-    	
-    	$plane .= '	</tbody>';
-    	$plane .= '</table>';
+    	$plane .= '</tr>';
+  	}
+  	
+  	$plane .= '	</tbody>';
+  	$plane .= '</table>';
 
-    	return $plane;
-    }
+  	return $plane;
+  }
 
-    // Temporal
-    // Retorna array de instancias de clase \App\Modulos\ReservaVuelo\Vuelo
-    public static function buscarVuelos($params)
-    {
+  public function escalas()
+  {
+    return random_int(0, 3);
+  }
 
-    	$fechaIda = Carbon::createFromFormat('d-m-Y', $params['fecha_ida']);
+  public function precio($formato = FALSE)
+  {
+    return $formato ? 
+              '$ '.number_format(random_int(10000, 150000), 0, ',', '.')
+              : random_int(10000, 150000);
+  }
 
-    	$query = static::where('origen_id', '=', $params['origen_id'])				// origen
-    				->where('destino_id', '=', $params['destino_id']);			// destino
-    				// ->whereDate('fecha_partida', $fechaIda->format('Y-m-d'));
+  /* Temporal -  */
+  // Retorna array de instancias de clase \App\Modulos\ReservaVuelo\Vuelo
+  public static function buscarVuelos($params)
+  {
 
-    	// if ($fechaVuelta = Carbon::createFromFormat('d-m-Y', $params['fecha_vuelta'])) {
-    	// 	$query->whereDate('fecha_llegada', $fechaVuelta->format('Y-m-d'));
-    	// }
+  	$fechaIda = Carbon::createFromFormat('d-m-Y', $params['fecha_ida']);
 
-    	// Capacidad
-    	// $query->join('reserva_asientos', 'reserva_asientos.id_tramo', '=', 'tramos.id');
-    	// $query->where();
-    	
-    	// Asiento
-    	
+  	$query = static::where('origen_id', '=', $params['origen_id'])				// origen
+  				->where('destino_id', '=', $params['destino_id']);			// destino
+  				// ->whereDate('fecha_partida', $fechaIda->format('Y-m-d'));
 
-    	// Tipo Asiento
-    	// $query->where('');
+  	// if ($fechaVuelta = Carbon::createFromFormat('d-m-Y', $params['fecha_vuelta'])) {
+  	// 	$query->whereDate('fecha_llegada', $fechaVuelta->format('Y-m-d'));
+  	// }
 
-    	return $query->get();
-    }
+  	// Capacidad
+  	// $query->join('reserva_asientos', 'reserva_asientos.id_tramo', '=', 'tramos.id');
+  	// $query->where();
+  	
+  	// Asiento
+  	
+
+  	// Tipo Asiento
+  	// $query->where('');
+
+  	return $query->get();
+  }
 }

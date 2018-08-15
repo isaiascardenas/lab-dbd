@@ -9,7 +9,7 @@
 	
 	@include('layouts.messages')
 
-	<form method="post" action="{{ action('ReservaVuelo\AeropuertosController@store') }}" method="post">
+	<form method="post" action="{{ action('ReservaVuelo\AvionesController@store') }}" method="post">
 		{{ csrf_field() }}
 		
 		<div class="form-group row">
@@ -45,7 +45,7 @@
 		</div>
 
 		<div class="text-right">
-			<a href="/aeropuertos/" class="btn btn-info">
+			<a href="/aviones/" class="btn btn-info">
         <i class="fas fa-ban"></i> Cancelar
       </a>
 			<button type="submit" class="btn btn-primary">

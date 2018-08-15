@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Actividad::class, function (Faker $faker) {
     return [
-        'descripcion' =>  $faker->realText($faker->numberBetween(50,150)),
+        'descripcion' => $faker->realText($faker->numberBetween(50,150)),
         'fecha_inicio' => $faker->dateTimeBetween( 'now', '+1 weeks'),
         'fecha_termino' => $faker->dateTimeBetween( '+1 weeks', '+2 weeks'),
         'id_localizacion' => rand(1,150),
