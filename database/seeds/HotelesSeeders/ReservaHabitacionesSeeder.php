@@ -4,7 +4,7 @@ use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use App\ReservaHotel;
 
-class ReservaHotelesSeeder extends Seeder
+class ReservaHabitacionesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class ReservaHotelesSeeder extends Seeder
      */
     public function run()
     {
-      factory(ReservaHotel::class, 50)->create();   
+      factory(ReservaHabitaciones::class, 50)->create();   
     }
 }
