@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Modulos\Paquetes;
 
+use App\OrdenCompra;
 use Illuminate\Database\Eloquent\Model;
 
 class PaqueteVueloAuto extends Model
@@ -10,7 +11,7 @@ class PaqueteVueloAuto extends Model
 
     protected $fillable = [
 
-    	'descipcion',
+    	'descripcion',
     	'descuento',
     	'reserva_auto_id',
     	'orden_compra_id',
@@ -18,5 +19,10 @@ class PaqueteVueloAuto extends Model
 
     public function reservaAuto(){
     	return $this->hasOne(ReservaAuto::class);
+    }
+
+    public function ordenCompra()
+    {
+        return $this->belongsTo(OrdenCompra::class);
     }
 }
