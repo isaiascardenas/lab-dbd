@@ -36,10 +36,11 @@ class SucursalesController extends Controller
      */
     public function store(Request $request)
     {
-        return Sucursal::create([$this->validate($request, [
+        $data = $this->validate($request, [
             'compania_id' => 'required',
             'ciudad_id' => 'required',
-        ])]);
+        ]);
+        return Sucursal::create($data);
     }
 
     /**
@@ -71,13 +72,15 @@ class SucursalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sucursal $sucursal)
+    public function update(Request $request, $id)
     {
-        $sucursal->fill([$this->validate($request, [
+        $sucursal = Sucursal::find($id);
+        $this->validate($request, [
             'nombre' => 'required',
-        ])])->save();
+        ]);
+        $sucursal()->save();
 
-        return $compania;
+        return $sucursal;
     }
 
     /**
@@ -88,6 +91,6 @@ class SucursalesController extends Controller
      */
     public function destroy(Sucursal $sucursal)
     {
-        //
+        $sucursal->delete();
     }
 }
