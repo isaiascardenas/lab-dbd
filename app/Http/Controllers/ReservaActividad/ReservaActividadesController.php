@@ -45,7 +45,6 @@ class ReservaActividadesController extends Controller
             'actividad_id' => 'required',
             'orden_compra_id' => 'required',
         ])]);
-        
     }
 
     /**

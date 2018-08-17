@@ -48,9 +48,9 @@ class SucursalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Sucursal $sucursal)
+    public function show($id)
     {
-        return $sucursal;
+        return Sucursal::find($id);
     }
 
     /**
@@ -71,8 +71,9 @@ class SucursalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sucursal $sucursal)
+    public function update(Request $request, $id)
     {
+        $sucursal = Sucursal::find($id);
         $sucursal->fill($this->validate($request, [
             'nombre' => 'required',
         ]))->save();
@@ -86,8 +87,9 @@ class SucursalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sucursal $sucursal)
+    public function destroy($id)
     {
+        $sucursal = Sucursal::find($id);
         $sucursal->delete();
         return Sucursal::all();
     }
