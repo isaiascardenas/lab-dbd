@@ -115,10 +115,9 @@ class HabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Habitacion $habitacion)
+    public function destroy($id)
     {
-        $habitacion->delete();
-
+        Habitacion::destroy($id);
         return Habitacion::all();
     }
 }

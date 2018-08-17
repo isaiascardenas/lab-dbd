@@ -94,6 +94,7 @@ class PaqueteVueloHotelController extends Controller
         $paqueteVueloHotel->orden_compra_id = $request->get('orden_compra_id');
 
         $paqueteVueloHotel->save();
+        
         return $paqueteVueloHotel;
     }
 
@@ -103,10 +104,9 @@ class PaqueteVueloHotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaqueteVueloHotel $paqueteVueloHotel)
+    public function destroy($id)
     {
-        $paqueteVueloHotel->delete();
-
+        PaqueteVueloHotel::destroy($id);
         return PaqueteVueloHotel::all();
     }
 }

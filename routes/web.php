@@ -35,7 +35,7 @@ Route::resources([
 Route::resources([
     'hoteles' => 'ReservaHabitacion\HotelesController',
     'habitaciones' => 'ReservaHabitacion\HabitacionesController',
-    'ReservaHabitacion' => 'ReservaHabitacion\ReservaHabitacionesController',
+    'Reserva_habitaciones' => 'ReservaHabitacion\ReservaHabitacionesController',
     
 ]);
 /*

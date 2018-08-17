@@ -47,7 +47,7 @@ class HotelesController extends Controller
 
         return Hotel::create($hotelData);
 
-        //return redirect('/hoteles/')->with('success', 'Creado con éxito');
+        
     }
 
     /**
@@ -110,9 +110,9 @@ class HotelesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Hotel $hotel)
+    public function destroy($id)
     {
-        $hotel->delete();
+        Hotel::destroy($id);
         return Hotel::all();
     }
 }

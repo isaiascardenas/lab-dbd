@@ -117,9 +117,9 @@ class ReservaHabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ReservaHabitacion $reservaHabitacion)
+    public function destroy($id)
     {
-        $reservaHabitacion->delete();
+        ReservaHabitacion::destroy($id);
         return ReservaHabitacion::all();
     }
 }
