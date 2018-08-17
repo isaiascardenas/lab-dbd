@@ -36,23 +36,16 @@ class PaqueteVueloAutoController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $paqueteVueloAutoData = $this->validate($request, [
         'descripcion' => 'requiered',
         'descuento' => 'requiered',
         'reserva_auto_id' => 'requiered',
         'orden_compra_id' => 'requiered',
         ]);
 
-        PaqueteVueloAuto::create(request([
+        return PaqueteVueloAuto::create($paqueteVueloAutoData);
 
-            'descripcion',
-            'descuento',
-            'reserva_auto_id',
-            'orden_compra_id',
-
-        ]));
-
-        return redirect('/paqueteVueloAutos/')->with('success', 'Creado con éxito');
+        
     }
 
     /**
@@ -61,9 +54,9 @@ class PaqueteVueloAutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PaqueteVueloAuto $paqueteVueloAutos)
+    public function show($id)
     {
-        return $paqueteVueloAutos;
+        return PaqueteVueloAuto::find($id);
     }
 
     /**
@@ -84,9 +77,11 @@ class PaqueteVueloAutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,PaqueteVueloAuto $paqueteVueloAutos)
+    public function update(Request $request,$id)
     {
      
+        $paqueteVueloAutos = PaqueteVueloAuto::find($id);
+
         $this->validate($request, [
         'descripcion' => 'requiered',
         'descuento' => 'requiered',
@@ -100,6 +95,8 @@ class PaqueteVueloAutoController extends Controller
         $paqueteVueloAutos->orden_compra_id = $request->get('orden_compra_id');
 
         $paqueteVueloAutos->save();
+
+        return $paqueteVueloAutos;
     }
 
     /**
@@ -112,6 +109,6 @@ class PaqueteVueloAutoController extends Controller
     {
         $paqueteVueloAutos->delete();
 
-        return redirect('/paqueteVueloAutos/')->with('success', 'Removido con éxito');
+        return PaqueteVueloAuto::all();
     }
 }
