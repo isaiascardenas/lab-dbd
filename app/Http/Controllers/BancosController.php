@@ -35,9 +35,9 @@ class BancosController extends Controller
      */
     public function store(Request $request)
     {
-        return Banco::create([$this->validate($request, [
+        return Banco::create($this->validate($request, [
             'nombre' => 'required',
-        ])]);
+        ]));
     }
 
     /**
@@ -46,9 +46,9 @@ class BancosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Banco $banco)
     {
-        return Banco::find($id);
+        return $banco;
     }
 
     /**
@@ -69,11 +69,12 @@ class BancosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Banco $id)
     {
-        $banco = Banco::find($id);
-        $banco->nombre = $request->nombre;
-        $banco->save();
+        $banco->fill($this->validate($request, [
+            'nombre',
+        ]))->save();
+
         return $banco;
     }
 
@@ -83,9 +84,8 @@ class BancosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Banco $banco)
     {
-        $banco = Banco::find($id);
         $banco->delete();
         return Banco::all();
     }

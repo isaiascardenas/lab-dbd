@@ -38,22 +38,13 @@ class TrasladosController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
+      Traslado::create($this->validate($request, [
         'tipo' => 'required',
         'fecha_inicio' => 'required',
         'fecha_termino' => 'required',
         'capacidad' => 'required',
         'aeropuerto_id' => 'required',
         'hotel_id' => 'required'
-      ]);
-
-      Traslado::create(request([
-        'tipo',
-        'fecha_inicio',
-        'fecha_termino',
-        'capacidad',
-        'aeropuerto_id',
-        'hotel_id'
       ]));
     }
 
@@ -88,23 +79,16 @@ class TrasladosController extends Controller
      */
     public function update(Request $request, Traslado $traslado)
     {
-      $this->validate($request, [
-        'tipo' => 'required',
-        'fecha_inicio' => 'required',
-        'fecha_termino' => 'required',
-        'capacidad' => 'required',
-        'aeropuerto_id' => 'required',
-        'hotel_id' => 'required'
-      ]);
+        $traslado->fill($this->validate($request, [
+            'tipo' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_termino' => 'required',
+            'capacidad' => 'required',
+            'aeropuerto_id' => 'required',
+            'hotel_id' => 'required'
+        ]))->save();
 
-      $traslado->tipo = $request->get('tipo');
-      $traslado->fecha_inicio = $request->get('fecha_inicio');
-      $traslado->fecha_termino = $request->get('fecha_termino');
-      $traslado->capacidad = $request->get('capacidad');
-      $traslado->aeropuerto_id = $request->get('aeropuerto_id');
-      $traslado->hotel_id = $request->get('hotel_id');
-
-      $traslado->save();
+        return $traslado;
     }
 
     /**
@@ -115,6 +99,7 @@ class TrasladosController extends Controller
      */
     public function destroy(Traslado $traslado)
     {
-      $traslado->delete();
+        $traslado->delete();
+        Traslado::all();
     }
 }

@@ -36,14 +36,13 @@ class AutosController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
+        return Auto::create($this->validate($request, [
             'patente' => 'required',
             'descripcion' => 'required',
             'precio_hora' => 'required',
             'capacidad' => 'required',
             'sucursal_id' => 'required',
-        ]);
-        return Auto::create($data);
+        ]));
     }
 
     /**
@@ -75,23 +74,15 @@ class AutosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Auto $auto)
     {
-        $auto = Auto::find($id);
-        $this->validate($request, [
+        $auto->fill($this->validate($request, [
             'patente' => 'required',
             'descripcion' => 'required',
             'precio_hora' => 'required',
             'capacidad' => 'required',
             'sucursal_id' => 'required',
-        ]);
-        $auto->patente = request('patente');
-        $auto->descripcion = request('descripcion');
-        $auto->precio_hora = request('precio_hora');
-        $auto->capacidad = request('capacidad');
-        $auto->sucursal_id = request('sucursal_id ');
-        $auto->save();
-
+        ]))->save();
         return $auto;
     }
 
@@ -103,6 +94,7 @@ class AutosController extends Controller
      */
     public function destroy(Auto $auto)
     {
-        return $auto->delete();
+        $auto->delete();
+        return Auto::all();
     }
 }

@@ -36,10 +36,9 @@ class CompaniasController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
+        return Compania::create($this->validate($request, [
             'nombre' => 'required',
-        ]);
-        return Compania::create($data);
+        ]));
     }
 
     /**
@@ -71,14 +70,11 @@ class CompaniasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Compania $compania)
     {
-        $data = [$this->validate($request, [
+        $compania->fill($this->validate($request, [
             'nombre' => 'required',
-        ])];
-        $compania = Compania::find($id);
-        $compania->nombre = request('nombre');
-        $compania->save();
+        ]))->save();
 
         return $compania;
     }
@@ -92,5 +88,6 @@ class CompaniasController extends Controller
     public function destroy(Compania $compania)
     {
         $compania->delete();
+        return Compania::all();
     }
 }

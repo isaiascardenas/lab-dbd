@@ -36,7 +36,7 @@ class ReservaAutosController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
+        return ReservaAuto::create($this->validate($request, [
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
             'fecha_reserva' => 'required',
@@ -44,8 +44,7 @@ class ReservaAutosController extends Controller
             'costo' => 'required',
             'auto_id' => 'required',
             'orden_compra_id' => 'required',
-        ]);
-        return ReservaAuto::create($data);
+        ]));
     }
 
     /**
@@ -77,9 +76,9 @@ class ReservaAutosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ReservaAuto $reserva)
     {
-        $this->validate($request, [
+        $reserva->fill($this->validate($request, [
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
             'fecha_reserva' => 'required',
@@ -87,16 +86,7 @@ class ReservaAutosController extends Controller
             'costo' => 'required',
             'auto_id' => 'required',
             'orden_compra_id' => 'required',
-        ]);
-        $reserva = ReservaAuto::find($id);
-        $reserva->fecha_inicio = request('fecha_inicio');
-        $reserva->fecha_termino = request('fecha_termino');
-        $reserva->fecha_reserva = request('fecha_reserva');
-        $reserva->descuento = request('descuento');
-        $reserva->costo = request('costo');
-        $reserva->auto_id = request('auto_id');
-        $reserva->orden_compra_id = request('orden_compra_id');
-        $reserva->save();
+        ]))->save();
 
         return $reserva;
     }
@@ -109,6 +99,7 @@ class ReservaAutosController extends Controller
      */
     public function destroy(ReservaAuto $reserva)
     {
-        return $reserva->delete();
+        $reserva->delete();
+        ReservaAuto::all();
     }
 }

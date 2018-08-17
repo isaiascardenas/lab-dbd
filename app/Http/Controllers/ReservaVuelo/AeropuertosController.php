@@ -102,7 +102,7 @@ class AeropuertosController extends Controller
       'direccion' => 'required',
       'ciudad_id' => 'required|integer'
     ]);
-    
+
     $aeropuerto->codigo = $request->get('codigo');
     $aeropuerto->nombre = $request->get('nombre');
     $aeropuerto->direccion = $request->get('direccion');

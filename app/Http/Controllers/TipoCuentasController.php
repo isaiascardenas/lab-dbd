@@ -35,8 +35,9 @@ class TipoCuentasController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, ['descripcion' => 'required',]);
-        return TipoCuenta::create($data);
+        return TipoCuenta::create($this->validate($request, [
+            'descripcion' => 'required'
+        ]));
     }
 
     /**
@@ -45,9 +46,9 @@ class TipoCuentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(TipoCuenta $tipo)
     {
-        return TipoCuenta::find($id);
+        return $tipo;
     }
 
     /**
@@ -68,11 +69,12 @@ class TipoCuentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, TipoCuenta $tipo)
     {
-        $tipocuenta = TipoCuenta::find($id);
-        $tipocuenta->descripcion = $request->descripcion;
-        $tipocuenta->save();
+        $tipocuenta->fill($this->validate($request, [
+            'descripcion',
+        ]))->save();
+
         return $tipocuenta;
     }
 
@@ -82,9 +84,8 @@ class TipoCuentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TipoCuenta $tipo)
     {
-        $tipocuenta = TipoCuenta::find($id);
         $tipocuenta->delete();
         return TipoCuenta::all();
     }

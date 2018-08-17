@@ -14,7 +14,7 @@ class CuentasController extends Controller
      */
     public function index()
     {
-        return Cuenta::all(); 
+        return Cuenta::all();
     }
 
     /**
@@ -35,13 +35,13 @@ class CuentasController extends Controller
      */
     public function store(Request $request)
     {
-        return Cuenta::create([$this->validate($request, [
+        return Cuenta::create($this->validate($request, [
             'numero_cuenta' => 'required',
             'saldo' => 'required',
             'tipo_cuenta_id' => 'required',
             'banco_id' => 'required',
             'user_id' => 'required',
-        ])]);
+        ]));
     }
 
     /**
@@ -50,9 +50,9 @@ class CuentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cuenta $cuenta)
     {
-        return Cuenta::find($id);
+        return $cuenta;
     }
 
     /**
@@ -73,15 +73,16 @@ class CuentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Cuenta $cuenta)
     {
-        $cuenta = Cuenta::find($id);
-        $cuenta->numero_cuenta = $request->numero_cuenta;
-        $cuenta->saldo = $request->saldo;
-        $cuenta->tipo_cuenta_id = $request->tipo_cuenta_id;
-        $cuenta->banco_id = $request->banco_id;
-        $cuenta->user_id = $request->user_id;
-        $cuenta->save();
+        $cuenta->fill($this->validate($request, [
+            'numero_cuenta',
+            'saldo',
+            'tipo_cuenta_id',
+            'banco_id',
+            'user_id',
+        ]))->save();
+
         return $cuenta;
     }
 
@@ -91,9 +92,8 @@ class CuentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Cuenta $cuenta)
     {
-        $cuenta = Cuenta::find($id);
         $cuenta->delete();
         return Cuenta::all();
     }
