@@ -31,8 +31,16 @@ Route::resources([
 /* CRUD Reservas Hoteles */
 Route::resources([
     'hoteles' => 'ReservaHabitacion\HotelesController',
-    //'habitaciones' => 'ReservaHabitacion\ReservaHabitacionesController',
-    //'ReservaHabitacion' => 'ReservaHabitacion\ReservaHabitacionesController',
+    'habitaciones' => 'ReservaHabitacion\HabitacionesController',
+    'Reserva_habitaciones' => 'ReservaHabitacion\ReservaHabitacionesController',
+]);
+
+/**
+ * Paquetes
+ */
+Route::resources([
+    'PaqueteVueloAuto' => 'Paquetes\PaqueteVueloAutoController',
+    'PaqueteVueloHotel' => 'Paquetes\PaqueteVueloHotelController'
 ]);
 
 /* CRUD Reservas Autos */
@@ -61,7 +69,6 @@ Route::resources([
   'tipo_asientos'   => 'ReservaVuelo\TipoAsientosController',
   'tramos'          => 'ReservaVuelo\TramosController',
 ]);
-
 
 /* CRUD Cuentas de usuario*/
 Route::resources([

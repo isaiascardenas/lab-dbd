@@ -5,8 +5,6 @@
 
 -- CREATE DATABASE lab_dbd;
 
-
-
 DROP TABLE IF EXISTS actividades CASCADE;
 DROP TABLE IF EXISTS aerolineas CASCADE;
 DROP TABLE IF EXISTS aeropuertos CASCADE;
@@ -50,7 +48,7 @@ DROP TABLE IF EXISTS users CASCADE;
 --
 
 CREATE TABLE IF NOT EXISTS actividades (
-    id integer NOT NULL,
+    id serial NOT NULL,
     fecha_inicio timestamp NOT NULL,
     fecha_termino timestamp NOT NULL,
     descripcion character varying(255) NOT NULL,
@@ -58,165 +56,165 @@ CREATE TABLE IF NOT EXISTS actividades (
     max_adultos integer NOT NULL,
     costo_nino integer NOT NULL,
     costo_adulto integer NOT NULL,
-    ciudad_id integer NOT NULL,
+    ciudad_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS aerolineas (
-    id integer NOT NULL,
+    id serial NOT NULL,
     nombre character varying(255) NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS aeropuertos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     codigo character varying(255) NOT NULL,
     nombre character varying(255) NOT NULL,
     direccion character varying(255) NOT NULL,
-    ciudad_id integer NOT NULL,
+    ciudad_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS asiento_avion (
-    id integer NOT NULL,
-    asiento_id integer NOT NULL,
-    avion_id integer NOT NULL,
+    id serial NOT NULL,
+    asiento_id serial NOT NULL,
+    avion_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS asientos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     codigo character varying(255) NOT NULL,
-    tipo_asiento_id integer NOT NULL,
+    tipo_asiento_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS autos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     patente character varying(255) NOT NULL,
     descripcion character varying(255) NOT NULL,
     precio_hora integer NOT NULL,
     capacidad integer NOT NULL,
-    sucursal_id integer NOT NULL,
+    sucursal_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS aviones (
-    id integer NOT NULL,
+    id serial NOT NULL,
     descripcion character varying(255) NOT NULL,
-    aerolinea_id integer NOT NULL,
+    aerolinea_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS bancos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     nombre character varying(255) NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS ciudades (
-    id integer NOT NULL,
+    id serial NOT NULL,
     nombre character varying(255) NOT NULL,
-    pais_id integer NOT NULL,
+    pais_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS companias (
-    id integer NOT NULL,
+    id serial NOT NULL,
     nombre character varying(255) NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS cuentas (
-    id integer NOT NULL,
+    id serial NOT NULL,
     numero_cuenta character varying(255) NOT NULL,
     saldo integer NOT NULL,
-    tipo_cuenta_id integer NOT NULL,
-    banco_id integer NOT NULL,
-    user_id integer NOT NULL,
+    tipo_cuenta_id serial NOT NULL,
+    banco_id serial NOT NULL,
+    user_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS habitaciones (
-    id integer NOT NULL,
+    id serial NOT NULL,
     capacidad_nino integer NOT NULL,
     capacidad_adulto integer NOT NULL,
     precio_por_noche integer NOT NULL,
     descripcion character varying(255) NOT NULL,
-    hotel_id integer NOT NULL,
+    hotel_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS hoteles (
-    id integer NOT NULL,
+    id serial NOT NULL,
     estrellas integer NOT NULL,
     nombre character varying(255) NOT NULL,
     descripcion character varying(255) NOT NULL,
-    ciudad_id integer NOT NULL,
+    ciudad_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS migrations (
-    id integer NOT NULL,
+    id serial NOT NULL,
     migration character varying(255) NOT NULL,
     batch integer NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS orden_compras (
-    id integer NOT NULL,
+    id serial NOT NULL,
     costo_total integer NOT NULL,
     fecha_generado timestamp NOT NULL,
     detalle character varying(255) NOT NULL,
-    user_id integer NOT NULL,
+    user_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS paises (
-    id integer NOT NULL,
+    id serial NOT NULL,
     nombre character varying(255) NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS paquete_vuelo_autos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     descripcion character varying(255) NOT NULL,
     descuento double precision NOT NULL,
-    reserva_auto_id integer NOT NULL,
-    orden_compra_id integer NOT NULL,
+    reserva_auto_id serial NOT NULL,
+    orden_compra_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS paquete_vuelo_hoteles (
-    id integer NOT NULL,
+    id serial NOT NULL,
     descripcion character varying(255) NOT NULL,
     descuento double precision NOT NULL,
-    reserva_habitacion_id integer NOT NULL,
-    orden_compra_id integer NOT NULL,
+    reserva_habitacion_id serial NOT NULL,
+    orden_compra_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS pasajeros (
-    id integer NOT NULL,
+    id serial NOT NULL,
     nombre character varying(255) NOT NULL,
     rut character varying(255) NOT NULL,
-    reserva_boleto_id integer NOT NULL,
+    reserva_boleto_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
@@ -228,113 +226,113 @@ CREATE TABLE IF NOT EXISTS password_resets (
 );
 
 CREATE TABLE IF NOT EXISTS permisos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     descripcion character varying(255) NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS reserva_actividades (
-    id integer NOT NULL,
+    id serial NOT NULL,
     fecha_reserva timestamp NOT NULL,
     capacidad_ninos integer NOT NULL,
     capacidad_adultos integer NOT NULL,
     descuento double precision NOT NULL,
-    actividad_id integer NOT NULL,
-    orden_compra_id integer NOT NULL,
+    actividad_id serial NOT NULL,
+    orden_compra_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS reserva_autos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     fecha_inicio timestamp NOT NULL,
     fecha_termino timestamp NOT NULL,
     fecha_reserva timestamp NOT NULL,
     costo integer NOT NULL,
     descuento double precision NOT NULL,
-    auto_id integer NOT NULL,
-    orden_compra_id integer NOT NULL,
+    auto_id serial NOT NULL,
+    orden_compra_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS reserva_boletos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     fecha_reserva timestamp NOT NULL,
     descuento double precision NOT NULL,
     costo integer NOT NULL,
-    asiento_avion_id integer NOT NULL,
-    tramo_id integer NOT NULL,
-    orden_compra_id integer NOT NULL,
+    asiento_avion_id serial NOT NULL,
+    tramo_id serial NOT NULL,
+    orden_compra_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS reserva_habitaciones (
-    id integer NOT NULL,
+    id serial NOT NULL,
     fecha_inicio timestamp NOT NULL,
     fecha_termino timestamp NOT NULL,
     fecha_reserva timestamp NOT NULL,
     costo integer NOT NULL,
     descuento double precision NOT NULL,
-    habitacion_id integer NOT NULL,
-    orden_compra_id integer NOT NULL,
+    habitacion_id serial NOT NULL,
+    orden_compra_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS reserva_paquete_vuelo_autos (
-    paquete_vuelo_auto_id integer NOT NULL,
-    reserva_boleto_id integer NOT NULL,
+    paquete_vuelo_auto_id serial NOT NULL,
+    reserva_boleto_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS reserva_paquete_vuelo_hoteles (
-    paquete_vuelo_hotel_id integer NOT NULL,
-    reserva_boleto_id integer NOT NULL,
+    paquete_vuelo_hotel_id serial NOT NULL,
+    reserva_boleto_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS reserva_traslados (
-    id integer NOT NULL,
+    id serial NOT NULL,
     cantidad_pasajeros integer NOT NULL,
     fecha_reserva timestamp NOT NULL,
     costo integer NOT NULL,
     descuento double precision NOT NULL,
-    traslado_id integer NOT NULL,
-    orden_compra_id integer NOT NULL,
+    traslado_id serial NOT NULL,
+    orden_compra_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS rol_permiso (
-    id integer NOT NULL,
-    permiso_id integer NOT NULL,
-    rol_id integer NOT NULL,
+    id serial NOT NULL,
+    permiso_id serial NOT NULL,
+    rol_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS roles (
-    id integer NOT NULL,
+    id serial NOT NULL,
     nombre character varying(255) NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS sucursales (
-    id integer NOT NULL,
-    compania_id integer NOT NULL,
-    ciudad_id integer NOT NULL,
+    id serial NOT NULL,
+    compania_id serial NOT NULL,
+    ciudad_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS tipo_asientos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     factor_costo double precision NOT NULL,
     descripcion character varying(255) NOT NULL,
     created_at timestamp,
@@ -342,45 +340,45 @@ CREATE TABLE IF NOT EXISTS tipo_asientos (
 );
 
 CREATE TABLE IF NOT EXISTS tipo_cuentas (
-    id integer NOT NULL,
+    id serial NOT NULL,
     descripcion character varying(255) NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS tramos (
-    id integer NOT NULL,
+    id serial NOT NULL,
     codigo character varying(255) NOT NULL,
     fecha_partida timestamp NOT NULL,
     fecha_llegada timestamp NOT NULL,
-    avion_id integer NOT NULL,
-    origen_id integer NOT NULL,
-    destino_id integer NOT NULL,
+    avion_id serial NOT NULL,
+    origen_id serial NOT NULL,
+    destino_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS traslados (
-    id integer NOT NULL,
+    id serial NOT NULL,
     tipo integer NOT NULL,
     fecha_inicio timestamp NOT NULL,
     fecha_termino timestamp NOT NULL,
-    aeropuerto_id integer NOT NULL,
-    hotel_id integer NOT NULL,
+    aeropuerto_id serial NOT NULL,
+    hotel_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS user_rol (
-    id integer NOT NULL,
-    user_id integer NOT NULL,
-    rol_id integer NOT NULL,
+    id serial NOT NULL,
+    user_id serial NOT NULL,
+    rol_id serial NOT NULL,
     created_at timestamp,
     updated_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS users (
-    id integer NOT NULL,
+    id serial NOT NULL,
     nombre character varying(255) NOT NULL,
     rut character varying(255) NOT NULL,
     email character varying(255) NOT NULL,

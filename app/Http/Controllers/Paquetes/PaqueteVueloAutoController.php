@@ -1,4 +1,4 @@
-<?php
+z<?php
 
 namespace App\Http\Controllers\Paquetes;
 
@@ -105,10 +105,9 @@ class PaqueteVueloAutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaqueteVueloAuto $paqueteVueloAutos)
+    public function destroy($id)
     {
-        $paqueteVueloAutos->delete();
-
+        PaqueteVueloAuto::destroy($id);
         return PaqueteVueloAuto::all();
     }
 }
