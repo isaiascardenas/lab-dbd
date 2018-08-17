@@ -36,6 +36,7 @@ class ReservaTrasladosController extends Controller
      */
     public function store(Request $request)
     {
+
       return ReservaTraslado::create($this->validate($request, [
         'fecha_reserva' => 'required',
         'descuento' => 'required',
@@ -54,7 +55,7 @@ class ReservaTrasladosController extends Controller
      */
     public function show(ReservaTraslado $reservaTraslado)
     {
-      return $reservaTraslado;
+        return $reservaTraslado;
     }
 
     /**
@@ -77,6 +78,7 @@ class ReservaTrasladosController extends Controller
      */
     public function update(Request $request, ReservaTraslado $reservaTraslado)
     {
+
       $reservaTraslado->fill($this->validate($request, [
        'fecha_reserva' => 'required',
        'descuento' => 'required',

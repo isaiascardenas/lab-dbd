@@ -46,6 +46,7 @@ class TrasladosController extends Controller
     ]));
   }
 
+
   /**
    * Display the specified resource.
    *
@@ -67,6 +68,7 @@ class TrasladosController extends Controller
   {
     //
   }
+
 
   /**
    * Update the specified resource in storage.

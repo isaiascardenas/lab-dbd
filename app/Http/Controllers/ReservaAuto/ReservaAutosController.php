@@ -36,7 +36,7 @@ class ReservaAutosController extends Controller
      */
     public function store(Request $request)
     {
-        return ReservaAuto::create([$this->validate($request, [
+        return ReservaAuto::create($this->validate($request, [
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
             'fecha_reserva' => 'required',
@@ -44,7 +44,7 @@ class ReservaAutosController extends Controller
             'costo' => 'required',
             'auto_id' => 'required',
             'orden_compra_id' => 'required',
-        ])]);
+        ]));
     }
 
     /**
@@ -78,7 +78,7 @@ class ReservaAutosController extends Controller
      */
     public function update(Request $request, ReservaAuto $reserva)
     {
-        $reserva->fill([$this->validate($request, [
+        $reserva->fill($this->validate($request, [
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
             'fecha_reserva' => 'required',
@@ -86,7 +86,7 @@ class ReservaAutosController extends Controller
             'costo' => 'required',
             'auto_id' => 'required',
             'orden_compra_id' => 'required',
-        ])])->save();
+        ]))->save();
 
         return $reserva;
     }
@@ -99,6 +99,7 @@ class ReservaAutosController extends Controller
      */
     public function destroy(ReservaAuto $reserva)
     {
-        return $reserva->destroy();
+        $reserva->delete();
+        ReservaAuto::all();
     }
 }

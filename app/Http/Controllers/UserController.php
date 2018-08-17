@@ -73,16 +73,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    // public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        $user = $user->fill([$this->validate($request, [
+        $this->validate($request, [
             'rut' => 'required',
             'nombre' => 'required',
             'email' => 'required',
             'password' => 'required',
-        ])])->save();
+        ]);
 
-        return User::find($user->id);
+        $user = User::find($id);
+        $user->nombre = request('nombre');
+        $user->save();
+
+        return $user;
     }
 
     /**

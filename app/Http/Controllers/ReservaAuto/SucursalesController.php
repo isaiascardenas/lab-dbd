@@ -36,10 +36,10 @@ class SucursalesController extends Controller
      */
     public function store(Request $request)
     {
-        return Sucursal::create([$this->validate($request, [
+        return Sucursal::create($this->validate($request, [
             'compania_id' => 'required',
             'ciudad_id' => 'required',
-        ])]);
+        ]));
     }
 
     /**
@@ -73,11 +73,11 @@ class SucursalesController extends Controller
      */
     public function update(Request $request, Sucursal $sucursal)
     {
-        $sucursal->fill([$this->validate($request, [
+        $sucursal->fill($this->validate($request, [
             'nombre' => 'required',
-        ])])->save();
+        ]))->save();
 
-        return $compania;
+        return $sucursal;
     }
 
     /**
@@ -88,6 +88,7 @@ class SucursalesController extends Controller
      */
     public function destroy(Sucursal $sucursal)
     {
-        //
+        $sucursal->delete();
+        return Sucursal::all();
     }
 }
