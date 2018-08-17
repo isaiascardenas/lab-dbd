@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\ReservaVuelo;
 
-use App\TipoAsiento;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modulos\ReservaVuelo\TipoAsiento;
 
 class TipoAsientosController extends Controller
 {
@@ -15,11 +15,7 @@ class TipoAsientosController extends Controller
      */
     public function index()
     {
-      $tipoAsientos = TipoAsiento::all();
-
-      return $tipoAsientos;
-
-      // return view('modulos.ReservaVuelo.tipo_asientos.index', compact('tipoAsientos'));
+      return TipoAsiento::all();
     }
 
     /**
@@ -29,7 +25,7 @@ class TipoAsientosController extends Controller
      */
     public function create()
     {
-      // return view('modulos.ReservaVuelo.tipo_asientos.create');
+      // 
     }
 
     /**
@@ -40,17 +36,10 @@ class TipoAsientosController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
+      return Aeropuerto::create($this->validate($request, [
         'factor_costo' => 'required',
         'descripcion' => 'required'
-      ]);
-
-      Aeropuerto::create(request([
-        'factor_costo',
-        'descripcion'
       ]));
-
-      // return redirect('/tipo_asientos/')->with('success', 'Creado con éxito');
     }
 
     /**
@@ -62,7 +51,6 @@ class TipoAsientosController extends Controller
     public function show(TipoAsiento $tipoAsiento)
     {
       return $tipoAsiento;
-      // return view('modulos.ReservaVuelo.tipo_asientos.show', compact('tipoAsiento'));
     }
 
     /**
@@ -73,7 +61,7 @@ class TipoAsientosController extends Controller
      */
     public function edit(TipoAsiento $tipoAsiento)
     {
-      // return view('modulos.ReservaVuelo.tipo_asientos.show', compact('tipoAsiento'));
+      // 
     }
 
     /**
@@ -85,15 +73,12 @@ class TipoAsientosController extends Controller
      */
     public function update(Request $request, TipoAsiento $tipoAsiento)
     {
-      $this->validate($request, [
+      $tipoAsiento->fill($this->validate($request, [
         'factor_costo' => 'required',
         'descripcion' => 'required'
-      ]);
+      ]))->save();
 
-      $tipoAsiento->factor_costo = $request->get('factor_costo');
-      $tipoAsiento->descripcion = $request->get('descripcion');
-
-      // return redirect('/tipo_asientos/')->with('success', 'Creado con éxito');
+      return $tipoAsiento;
     }
 
     /**
@@ -106,6 +91,6 @@ class TipoAsientosController extends Controller
     {
       $tipoAsiento->delete();
 
-      # return redirect('/tipo_asientos/')->with('success', 'Removido con éxito');
+      return TipoAsiento::all();
     }
 }

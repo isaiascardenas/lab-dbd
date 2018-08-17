@@ -17,12 +17,7 @@ class AsientosController extends Controller
      */
     public function index()
     {
-      $asientos = Asiento::all();
-
-      return $asientos;
-      // $asientos = Asiento::paginate(20);
-
-      // return view('modulos.ReservaVuelo.asientos.index', compact('asientos'));
+      return Asiento::all();
     }
 
     /**
@@ -32,9 +27,7 @@ class AsientosController extends Controller
      */
     public function create()
     {
-      // $tipoAsiento = TipoAsiento::all();
-
-      // return view('modulos.ReservaVuelo.asientos.create', compact('tipoAsiento'));
+      // 
     }
 
     /**
@@ -45,17 +38,10 @@ class AsientosController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
+      return Aeropuerto::create($this->validate($request, [
         'codigo' => 'required',
         'tipo_asiento_id' => 'required|integer'
-      ]);
-
-      Aeropuerto::create(request([
-        'codigo',
-        'tipo_asiento_id'
       ]));
-
-      // return redirect('/asientos/')->with('success', 'Creado con éxito');
     }
 
     /**
@@ -67,7 +53,6 @@ class AsientosController extends Controller
     public function show(Asiento $asiento)
     {
       return $asiento;
-      // return view('modulos.ReservaVuelo.asientos.show', compact('asiento'));
     }
 
     /**
@@ -78,9 +63,7 @@ class AsientosController extends Controller
      */
     public function edit(Asiento $asiento)
     {
-      // $ciudades = Ciudad::all();
-
-      // return view('modulos.ReservaVuelo.asientos.edit', compact('aeropuerto', 'ciudades'));
+      // 
     }
 
     /**
@@ -92,17 +75,12 @@ class AsientosController extends Controller
      */
     public function update(Request $request, Asiento $asiento)
     {
-      $this->validate($request, [
+      $asiento->fill($this->validate($request, [
         'codigo' => 'required',
         'tipo_asiento_id' => 'required|integer'
-      ]);
+      ]))->save();
       
-      $asiento->codigo = $request->get('codigo');
-      $asiento->tipo_asiento_id = $request->get('tipo_asiento_id');
-
-      $asiento->save();
-
-      // return redirect('/asientos/')->with('success', 'Actualizado con éxito');
+      return $asiento;
     }
 
     /**
@@ -115,6 +93,6 @@ class AsientosController extends Controller
     {
       $asiento->delete();
 
-      // return redirect('/asientos/')->with('success', 'Removido con éxito');
+      return Asiento::all();
     }
 }

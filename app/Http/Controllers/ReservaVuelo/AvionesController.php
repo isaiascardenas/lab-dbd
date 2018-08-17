@@ -16,12 +16,7 @@ class AvionesController extends Controller
    */
   public function index()
   {
-    $aviones = Avion::all();
-
-    return $aviones;
-    // $aviones = Avion::paginate(20);
-
-    // return view('modulos.ReservaVuelo.aviones.index', compact('aviones'));
+    return Avion::all();
   }
 
   /**
@@ -31,7 +26,7 @@ class AvionesController extends Controller
    */
   public function create()
   {
-    // return view('modulos.ReservaVuelo.aviones.create');
+    //
   }
 
   /**
@@ -42,17 +37,10 @@ class AvionesController extends Controller
    */
   public function store(Request $request)
   {
-    $this->validate($request, [
+    return Aerolinea::create($this->validate($request, [
       'descripcion' => 'required',
       'aerolinea_id' => 'required|integer'
-    ]);
-
-    Aerolinea::create(request([
-      'descripcion',
-      'aerolinea_id'
     ]));
-
-    // return redirect('/aviones/')->with('success', 'Creado con éxito');
   }
 
   /**
@@ -64,7 +52,6 @@ class AvionesController extends Controller
   public function show(Avion $avion)
   {
     return $avion;
-    // return view('modulos.ReservaVuelo.aviones.show', compact('avion'));
   }
 
   /**
@@ -75,9 +62,7 @@ class AvionesController extends Controller
    */
   public function edit(Avion $avion)
   {
-    // $aerolineas = Aerolinea::all();
-
-    // return view('modulos.ReservaVuelo.aviones.edit', compact('avion', 'aerolineas'));
+    //
   }
 
   /**
@@ -89,17 +74,12 @@ class AvionesController extends Controller
    */
   public function update(Request $request, Avion $avion)
   {
-    $this->validate($request, [
+    $avion->fill($this->validate($request, [
       'descripcion' => 'required',
       'aerolinea_id' => 'required|integer'
-    ]);
-    
-    $avion->descripcion = $request->get('descripcion');
-    $avion->aerolinea_id = $request->get('aerolinea_id');
-  
-    $avion->save(); 
+    ]))->save();
 
-    // return redirect('/aviones/')->with('success', 'Actualizado con éxtio');
+    return $avion;
   }
 
   /**
@@ -112,6 +92,6 @@ class AvionesController extends Controller
   {
     $avion->delete();
 
-    // return redirect('/aviones/')->with('success', 'Removido con éxito');
+    return Avion::all();
   }
 }

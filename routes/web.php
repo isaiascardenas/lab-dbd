@@ -35,7 +35,7 @@ Route::resources([
 Route::resources([
     'hoteles' => 'ReservaHabitacion\HotelesController',
     'habitaciones' => 'ReservaHabitacion\HabitacionesController',
-    'Reserva_habitaciones' => 'ReservaHabitacion\ReservaHabitacionesController',
+    'ReservaHabitacion' => 'ReservaHabitacion\ReservaHabitacionesController',
     
 ]);
 /*
@@ -83,7 +83,7 @@ Route::resources([
   'pasajeros'       => 'ReservaVuelo\PasajerosController',
   'reserva_boletos' => 'ReservaVuelo\ReservaBoletosController',
   'tipo_asientos'   => 'ReservaVuelo\TipoAsientosController',
-  'tramos'          => 'ReservaVuelo\TramosController',
+  'tramos'          => 'ReservaVuelo\TramosController'
 ]);
 
 

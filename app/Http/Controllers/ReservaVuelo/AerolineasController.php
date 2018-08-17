@@ -15,12 +15,7 @@ class AerolineasController extends Controller
    */
   public function index()
   {
-    $aerolineas = Aerolinea::all();
-
-    return $aerolineas;
-
-    // $aerolineas = Aerolinea::paginate(20);
-    // return view('modulos.ReservaVuelo.aerolineas.index', compact('aerolineas'));
+    return Aerolinea::all();
   }
 
   /**
@@ -30,7 +25,7 @@ class AerolineasController extends Controller
    */
   public function create()
   {
-    // return view('modulos.ReservaVuelo.aerolineas.create');
+    // 
   }
 
   /**
@@ -41,70 +36,59 @@ class AerolineasController extends Controller
    */
   public function store(Request $request)
   {
-    $this->validate($request, [
+    return Aerolinea::create($this->validate($request, [
       'nombre' => 'required'
-    ]);
-
-    Aerolinea::create(request([
-      'nombre'
     ]));
-
-    // return redirect('/aerolineas/')->with('success', 'Creado con éxito');
   }
 
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
+   * @param  Aerolinea  $aeropuerto
    * @return \Illuminate\Http\Response
    */
   public function show(Aerolinea $aerolinea)
   {
     return $aerolinea;
-    // return view('modulos.ReservaVuelo.aerolineas.show', compact('aerolinea'));
   }
 
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
+   * @param  Aerolinea  $aeropuerto
    * @return \Illuminate\Http\Response
    */
   public function edit(Aerolinea $aerolinea)
   {
-    // return view('modulos.ReservaVuelo.aerolineas.edit', compact('aerolinea'));
+    // 
   }
 
   /**
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
+   * @param  Aerolinea  $aeropuerto
    * @return \Illuminate\Http\Response
    */
   public function update(Request $request, Aerolinea $aerolinea)
   {
-    $this->validate($request, [
+    $aerolinea->fill($this->validate($request, [
       'nombre' => 'required'
-    ]);
+    ]))->save();
 
-    $aerolinea->nombre = $request->get('nombre');
-
-    $aerolinea->save();
-
-    // return redirect('/aerolineas/')->with('success', 'Actualizado con éxito');
+    return $aerolinea;
   }
 
   /**
    * Remove the specified resource from storage.
    *
-   * @param  int  $id
+   * @param  Aerolinea  $aeropuerto
    * @return \Illuminate\Http\Response
    */
   public function destroy(Aerolinea $aerolinea)
   {
     $aerolinea->delete();
 
-    // return redirect('/aerolineas/')->with('success', 'Removido con éxito');
+    return Aerolinea::all();
   }
 }

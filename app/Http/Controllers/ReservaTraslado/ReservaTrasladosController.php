@@ -15,9 +15,7 @@ class ReservaTrasladosController extends Controller
      */
     public function index()
     {
-      $reservas = ReservaTraslado::all();
-
-      return $reservas;
+      return ReservaTraslado::all();
     }
 
     /**
@@ -38,22 +36,13 @@ class ReservaTrasladosController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
+      return ReservaTraslado::create($this->validate($request, [
         'fecha_reserva' => 'required',
         'descuento' => 'required',
         'costo' => 'required',
         'asiento_avion_id' => 'required',
         'tramo_id' => 'required',
         'orden_compra_id' => 'required'
-      ]);
-
-      ReservaTraslado::create(request([
-        'fecha_reserva',
-        'descuento',
-        'costo',
-        'asiento_avion_id',
-        'tramo_id',
-        'orden_compra_id'
       ]));
     }
 
@@ -88,24 +77,16 @@ class ReservaTrasladosController extends Controller
      */
     public function update(Request $request, ReservaTraslado $reservaTraslado)
     {
-       $this->validate($request, [
-         'fecha_reserva' => 'required',
-         'descuento' => 'required',
-         'costo' => 'required',
-         'asiento_avion_id' => 'required',
-         'tramo_id' => 'required',
-         'orden_compra_id' => 'required'
-       ]);
+      $reservaTraslado->fill($this->validate($request, [
+       'fecha_reserva' => 'required',
+       'descuento' => 'required',
+       'costo' => 'required',
+       'asiento_avion_id' => 'required',
+       'tramo_id' => 'required',
+       'orden_compra_id' => 'required'
+      ]))->save();
 
-       
-      $reservaTraslado->fecha_reserva = $request->get('fecha_reserva');
-      $reservaTraslado->descuento = $request->get('descuento');
-      $reservaTraslado->costo = $request->get('costo');
-      $reservaTraslado->asiento_avion_id = $request->get('asiento_avion_id');
-      $reservaTraslado->tramo_id = $request->get('tramo_id');
-      $reservaTraslado->orden_compra_id = $request->get('orden_compra_id');
-
-      $reservaTraslado->save();  
+      return $reservaTraslado;
     }
 
     /**
@@ -117,5 +98,7 @@ class ReservaTrasladosController extends Controller
     public function destroy(ReservaTraslado $reservaTraslado)
     {
       $reservaTraslado->delete();
+
+      return ReservaTraslado::all();
     }
 }

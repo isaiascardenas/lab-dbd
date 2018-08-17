@@ -6,24 +6,13 @@
 		<form action="/vuelo/list" method="post">
 			{{ csrf_field() }}
 			
-			<div class="form-group form-row align-items-end">
+			<div class="form-group form-row align-items-end">				
 				<div class="col">
-					<label for="id_origen"> País </label>
-					<div class="form-group">
-						<select id="id_origen" name="id_origen" class="form-control select2" placeholder="Origen">
-							@foreach ($data["localizacion"] as $localizacion)
-							<option value="{{ $localizacion["id"] }}">{{ $localizacion["ciudad"] . ", " . $localizacion["aeropuerto"] }}</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-				
-				<div class="col">
-					<label for="id_destino"> Cuidad </label>
+					<label for="id_destino">Cuidad</label>
 					<div class="form-group">
 						<select id="id_destino" name="id_destino" class="form-control select2" placeholder="Destino">
-							@foreach ($data["localizacion"] as $localizacion)
-							<option value="{{ $localizacion["id"] }}">{{ $localizacion["ciudad"] . ", " . $localizacion["aeropuerto"] }}</option>
+							@foreach ($ciudades as $ciudad)
+							<option value="{{ $ciudad->id }}">{{ $ciudad->ciudad . ", " . $ciudad->aeropuerto }}</option>
 							@endforeach
 						</select>
 					</div>

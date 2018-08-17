@@ -1,10 +1,18 @@
 -- DROP DATABASE IF EXISTS lab_dbd;
--- --
--- -- Crear DB
--- --
+--
+-- Crear DB
+--
 
 -- CREATE DATABASE lab_dbd;
 
+-- 
+-- Seleccionar BD 
+--
+
+
+--
+-- DROP relaciones
+--
 DROP TABLE IF EXISTS actividades CASCADE;
 DROP TABLE IF EXISTS aerolineas CASCADE;
 DROP TABLE IF EXISTS aeropuertos CASCADE;

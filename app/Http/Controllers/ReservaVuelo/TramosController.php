@@ -5,10 +5,10 @@ namespace App\Http\Controllers\ReservaVuelo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Aerolinea;
-use App\Aeropuerto;
-use App\Avion;
-use App\Tramo;
+use App\Modulos\ReservaVuelo\Avion;
+use App\Modulos\ReservaVuelo\Tramo;
+use App\Modulos\ReservaVuelo\Aerolinea;
+use App\Modulos\ReservaVuelo\Aeropuerto;
 
 class TramosController extends Controller
 {
@@ -20,12 +20,7 @@ class TramosController extends Controller
    */
   public function index()
   {
-    $tramos = Tramo::all();
-
-    return $tramos;
-    // $tramos = Tramo::paginate(20);
-
-    // return view('modulos.ReservaVuelo.tramos.index', compact("tramos"));
+    return Tramo::all();
   }
 
   /**
@@ -35,11 +30,7 @@ class TramosController extends Controller
    */
   public function create()
   {
-    // $aviones = Avion::all();
-    // $aeropuertos = Aeropuerto::all();
-    // $aerolineas = Aerolinea::all();
-
-    // return view('modulos.ReservaVuelo.tramos.create', compact(['aerolineas', 'aeropuertos', 'aviones']));
+    //
   }
 
   /**
@@ -50,25 +41,14 @@ class TramosController extends Controller
    */
   public function store(Request $request)
   {
-    $this->validate($request, [
+    return Tramo::create($this->validate($request, [
       'codigo'    => 'required',
       'fecha_partida' => 'required|date',
       'fecha_llegada' => 'required|date',
       'avion_id'    => 'required|integer',
       'origen_id'   => 'required|integer',
       'destino_id'  => 'required|integer'
-    ]);
-
-    Tramo::create(request([
-      'codigo',
-      'fecha_partida',
-      'fecha_llegada',
-      'avion_id',
-      'origen_id',
-      'destino_id'
     ]));
-
-    // return redirect('/tramos/');
   }
 
   /**
@@ -80,7 +60,6 @@ class TramosController extends Controller
   public function show(Tramo $tramo)
   {
     return $tramo;
-    // return view('modulos.ReservaVuelo.tramos.show', compact('tramo'));
   }
 
   /**
@@ -91,11 +70,7 @@ class TramosController extends Controller
    */
   public function edit(Tramo $tramo)
   {
-    // $aviones = Avion::all();
-    // $aeropuertos = Aeropuerto::all();
-    // $aerolineas = Aerolinea::all();
-
-    // return view('modulos.ReservaVuelo.tramos.edit', compact(['aerolineas', 'aeropuertos', 'aviones', 'tramo']));
+    //
   }
 
   /**
@@ -107,25 +82,16 @@ class TramosController extends Controller
    */
   public function update(Request $request, Tramo $tramo)
   {
-    $this->validate($request, [
+    $tramo->fill($this->validate($request, [
       'codigo'        => 'required',
       'fecha_partida' => 'required|date',
       'fecha_llegada' => 'required|date',
       'avion_id'      => 'required|integer',
       'origen_id'     => 'required|integer',
       'destino_id'    => 'required|integer'
-    ]);
+    ]))->save();
     
-    $tramo->codigo        = $request->get('codigo');
-    $tramo->fecha_partida = $request->get('fecha_partida');
-    $tramo->fecha_llegada = $request->get('fecha_llegada');
-    $tramo->avion_id      = $request->get('avion_id');
-    $tramo->origen_id     = $request->get('origen_id');
-    $tramo->destino_id    = $request->get('destino_id');
-  
-    $tramo->save(); 
-
-    // return redirect('/tramos/')->with('success', 'Actualizado con éxito');
+    return $tramo;
   }
 
   /**
@@ -138,6 +104,6 @@ class TramosController extends Controller
   {
     $tramo->delete();
 
-    // return redirect('/tramos/')->with('success', 'Removido con éxito');
+    return Tramo::all();
   }
 }
