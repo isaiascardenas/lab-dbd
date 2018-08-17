@@ -59,9 +59,9 @@ class ReservaHabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ReservaHabitacion $reservaHabitacion)
+    public function show($id)
     {
-        return $reservaHabitacion;
+        return ReservaHabitacion::find($id);
     }
 
     /**
@@ -82,9 +82,9 @@ class ReservaHabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,ReservaHabitacion $reservaHabitacion)
+    public function update(Request $request,$id)
     {
-        $this->validate($request , [
+        $reservaHabitacion = $this->validate($request , [
         
 
             'fecha_inicio' => 'required',
@@ -105,6 +105,8 @@ class ReservaHabitacionesController extends Controller
         $reservaHabitacion->orden_compra_id = $request->get('orden_compra_id');
 
         $reservaHabitacion->save();
+
+        return $ReservaHabitacion;
 
         
     }

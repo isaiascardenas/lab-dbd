@@ -54,9 +54,9 @@ class PaqueteVueloHotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PaqueteVueloHotel $paqueteVueloHoteles)
+    public function show($id)
     {
-        return $paqueteVueloHoteles;
+        return PaqueteVueloHotel::find($id);
     }
 
     /**
@@ -77,9 +77,10 @@ class PaqueteVueloHotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,PaqueteVueloHotel $paqueteVueloHoteles)
+    public function update(Request $request,$id)
     {
      
+        $paqueteVueloHotel = PaqueteVueloHotel::find($id);
         $this->validate($request, [
         'descripcion' => 'requiered',
         'descuento' => 'requiered',
@@ -93,6 +94,7 @@ class PaqueteVueloHotelController extends Controller
         $paqueteVueloHotel->orden_compra_id = $request->get('orden_compra_id');
 
         $paqueteVueloHotel->save();
+        return $paqueteVueloHotel;
     }
 
     /**
