@@ -12,7 +12,7 @@ class ReservaBoleto extends Model
     'fecha_reserva',
     'descuento',
     'costo',
-    'avion_asiento_id',
+    'asiento_avion_id',
     'tramo_id',
     'orden_compra_id'
   ];

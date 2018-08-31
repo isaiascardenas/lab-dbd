@@ -41,7 +41,8 @@ class ReservaBoletosController extends Controller
         'descuento' => 'required',
         'costo' => 'required',
         'asiento_avion_id' => 'required',
-        'tramo_id' => 'required'
+        'tramo_id' => 'required',
+        'orden_compra_id' => 'required',
       ]));
     }
 

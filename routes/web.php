@@ -46,9 +46,9 @@ Route::resources([
 /* CRUD Reservas Autos */
 Route::resources([
     'autos' => 'ReservaAuto\AutosController',
-    'companias' => 'ReservaAuto\AutosController',
-    'sucursales' => 'ReservaAuto\AutosController',
-    'reserva_autos', 'ReservaAuto\AutosController',
+    'companias' => 'ReservaAuto\CompaniasController',
+    'sucursales' => 'ReservaAuto\SucursalesController',
+    'reserva_autos' => 'ReservaAuto\ReservaAutosController',
 ]);
 
 /**

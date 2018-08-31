@@ -18,12 +18,12 @@
 				<div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
 					@include('modulos.ReservaHotel.form');
 				</div>
-				<div class="tab-pane fade" id="auto" role="tabpanel" aria-labelledby="auto-tab">
-					@include('modulos.ReservaAuto.form')
-				</div>
-				<div class="tab-pane fade" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
-					@include('modulos.ReservaActividad.form')
-				</div>
+				{{-- <div class="tab-pane fade" id="auto" role="tabpanel" aria-labelledby="auto-tab"> --}}
+					{{-- @include('modulos.ReservaAuto.form') --}}
+				{{-- </div> --}}
+				{{-- <div class="tab-pane fade" id="actividad" role="tabpanel" aria-labelledby="actividad-tab"> --}}
+					{{-- @include('modulos.ReservaActividad.form') --}}
+				{{-- </div> --}}
 			</div>
 		</div>
 	</div>
@@ -37,18 +37,18 @@
 			<li data-target="#carouselPaquetes" data-slide-to="2"></li>
 		</ol>
 
-		<div class="carousel-inner">
-			@foreach ($data["paquetes"] as $paquete)
-			<div class="carousel-item {{ $paquete["class"] }}">
-				<a href="/paquete/{{ $paquete["id"] }}">
-					<div class="carousel-caption d-none d-md-block">
-						<h5>{{ $paquete["destino"] }}</h5>
-						<p>{{ $paquete["valor"] }}</p>
-					</div>
-				</a>
-			</div>
-			@endforeach
-		</div>
+		{{-- <div class="carousel-inner"> --}}
+			{{-- @foreach ($data["paquetes"] as $paquete) --}}
+			{{-- <div class="carousel-item {{ $paquete["class"] }}"> --}}
+				{{-- <a href="/paquete/{{ $paquete["id"] }}"> --}}
+					{{-- <div class="carousel-caption d-none d-md-block"> --}}
+						{{-- <h5>{{ $paquete["destino"] }}</h5> --}}
+						{{-- <p>{{ $paquete["valor"] }}</p> --}}
+					{{-- </div> --}}
+				{{-- </a> --}}
+			{{-- </div> --}}
+			{{-- @endforeach --}}
+		{{-- </div> --}}
 
 		<a class="carousel-control-prev" href="#carouselPaquetes" role="button" data-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>

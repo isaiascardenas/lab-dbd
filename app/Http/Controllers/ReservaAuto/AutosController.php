@@ -15,7 +15,7 @@ class AutosController extends Controller
      */
     public function index()
     {
-        return Auto::all();
+        return view('modulos.ReservaAuto.form', ['autos' => Auto::all()]);
     }
 
     /**
