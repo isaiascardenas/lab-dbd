@@ -33,11 +33,7 @@ Route::resource('actividades', 'ReservaActividad\ActividadesController', [
   ]);
 
 /* CRUD Reservas Hoteles */
-Route::resources([
-    'hoteles' => 'ReservaHabitacion\HotelesController',
-    'habitaciones' => 'ReservaHabitacion\HabitacionesController',
-    'reserva_habitaciones' => 'ReservaHabitacion\ReservaHabitacionesController',
-]);
+
 
 
 Route::resource('hoteles','ReservaHabitacion\HotelesController', [
