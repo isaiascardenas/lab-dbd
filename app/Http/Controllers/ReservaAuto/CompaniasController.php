@@ -15,7 +15,8 @@ class CompaniasController extends Controller
      */
     public function index()
     {
-        return Compania::all();
+        $companias = Compania::all();
+        return view('modulos.ReservaAuto.companias.index', compact('companias'));
     }
 
     /**
@@ -25,7 +26,7 @@ class CompaniasController extends Controller
      */
     public function create()
     {
-        //
+        return view('modulos.ReservaAuto.companias.create');
     }
 
     /**
@@ -36,9 +37,17 @@ class CompaniasController extends Controller
      */
     public function store(Request $request)
     {
-        return Compania::create($this->validate($request, [
+        $compania = Compania::create($this->validate($request, [
             'nombre' => 'required',
         ]));
+
+        if ($compania->exists()) {
+            $response = ['success' => 'Creado con éxito!'];
+        } else {
+            $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/companias')->with($response);
     }
 
     /**
@@ -49,7 +58,7 @@ class CompaniasController extends Controller
      */
     public function show(Compania $compania)
     {
-        return $compania;
+        return view('modulos.ReservaAuto.companias.show', compact('compania'));
     }
 
     /**
@@ -58,9 +67,9 @@ class CompaniasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Compania $compania)
     {
-        //
+        return view('modulos.ReservaAuto.companias.edit', compact('compania'));
     }
 
     /**
@@ -72,11 +81,17 @@ class CompaniasController extends Controller
      */
     public function update(Request $request, Compania $compania)
     {
-        $compania->fill($this->validate($request, [
+        $outcome = $compania->fill($this->validate($request, [
             'nombre' => 'required',
         ]))->save();
 
-        return $compania;
+        if ($outcome) {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } else {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
+
+        return redirect('/companias/'.$compania->id.'/edit')->with($response);
     }
 
     /**
@@ -87,7 +102,14 @@ class CompaniasController extends Controller
      */
     public function destroy(Compania $compania)
     {
-        $compania->delete();
-        return Compania::all();
+        $response = [];
+        try {
+            $compania->delete();
+            $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+            $response = ['error' => 'Error al eliminar el registro!'];
+        }
+
+        return redirect('/companias')->with($response);
     }
 }

@@ -47,8 +47,11 @@ Route::resources([
 Route::resources([
     'autos' => 'ReservaAuto\AutosController',
     'companias' => 'ReservaAuto\CompaniasController',
-    'sucursales' => 'ReservaAuto\SucursalesController',
     'reserva_autos' => 'ReservaAuto\ReservaAutosController',
+]);
+
+Route::resource('sucursales', 'ReservaAuto\SucursalesController', [
+    'parameters' => ['sucursales' => 'sucursal']
 ]);
 
 /**
