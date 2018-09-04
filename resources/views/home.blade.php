@@ -7,7 +7,7 @@
                 <a class="nav-link active" id="vuelo-tab" data-toggle="pill" href="#vuelo" role="tab" aria-controls="vuelo" aria-selected="true"><i class="fas fa-plane"></i> Reserva Vuelo</a>
                 <a class="nav-link" id="hotel-tab" data-toggle="pill" href="#hotel" role="tab" aria-controls="hotel" aria-selected="false"><i class="fas fa-building"></i> Hoteler&iacute;a</a>
                 <a class="nav-link" id="auto-tab" data-toggle="pill" href="#auto" role="tab" aria-controls="auto" aria-selected="false"><i class="fas fa-car"></i> Reserva Automovil</a>
-                <a class="nav-link" id="actividad-tab" data-toggle="pill" href="#actividad" role="tab" aria-controls="actividad" aria-selected="false"><i class="fas fa-tasks"></i> Actividad</a>
+                <a class="nav-link" id="actividad-tab" data-toggle="pill" href="#actividad" role="tab" aria-controls="actividad" aria-selected="false"><i class="fas fa-calendar-alt"></i> Actividad</a>
             </div>
         </div>
         <div class="col-9">
