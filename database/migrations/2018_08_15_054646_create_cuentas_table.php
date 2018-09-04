@@ -27,7 +27,8 @@ class CreateCuentasTable extends Migration
                 ->references('id')
                 ->on('bancos');
 
-            $table->integer('user_id');
+            $table->integer('user_id')
+                ->nullable();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
