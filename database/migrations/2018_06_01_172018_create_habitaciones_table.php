@@ -19,7 +19,7 @@ class CreateHabitacionesTable extends Migration
             $table->integer('capacidad_adulto');
             $table->integer('precio_por_noche');
             $table->string('descripcion');
-            $table->integer('hotel_id');
+            $table->integer('hotel_id')->nullable();
             $table->foreign('hotel_id')
                   ->references('id')->on('hoteles');
             $table->timestamps();

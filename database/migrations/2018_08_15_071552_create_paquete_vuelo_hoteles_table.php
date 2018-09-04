@@ -17,11 +17,11 @@ class CreatePaqueteVueloHotelesTable extends Migration
             $table->increments('id');
             $table->string('descripcion');
             $table->float('descuento');
-            $table->integer('reserva_habitacion_id');
+            $table->integer('reserva_habitacion_id')->nullable();
             $table->foreign('reserva_habitacion_id')
                   ->references('id')
                   ->on('reserva_habitaciones');
-            $table->integer('orden_compra_id');
+            $table->integer('orden_compra_id')->nullable();
             $table->timestamps();
         });
     }

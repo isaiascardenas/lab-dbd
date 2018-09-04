@@ -14,11 +14,11 @@ class CreateReservaPaqueteVueloAutosTable extends Migration
     public function up()
     {
         Schema::create('reserva_paquete_vuelo_autos', function (Blueprint $table) {
-            $table->integer('paquete_vuelo_auto_id');
+            $table->integer('paquete_vuelo_auto_id')->nullable();
             $table->foreign('paquete_vuelo_auto_id')
                   ->references('id')
                   ->on('paquete_vuelo_autos');
-            $table->integer('reserva_boleto_id');
+            $table->integer('reserva_boleto_id')->nullable();
             $table->foreign('reserva_boleto_id')
                   ->references('id')
                   ->on('reserva_boletos');
