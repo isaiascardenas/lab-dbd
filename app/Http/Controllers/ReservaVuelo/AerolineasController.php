@@ -15,7 +15,9 @@ class AerolineasController extends Controller
    */
   public function index()
   {
-    return Aerolinea::all();
+    $aerolineas = Aerolinea::all();
+
+    return view('modulos.ReservaVuelo.aerolineas.index', compact('aerolineas'));
   }
 
   /**
@@ -25,7 +27,7 @@ class AerolineasController extends Controller
    */
   public function create()
   {
-    // 
+    return view('modulos.ReservaVuelo.aerolineas.create');
   }
 
   /**
@@ -36,9 +38,17 @@ class AerolineasController extends Controller
    */
   public function store(Request $request)
   {
-    return Aerolinea::create($this->validate($request, [
+    $aerolinea = Aerolinea::create($this->validate($request, [
       'nombre' => 'required'
     ]));
+
+    if ($aerolinea instanceof \Illuminate\Database\Eloquent\Model) {
+      $response = ['success' => 'Creado con éxito!'];
+    } else {
+      $response = ['error' => 'No se ha podido crear!'];
+    }
+
+    return redirect('/aerolineas')->with($response);
   }
 
   /**
@@ -49,7 +59,7 @@ class AerolineasController extends Controller
    */
   public function show(Aerolinea $aerolinea)
   {
-    return $aerolinea;
+    return view('modulos.ReservaVuelo.aerolineas.show', compact('aerolinea'));
   }
 
   /**
@@ -60,7 +70,7 @@ class AerolineasController extends Controller
    */
   public function edit(Aerolinea $aerolinea)
   {
-    // 
+    return view('modulos.ReservaVuelo.aerolineas.edit', compact('aerolinea'));
   }
 
   /**
@@ -72,11 +82,17 @@ class AerolineasController extends Controller
    */
   public function update(Request $request, Aerolinea $aerolinea)
   {
-    $aerolinea->fill($this->validate($request, [
+    $outcome = $aerolinea->fill($this->validate($request, [
       'nombre' => 'required'
     ]))->save();
 
-    return $aerolinea;
+    if ($outcome) {
+      $response = ['success' => 'Actualizado con éxito!'];
+    } else {
+      $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+    }
+
+    return redirect('/aerolineas/'.$aerolinea->id.'/edit')->with($response);
   }
 
   /**
@@ -87,8 +103,14 @@ class AerolineasController extends Controller
    */
   public function destroy(Aerolinea $aerolinea)
   {
-    $aerolinea->delete();
+    $response = [];
+    try {
+      $aerolinea->delete();
+      $response = ['success' => 'Eliminado con éxito!'];
+    } catch (\Exception $e) {
+      $response = ['error' => 'Error al eliminar el registro!'];
+    }
 
-    return Aerolinea::all();
+    return redirect('/aerolineas')->with($response);
   }
 }

@@ -16,13 +16,22 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-	<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-	<!-- Datepicker -->
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <script defer src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    {{-- <script defer src="https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"></script> --}}
+
+    <!-- Datepicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
     <!-- Bootstrap Select -->
@@ -53,12 +62,14 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
+                          <!-- 
                         	<li>
                         		<a href="/cart" class="nav-link">
                         			<i class="fas fa-shopping-cart"></i>
                         			<span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
                         		</a>
                         	</li>
+                          -->
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fas fa-user-circle"></i> {{ Auth::user()->name }} <span class="caret"></span>
@@ -94,7 +105,7 @@
         			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-car"></i> Reserva Autos</a>
         			<!-- RESERVA HOTELES -->
         			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-building"></i> Reserva Hoteles</a>
-					<!-- RESERVA VUELOS -->
+              <!-- RESERVA VUELOS -->
         			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-plane"></i> Reserva Vuelos</a>
         			<a class="list-group-item list-group-item-action" href="/aerolineas/">Aerol&iacute;neas</a>
         			<a class="list-group-item list-group-item-action" href="/aeropuertos/">Aeropuertos<a>
@@ -102,9 +113,9 @@
         			<a class="list-group-item list-group-item-action" href="/tramos/">Tramos</a>
         		</div>
         	</aside>
-			<main class="col py-3">
-            	@yield('content')
-            </main>
+          <main class="col py-3">
+            @yield('content')
+          </main>
         </div>
 
         <footer class="container-fluid mt-3 position-sticky">
