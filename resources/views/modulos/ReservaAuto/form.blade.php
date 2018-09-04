@@ -3,14 +3,14 @@
         <h2><i class="fas fa-car"></i> Reserva tu auto </h2>
     </div>
     <div class="card-body">
-        <form action="/autos" method="post">
+        <form action="/reserva_autos" method="get">
             {{ csrf_field() }}
 
             <div class="form-group form-row align-items-end">
                 <div class="col">
-                    <label for="id_destino"> Cuidad </label>
+                    <label for="sucursal_id"> Cuidad </label>
                     <div class="form-group">
-                        <select id="origen_id" name="origen_id" class="form-control selectpicker" title="Origen" data-live-search="true">
+                        <select id="sucursal_id" name="sucursal_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
                             @foreach ($sucursales as $sucursal)
                                 <option value="{{ $sucursal->id }}">
                                 {{ $sucursal->compania->nombre }}, {{$sucursal->ciudad->nombre }}
@@ -23,16 +23,16 @@
 
             <div class="form-group form-row align-items-end">
                 <div class="col">
-                    <label for="fecha_ida">Fecha retiro</label>
-                    <input type="text" id="fecha_ida" name="fecha_ida" class="form-control text-center datepicker" readonly="readonly">
+                    <label for="fecha_inicio">Fecha retiro</label>
+                    <input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control text-center datepicker" readonly="readonly">
                     <span class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                     </span>
                 </div>
 
-                <div class="col vuelo-vuelta">
-                    <label for="fecha_vuelta">Fecha entrega</label>
-                    <input type="text" id="fecha_ida" name="fecha_ida" class="form-control text-center datepicker" readonly="readonly">
+                <div class="col fecha_entrega">
+                    <label for="fecha_termino">Fecha entrega</label>
+                    <input type="text" id="fecha_termino" name="fecha_termino" class="form-control text-center datepicker" readonly="readonly">
                     <span class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                     </span>
@@ -44,13 +44,13 @@
                     <label>Pasajeros</label>
                     <div class="row">
                         <div class="col input-group">
-                            <input type="number" name="pasajeros" class="form-control text-right" value="1">
+                            <input type="number" name="adultos" class="form-control text-right" value="1">
                             <div class="input-group-append">
                                 <span class="input-group-text">Adultos</span>
                             </div>
                         </div>
                         <div class="col input-group">
-                            <input type="number" name="pasajeros" class="form-control text-right" value="0">
+                            <input type="number" name="ninos" class="form-control text-right" value="0">
                             <div class="input-group-append">
                                 <span class="input-group-text">Ni&ntilde;os</span>
                             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ReservaAuto;
 
 use Illuminate\Http\Request;
+use App\Modulos\ReservaAuto\Auto;
 use App\Http\Controllers\Controller;
 use App\Modulos\ReservaAuto\ReservaAuto;
 
@@ -15,7 +16,17 @@ class ReservaAutosController extends Controller
      */
     public function index()
     {
-        return ReservaAuto::all();
+        $autosReservados = ReservaAuto::whereDate('fecha_inicio', '<', request('fecha_termino'))
+            ->whereDate('fecha_termino', '>', request('fecha_inicio'))
+            ->pluck('auto_id');
+
+        $autos = Auto::whereSucursalId(request('sucursal_id'))
+            ->where('capacidad', '>=', request('adultos') + request('ninos'))
+            ->whereNotIn('id', $autosReservados)
+            ->get();
+
+        // return $autos;
+        return view('modulos.ReservaAuto.reservas.index', compact('autos'));
     }
 
     /**
