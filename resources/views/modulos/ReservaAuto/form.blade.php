@@ -3,16 +3,20 @@
         <h2><i class="fas fa-car"></i> Reserva tu auto </h2>
     </div>
     <div class="card-body">
-        <form action="/vuelo/list" method="post">
+        <form action="/autos" method="post">
             {{ csrf_field() }}
 
             <div class="form-group form-row align-items-end">
                 <div class="col">
                     <label for="id_destino">Cuidad</label>
+                    {{-- <div class="form-group"> --}}
+
                     <div class="form-group">
-                        <select id="id_destino" name="id_destino" class="form-control select2" placeholder="Destino">
-                            @foreach ($autos as $auto)
-                            <option value="{{ $auto->id }}">{{ $auto->patente . ", " . $auto->descripcion }}</option>
+                        <select id="origen_id" name="origen_id" class="form-control selectpicker" title="Origen" data-live-search="true">
+                            @foreach ($sucursales as $sucursal)
+                                <option value="{{ $sucursal->id }}">
+                                {{ $sucursal->compania->nombre }}, {{$sucursal->ciudad->nombre }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -22,12 +26,18 @@
             <div class="form-group form-row align-items-end">
                 <div class="col">
                     <label for="fecha_ida">Fecha retiro</label>
-                    <input type="text" id="fecha_ida" name="fecha_ida" class="form-control gijgo-datepicker">
+                    <input type="text" id="fecha_ida" name="fecha_ida" class="form-control text-center datepicker" readonly="readonly">
+                    <span class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </span>
                 </div>
 
                 <div class="col vuelo-vuelta">
                     <label for="fecha_vuelta">Fecha entrega</label>
-                    <input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control gijgo-datepicker">
+                    <input type="text" id="fecha_ida" name="fecha_ida" class="form-control text-center datepicker" readonly="readonly">
+                    <span class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </span>
                 </div>
             </div>
 
@@ -49,18 +59,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-1"></div>
-                <div class="col">
-                    <label for="">Tipo Pasaje</label>
-                    <select name="tipo_pasaje" class="form-control">
-                        @foreach ($data["tipoPasaje"] as $pasaje)
-                        <option value="{{ $pasaje["id"] }}">{{ $pasaje["descripcion"] }}</option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Busca tu vuelo</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Busca tu auto</button>
         </form>
     </div>
 </div>
