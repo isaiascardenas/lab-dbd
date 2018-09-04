@@ -26,7 +26,7 @@
     </div>
     
     <div class="auto">
-      <form action="{{ action('ReservaVuelo\AerolineasController@destroy', $aerolinea->id) }}" method="POST">
+      <form action="{{ action('ReservaVuelo\AerolineasController@destroy', $aerolinea->id) }}" method="POST" onsubmit="return confirm('¿Esta seguro que desea eliminar?')">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit" class="btn btn-danger">

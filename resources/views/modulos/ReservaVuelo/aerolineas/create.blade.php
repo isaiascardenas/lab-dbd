@@ -9,7 +9,7 @@
 	
 	@include('layouts.messages')
 
-	<form method="post" action="{{ action('ReservaVuelo\AerolineasController@store') }}" method="post">
+	<form method="post" action="{{ action('ReservaVuelo\AerolineasController@store') }}">
 		{{ csrf_field() }}
 		
 		<div class="form-group row">

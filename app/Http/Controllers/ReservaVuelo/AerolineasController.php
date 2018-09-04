@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ReservaVuelo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modulos\ReservaVuelo\Aerolinea;
+use Illuminate\Database\Eloquent\Model;
 
 class AerolineasController extends Controller
 {
@@ -42,7 +43,7 @@ class AerolineasController extends Controller
       'nombre' => 'required'
     ]));
 
-    if ($aerolinea instanceof \Illuminate\Database\Eloquent\Model) {
+    if ($aerolinea instanceof Model) {
       $response = ['success' => 'Creado con éxito!'];
     } else {
       $response = ['error' => 'No se ha podido crear!'];

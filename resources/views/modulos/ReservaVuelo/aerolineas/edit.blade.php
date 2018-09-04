@@ -9,7 +9,7 @@
   
   @include('layouts.messages')
 
-  <form method="post" action="{{ action('ReservaVuelo\AerolineasController@update', $aerolinea->id) }}" method="post">
+  <form method="post" action="{{ action('ReservaVuelo\AerolineasController@update', $aerolinea->id) }}">
     {{ csrf_field() }}
     <input name="_method" type="hidden" value="PATCH">
 
