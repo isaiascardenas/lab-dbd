@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\ReservaHabitacion;
 
+use App\Modulos\ReservaHabitacion\Hotel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Modulos\ReservaHabitacion\Hotel;
 
 class HotelesController extends Controller
 {
@@ -15,7 +15,8 @@ class HotelesController extends Controller
      */
     public function index()
     {
-        return view('modulos.ReservaHabitacion.index', compact("hoteles"));
+        $hoteles = Hotel::all();
+        return view('modulos.ReservaHabitacion.hoteles.index', compact("hoteles"));
     }
 
     /**
@@ -25,7 +26,7 @@ class HotelesController extends Controller
      */
     public function create()
     {
-        //
+        return view('modulos.ReservaHabitacion.hoteles.create');
     }
 
     /**
@@ -45,44 +46,65 @@ class HotelesController extends Controller
         'ciudad_id' => 'required' 
         ]);
 
-        return Hotel::create($hotelData);
+        $hotel = Hotel::create($hotelData);
 
-        
+        if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
+        $response = ['success' => 'Creado con éxito!'];
+        } else {
+          $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/hoteles')->with($response);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Hotel $hotel)
     {
-        return Hotel::find($id)->load('habitaciones');
+        
+        if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
+            return view('modulos.ReservaHabitacion.hoteles.show', compact('hotel'));
+        } else {
+          $response = ['error' => 'No existe la id solicitada'];
+          return redirect('/hoteles')->with($response);
+        }
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Hotel $hotel)
     {
-        //
+        
+         
+
+        if ($hotel->exists()) {
+            return view('modulos.ReservaHabitacion.hoteles.edit', compact('hotel'));
+        } else {
+          $response = ['error' => 'No es posible editar una id que no existe'];
+          return redirect('/hoteles')->with($response);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, Hotel $hotel)
     {
-
-        $hotel = Hotel::find($id);
+        
         $this->validate($request , [
 
         'estrellas' => 'required|integer',
@@ -97,22 +119,37 @@ class HotelesController extends Controller
         $hotel->descripcion = $request->get('descripcion');
         $hotel->ciudad_id = $request->get('ciudad_id');
 
-        $hotel->save();
+        $dataUpdate = $hotel->save();
 
-        return $hotel;
+        if ($dataUpdate) 
+        {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } 
+        else 
+        {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
 
-        
+        return redirect('/hoteles/'.$hotel->id.'/edit')->with($response);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Hotel $hotel)
     {
-        Hotel::destroy($id);
-        return Hotel::all();
+        
+        $response = [];
+        try {
+          $hotel->delete();
+          $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+          $response = ['error' => 'Error al eliminar el registro!'];
+        }
+
+        return redirect('/hoteles')->with($response);
     }
 }
