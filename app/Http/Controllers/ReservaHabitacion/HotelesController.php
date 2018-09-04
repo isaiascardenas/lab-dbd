@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\ReservaHabitacion;
 
+use App\Modulos\ReservaHabitacion\Hotel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Modulos\ReservaHabitacion\Hotel;
 
 class HotelesController extends Controller
 {
@@ -15,6 +15,7 @@ class HotelesController extends Controller
      */
     public function index()
     {
+        $hoteles = Hotel::all();
         return view('modulos.ReservaHabitacion.index', compact("hoteles"));
     }
 
@@ -25,7 +26,7 @@ class HotelesController extends Controller
      */
     public function create()
     {
-        //
+        return view('modulos.ReservaHabitacion.create');
     }
 
     /**
@@ -45,44 +46,65 @@ class HotelesController extends Controller
         'ciudad_id' => 'required' 
         ]);
 
-        return Hotel::create($hotelData);
+        $hotel = Hotel::create($hotelData);
 
-        
+        if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
+        $response = ['success' => 'Creado con éxito!'];
+        } else {
+          $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/hoteles')->with($response);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return Hotel::find($id)->load('habitaciones');
+        $hotel=Hotel::find($id);
+        if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
+            return view('modulos.ReservaHabitacion.show', compact('hotel'));
+        } else {
+          $response = ['error' => 'No existe la id solicitada'];
+          return redirect('/hoteles')->with($response);
+        }
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $hotel=Hotel::find($id);
+         
+
+        if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
+            return view('modulos.ReservaHabitacion.edit', compact('hotel'));
+        } else {
+          $response = ['error' => 'No es posible editar una id que no existe'];
+          return redirect('/hoteles')->with($response);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-
-        $hotel = Hotel::find($id);
+        $hotel=Hotel::find($id);
         $this->validate($request , [
 
         'estrellas' => 'required|integer',
@@ -97,22 +119,37 @@ class HotelesController extends Controller
         $hotel->descripcion = $request->get('descripcion');
         $hotel->ciudad_id = $request->get('ciudad_id');
 
-        $hotel->save();
+        $dataUpdate = $hotel->save();
 
-        return $hotel;
+        if ($dataUpdate) 
+        {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } 
+        else 
+        {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
 
-        
+        return redirect('/hoteles/'.$hotel->id.'/edit')->with($response);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Hotel::destroy($id);
-        return Hotel::all();
+        $hotel=Hotel::find($id);
+        $response = [];
+        try {
+          $hotel->delete();
+          $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+          $response = ['error' => 'Error al eliminar el registro!'];
+        }
+
+        return redirect('/hoteles')->with($response);
     }
 }

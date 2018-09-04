@@ -1,53 +1,57 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-	<div class="card">
-		<div class="card-header">
-      <b>{{ $vuelo->origen()->horaPartida() }}</b>
-      {{ $vuelo->origen()->origen->localizacion->ciudad }}
-      <i class="fas fa-angle-right"></i>
-      <b>{{ $vuelo->destino()->horaLlegada() }}</b>
-      {{ $vuelo->destino()->destino->localizacion->ciudad }}
-		</div>
-		<div class="card-body">
-			{{-- OTROS DETALLES --}}
+  <h2>
+    <i class="fas fa-map-marker-alt"></i> Hotel #{{ $hotel->id }}
+  </h2>
+  
+  <hr>
 
-			<h3>Itinerario</h3>
-			<table class="table table-striped table-hover">
-				<tbody>
-          @foreach ($vuelo->itinerario() as $tramo)
-          <tr>
-            <td>
-              <b>{{ $tramo->horaPartida() }}</b> {{ $tramo->origen->codigo }}
-              <i class="fas fa-angle-right"></i>
-              <b>{{ $tramo->horaLlegada() }}</b> {{ $tramo->destino->codigo }}
-            </td>
-            <td>
-              <b>{{ $tramo->codigo }}</b> - Operado por {{ $tramo->avion->aerolinea->nombre }}
-            </td>
-					</tr>
+  <div class="form-group row">
+    <label class="col" for="nombre">Nombre</label>
 
-          @if (next($tramo)):
-          <tr>
-            <td colspan="2">
-              {{ $tramo->tiempoEscala(next($vuelo->itinerario())) }}
-            </td>
-          </tr>
-          @endif;
+    <div class="col">{{ $hotel->nombre }}</div>
 
-          @endforeach
-        </tbody>
-			</table>
+  </div>
 
-			{{-- <ul>
-				@foreach ($vuelo->asientos() as $asiento)
-					<li>{{ $asiento->tipo . ' - ' .$asiento->codigo_asiento . ' - ' . $asiento->costo }}</li>
-				@endforeach
-			</ul> --}}
+  <div class="form-group row">
+    <label class="col" for="estrellas">Estrellas</label>
+    <div class="col">{{ $hotel->estrellas }}</div>
 
-			<button class="btn btn-primary">
-				<i class="fas fa-shopping-cart"></i> Agregar al carrito
-			</button>
-		</div>
-	</div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col" for="descripcion">Descripcion</label>
+    <div class="col">{{ $hotel->descripcion }}</div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col" for="descripcion">Ciudad</label>
+    <div class="col">({{ $hotel->ciudad->id }}) {{ $hotel->ciudad->nombre }} </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-auto mr-auto">
+      <a href="/hoteles/" class="btn btn-info float-left">
+        <i class="fas fa-arrow-left"></i> Volver
+      </a>
+    </div>
+  
+    <div class="col-auto">
+      <a href="/hoteles/{{ $hotel->id }}/edit" class="btn btn-primary">
+        <i class="fas fa-edit"></i> Editar
+      </a>
+    </div>
+    
+    <div class="auto">
+      <form action="{{ action('ReservaHabitacion\HotelesController@destroy', $hotel->id) }}" method="POST">
+        {{ csrf_field() }}
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-trash-alt"></i> Eliminar
+        </button>
+      </form>
+    </div>
+      
+  </div>
 @endsection
