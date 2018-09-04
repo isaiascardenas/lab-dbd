@@ -5,8 +5,8 @@ namespace App\Http\Controllers\ReservaVuelo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Tramo;
-use App\Vuelo;
+use App\Modulos\ReservaVuelo\Tramo;
+use App\Modulos\ReservaVuelo\Vuelo;
 
 class VuelosController extends Controller
 {

@@ -37,8 +37,4 @@
 			@endforeach
 		</tbody>
 	</table>
-
-	<div class="text-center">
-		{{ $tramos->links() }}
-	</div>
 @endsection

@@ -91,8 +91,14 @@ class PasajerosController extends Controller
    */
   public function destroy(Pasajero $pasajero)
   {
-    $pasajero->delete();
+    $response = [];
+    try {
+      $pasajero->delete();
+      $response = ['success' => 'Eliminado con éxito!'];
+    } catch (\Exception $e) {
+      $response = ['error' => 'Error al eliminar el registro!'];
+    }
 
-    return Pasajero::all();
+    return redirect('/pasajeros')->with($response);
   }
 }

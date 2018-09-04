@@ -132,21 +132,36 @@ class Tramo extends Model
 
   public function precio($formato = FALSE)
   {
-    return $formato ? 
-              '$ '.number_format(random_int(10000, 150000), 0, ',', '.')
+    return $formato
+              ? '$ '.number_format(random_int(10000, 150000), 0, ',', '.')
               : random_int(10000, 150000);
   }
 
   /* Temporal -  */
   // Retorna array de instancias de clase \App\Modulos\ReservaVuelo\Vuelo
+  /**
+   * 
+   * $params = [
+   *    'origen_id',        # aeropuerto de origen
+   *    'destino_id',       # aeropuerto de destino
+   *    'tipo_vuelo',       # 
+   *    'fecha_ida',        # fecha de ida
+   *    'fecha_vuelta',     # fecha de retorno
+   *    'pasajeros_adultos',# 
+   *    'pasajeros_ninos',  # 
+   *    'tipo_pasaje',      #
+   * ];
+   *
+   *
+   */
   public static function buscarVuelos($params)
   {
 
   	$fechaIda = Carbon::createFromFormat('d-m-Y', $params['fecha_ida']);
 
   	$query = static::where('origen_id', '=', $params['origen_id'])				// origen
-  				->where('destino_id', '=', $params['destino_id']);			// destino
-  				// ->whereDate('fecha_partida', $fechaIda->format('Y-m-d'));
+  				            ->where('destino_id', '=', $params['destino_id']);			// destino
+  				            // ->whereDate('fecha_partida', $fechaIda->format('Y-m-d'));
 
   	// if ($fechaVuelta = Carbon::createFromFormat('d-m-Y', $params['fecha_vuelta'])) {
   	// 	$query->whereDate('fecha_llegada', $fechaVuelta->format('Y-m-d'));

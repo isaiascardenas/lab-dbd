@@ -2,43 +2,29 @@
 
 @section('content')
 	<h2>
-    <i class="fas fa-map-marker-alt"></i> Nuevo Aeropuerto
+    <i class="fas fa-map-marker-alt"></i> Nuevo Avión
   </h2>
 	
 	<hr>
 	
 	@include('layouts.messages')
 
-	<form method="post" action="{{ action('ReservaVuelo\AvionesController@store') }}" method="post">
+	<form method="post" action="{{ action('ReservaVuelo\AvionesController@store') }}">
 		{{ csrf_field() }}
 		
 		<div class="form-group row">
-			<label class="col-3" for="codigo">C&oacute;digo</label>
+			<label class="col-3" for="descripcion">Descripción</label>
 			<div class="col-9">
-				<input type="text" class="form-control" name="codigo" id="codigo">
+				<input type="text" class="form-control" name="descripcion" id="descripcion">
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<label class="col-3" for="nombre">Nombre</label>
+			<label class="col-3" for="aerolinea_id">Aerolínea</label>
 			<div class="col-9">
-				<input type="text" class="form-control" name="nombre" id="nombre">
-			</div>
-		</div>
-
-		<div class="form-group row">
-			<label class="col-3" for="direccion">Direcci&oacute;n</label>
-			<div class="col-9">
-				<input type="text" class="form-control" name="direccion" id="direccion">
-			</div>
-		</div>
-
-		<div class="form-group row">
-			<label class="col-3" for="localizacion_id">Localizaci&oacute;n</label>
-			<div class="col-9">
-				<select class="form-control" name="localizacion_id" id="localizacion_id">
-					@foreach($localizaciones as $localizacion)
-					<option value="{{ $localizacion->id }}">{{ $localizacion->ciudad .', '. $localizacion->pais }}</option>
+				<select class="form-control" name="aerolinea_id" id="aerolinea_id">
+					@foreach($aerolineas as $aerolinea)
+					<option value="{{ $aerolinea->id }}">{{ $aerolinea->nombre}}</option>
 					@endforeach
 				</select>
 			</div>

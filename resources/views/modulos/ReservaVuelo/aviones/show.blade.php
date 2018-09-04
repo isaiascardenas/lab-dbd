@@ -6,8 +6,8 @@
   <hr>
 
   <div class="form-group row">
-    <label class="col-3" for="modelo">Modelo</label>
-    <div class="col-9">{{ $avion->modelo }}</div>
+    <label class="col-3" for="descripcion">Descripción</label>
+    <div class="col-9">{{ $avion->descripcion }}</div>
   </div>
 
   <div class="form-group row">
@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-auto">
-      <form action="{{ action('ReservaVuelo\AvionesController@destroy', $avion->id) }}" method="POST">
+      <form action="{{ action('ReservaVuelo\AvionesController@destroy', $avion->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro que deseas eliminar el registro?')">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit" class="btn btn-danger">

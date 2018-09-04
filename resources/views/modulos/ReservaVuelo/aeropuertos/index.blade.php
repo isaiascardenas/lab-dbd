@@ -15,14 +15,14 @@
     </a>
 	</div>
 
-	<table class="table table-hover table-bordered table-sm">
+	<table class="table table-hover table-bordered table-sm datatable">
 		<thead>
 			<tr>
-				<th></th>
-				<th>C&oacute;digo</th>
+				<th class="no-sort"></th>
+				<th>Código</th>
 				<th>Nombre</th>
-				<th>Direcci&oacute;n</th>
-				<th>Localizaci&oacute;n</th>
+				<th>Dirección</th>
+				<th>Ciudad</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,13 +36,9 @@
 				<td>{{ $aeropuerto->codigo }}</td>
 				<td>{{ $aeropuerto->nombre }}</td>
 				<td>{{ $aeropuerto->direccion }}</td>
-				<td>{{ $aeropuerto->localizacion->ciudad .', '. $aeropuerto->localizacion->pais }}</td>
+				<td>{{ $aeropuerto->ciudad->nombre .', '. $aeropuerto->ciudad->pais->nombre }}</td>
 			</tr>
 			@endforeach
 		</tbody>
 	</table>
-
-	<div class="text-center">
-		{{ $aeropuertos->links() }}
-	</div>
 @endsection

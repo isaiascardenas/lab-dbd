@@ -15,12 +15,12 @@
     </a>
 	</div>
 
-	<table class="table table-hover table-bordered table-sm">
+	<table class="table table-hover table-bordered table-sm datatable">
 		<thead>
 			<tr>
-        <th></th>
-				<th>Modelo</th>
-				<th>Aerolinea</th>
+        <th class="no-sort"></th>
+				<th>Descripción</th>
+				<th>Aerolínea</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,7 +31,7 @@
             <i class="fas fa-eye"></i>
           </a>
         </td>
-				<td>{{ $avion->modelo }}</td>
+				<td>{{ $avion->descripcion }}</td>
 				<td>
           <a href="/aerolineas/{{ $avion->aerolinea->id }}">
             {{ $avion->aerolinea->nombre }}
@@ -41,8 +41,4 @@
 			@endforeach
 		</tbody>
 	</table>
-
-	<div class="text-center">
-		{{ $aviones->links() }}
-	</div>
 @endsection
