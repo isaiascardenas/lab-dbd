@@ -1,4 +1,4 @@
-@if(count($errors))
+@if($errors->any())
 <div class="alert alert-warning">
 	<strong>Whoops</strong>
 	<ul>
@@ -9,9 +9,22 @@
 </div>
 @endif
 
-@isset($success)
-<div class="alert alert-info">
+@if(session('success'))
+<div class="alert alert-info alert-dismissible fade show" role="alert">
 	<strong>Yay</strong>
-	{{ $success }}
+	{{ session('success') }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
-@endisset
+@endif
+
+@if(session('error'))
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Whoops</strong>
+  {{ session('error') }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+@endif

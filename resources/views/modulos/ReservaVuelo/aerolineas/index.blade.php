@@ -15,10 +15,10 @@
     </a>
 	</div>
 
-	<table class="table table-hover table-bordered table-sm">
+	<table class="table table-hover table-bordered table-sm datatable">
 		<thead>
 			<tr>
-				<th></th>
+				<th class="no-sort"></th>
 				<th>Nombre</th>
 			</tr>
 		</thead>
@@ -35,8 +35,20 @@
 			@endforeach
 		</tbody>
 	</table>
+@endsection
 
-	<div class="text-center">
-		{{ $aerolineas->links() }}
-	</div>
+@section('script')
+  <script>
+    $(document).ready(function() {
+        $('.datatable').DataTable({
+          'language': {
+            'url': 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json'
+          },
+          'columnDefs': [
+            {'targets': 'no-sort', 'orderable': false}
+          ], 
+          'order': [[1, 'asc']]
+        });
+    } );
+  </script>
 @endsection

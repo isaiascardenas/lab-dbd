@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -23,12 +23,11 @@ class CreateReservaActividadesTable extends Migration
             $table->foreign('actividad_id')
                 ->references('id')
                 ->on('actividades');
-            $table->integer('orden_compra_id');
-            /*
+            $table->integer('orden_compra_id')
+                ->nullable();
             $table->foreign('orden_compra_id')
                 ->references('id')
                 ->on('orden_compras');
-            */
             $table->timestamps();
         });
     }

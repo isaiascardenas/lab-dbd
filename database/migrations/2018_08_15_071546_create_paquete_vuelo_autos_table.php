@@ -17,11 +17,11 @@ class CreatePaqueteVueloAutosTable extends Migration
             $table->increments('id');
             $table->string('descripcion');
             $table->float('descuento');
-            $table->integer('reserva_auto_id');
+            $table->integer('reserva_auto_id')->nullable();
             $table->foreign('reserva_auto_id')
                   ->references('id')
                   ->on('reserva_autos');
-            $table->integer('orden_compra_id');
+            $table->integer('orden_compra_id')->nullable();
             $table->timestamps();
         });
     }
