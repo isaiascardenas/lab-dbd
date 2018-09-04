@@ -15,9 +15,9 @@
                 <div class="tab-pane fade show active" id="vuelo" role="tabpanel" aria-labelledby="vuelo-tab">
                     @include('modulos.ReservaVuelo.vuelos.form')
                 </div>
-                {{-- <div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab"> --}}
-                    {{-- @include('modulos.ReservaHotel.form'); --}}
-                {{-- </div> --}}
+                <div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
+                    @include('modulos.ReservaHabitacion.form');
+                </div>
                 <div class="tab-pane fade" id="auto" role="tabpanel" aria-labelledby="auto-tab">
                     @include('modulos.ReservaAuto.form')
                 </div>

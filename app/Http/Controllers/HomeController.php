@@ -8,7 +8,6 @@ use App\Modulos\ReservaVuelo\Aeropuerto;
 use App\Modulos\ReservaHabitacion\Hotel;
 use App\Modulos\ReservaVuelo\TipoAsiento;
 use App\Modulos\ReservaActividad\Actividad;
-use App\Modulos\ReservaHabitacion\Habitacion;
 
 class HomeController extends Controller
 {
@@ -19,19 +18,19 @@ class HomeController extends Controller
         $actividades = Actividad::all();
         $tipoPasaje = TipoAsiento::all();
         $aeropuertos = Aeropuerto::all();
-        $habitaciones = Habitacion::all();
+        $hoteles = Hotel::all();
         $sucursales = Sucursal::with('ciudad', 'compania')->get();
         // "paquetes" => Paquetes::all()
         $paquetes = [];
 
         return view('home', compact(
             'autos',
+            'hoteles',
             'paquetes',
             'sucursales',
             'tipoPasaje',
             'actividades',
-            'aeropuertos',
-            'habitaciones'
+            'aeropuertos'
         ));
     }
 
