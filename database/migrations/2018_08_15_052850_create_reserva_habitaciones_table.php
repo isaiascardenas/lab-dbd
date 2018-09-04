@@ -20,11 +20,11 @@ class CreateReservaHabitacionesTable extends Migration
             $table->datetime('fecha_reserva');
             $table->integer('costo');
             $table->float('descuento');
-            $table->integer('habitacion_id');
+            $table->integer('habitacion_id')->nullable();
             $table->foreign('habitacion_id')
                   ->references('id')
                   ->on('habitaciones');
-            $table->integer('orden_compra_id');
+            $table->integer('orden_compra_id')->nullable();
             $table->timestamps();
         });
     }
