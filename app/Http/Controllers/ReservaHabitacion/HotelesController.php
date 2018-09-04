@@ -15,7 +15,7 @@ class HotelesController extends Controller
      */
     public function index()
     {
-        return Hotel::all();
+        return view('modulos.ReservaHabitacion.index', compact("hoteles"));
     }
 
     /**

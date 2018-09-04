@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Modulos\ReservaVuelo\TipoAsiento;
 use App\Modulos\ReservaVuelo\Aeropuerto;
+use App\Modulos\ReservaHabitacion\Hotel;
 
 class HomeController extends Controller
 {
@@ -12,10 +13,11 @@ class HomeController extends Controller
   {
 		$tipoPasaje = TipoAsiento::all();
 		$aeropuertos = Aeropuerto::all();
+    $hoteles = Hotel::all();
 		// "paquetes"		=> Paquetes::all()
 		$paquetes	= [];
 
-    return view('home', compact('tipoPasaje', 'aeropuertos', 'paquetes'));
+    return view('home', compact('tipoPasaje', 'aeropuertos', 'paquetes','hoteles'));
   }
 
   public function cart()
