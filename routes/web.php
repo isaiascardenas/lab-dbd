@@ -20,7 +20,7 @@ Route::get('/', 'HomeController@index');
 Route::get('/cart', 'HomeController@cart');
 
 /* CRUD Usuarios */
-Route::resource('users', 'UserController')->except(['create', 'edit']);
+Route::resource('users', 'UserController');
 
 /* CRUD Reservas Actividades */
 Route::resources([

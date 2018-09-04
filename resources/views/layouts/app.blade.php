@@ -12,7 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-	
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
@@ -20,14 +20,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     <!-- Datepicker -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
     <!-- Bootstrap Select -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
-	<script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -53,12 +53,12 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
-                        	<li>
-                        		<a href="/cart" class="nav-link">
-                        			<i class="fas fa-shopping-cart"></i>
-                        			<span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
-                        		</a>
-                        	</li>
+                            <li>
+                                <a href="/cart" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fas fa-user-circle"></i> {{ Auth::user()->name }} <span class="caret"></span>
@@ -87,7 +87,7 @@
         </main>
 
         <footer class="container mt-3">
-        	&copy; 2018 {{ config('app.name', 'Trivago') }} Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
+            &copy; 2018 {{ config('app.name', 'Trivago') }} Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
         </footer>
     </div>
 

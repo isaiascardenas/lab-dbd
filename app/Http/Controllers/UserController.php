@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        $users = User::all();
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -24,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -35,13 +36,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
+        $user = User::create($this->validate($request, [
             'rut' => 'required',
             'nombre' => 'required',
             'email' => 'required',
-            'password' => 'required',
-        ]);
-        return User::create($data);
+            'password' => 'confirmed',
+            // role id (trigger)
+        ]));
+        if ($user->exists()) {
+            $response = ['success' => 'Creado con éxito!'];
+        } else {
+            $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/users')->with($response);
     }
 
     /**
@@ -52,7 +60,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $user;
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -61,9 +69,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -74,20 +82,22 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     // public function update(Request $request, User $user)
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $this->validate($request, [
+        $outcome = $user->fill($this->validate($request, [
             'rut' => 'required',
             'nombre' => 'required',
             'email' => 'required',
             'password' => 'required',
-        ]);
+        ]))->save();
 
-        $user = User::find($id);
-        $user->nombre = request('nombre');
-        $user->save();
+        if ($outcome) {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } else {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
 
-        return $user;
+        return redirect('/users/'.$user->id.'/edit')->with($response);
     }
 
     /**
@@ -98,7 +108,14 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return User::all();
+        $response = [];
+        try {
+            $user->delete();
+            $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+            $response = ['error' => 'Error al eliminar el registro!'];
+        }
+
+        return redirect('/users')->with($response);
     }
 }
