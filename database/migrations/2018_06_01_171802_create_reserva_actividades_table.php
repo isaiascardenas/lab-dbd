@@ -25,9 +25,9 @@ class CreateReservaActividadesTable extends Migration
                 ->on('actividades');
             $table->integer('orden_compra_id')
                 ->nullable();
-            $table->foreign('orden_compra_id')
-                ->references('id')
-                ->on('orden_compras');
+            //$table->foreign('orden_compra_id')
+              //  ->references('id')
+                //->on('orden_compras');
             $table->timestamps();
         });
     }

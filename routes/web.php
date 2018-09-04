@@ -23,10 +23,14 @@ Route::get('/cart', 'HomeController@cart');
 Route::resource('users', 'UserController')->except(['create', 'edit']);
 
 /* CRUD Reservas Actividades */
-Route::resources([
-    'actividades' => 'ReservaActividad\ActividadesController',
-    'reservaactividades'    => 'ReservaActividad\ReservaActividadesController',
-]);
+//Route::resources([
+    //'actividades' => 'ReservaActividad\ActividadesController',
+    //'reservaactividades'    => 'ReservaActividad\ReservaActividadesController',
+//]);
+
+Route::resource('actividades', 'ReservaActividad\ActividadesController', [
+  'parameters' => ['actividades' => 'actividad']
+  ]);
 
 /* CRUD Reservas Hoteles */
 Route::resources([
