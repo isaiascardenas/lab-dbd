@@ -8,9 +8,7 @@
 
             <div class="form-group form-row align-items-end">
                 <div class="col">
-                    <label for="id_destino">Cuidad</label>
-                    {{-- <div class="form-group"> --}}
-
+                    <label for="id_destino"> Cuidad </label>
                     <div class="form-group">
                         <select id="origen_id" name="origen_id" class="form-control selectpicker" title="Origen" data-live-search="true">
                             @foreach ($sucursales as $sucursal)

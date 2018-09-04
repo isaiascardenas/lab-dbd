@@ -20,19 +20,32 @@ Route::get('/', 'HomeController@index');
 Route::get('/cart', 'HomeController@cart');
 
 /* CRUD Usuarios */
-Route::resource('users', 'UserController')->except(['create', 'edit']);
+Route::resource('users', 'UserController');
 
 /* CRUD Reservas Actividades */
-Route::resources([
-    'actividades' => 'ReservaActividad\ActividadesController',
-    'reservaactividades'    => 'ReservaActividad\ReservaActividadesController',
-]);
+//Route::resources([
+    //'actividades' => 'ReservaActividad\ActividadesController',
+    //'reservaactividades'    => 'ReservaActividad\ReservaActividadesController',
+//]);
+
+Route::resource('actividades', 'ReservaActividad\ActividadesController', [
+  'parameters' => ['actividades' => 'actividad']
+  ]);
 
 /* CRUD Reservas Hoteles */
-Route::resources([
-    'hoteles' => 'ReservaHabitacion\HotelesController',
-    'habitaciones' => 'ReservaHabitacion\HabitacionesController',
-    'reserva_habitaciones' => 'ReservaHabitacion\ReservaHabitacionesController',
+
+
+
+Route::resource('hoteles','ReservaHabitacion\HotelesController', [
+  'parameters' => ['hoteles'=>'hotel']
+]);
+
+Route::resource('habitaciones','ReservaHabitacion\HabitacionesController', [
+  'parameters' => ['habitaciones'=>'habitacion']
+]);
+
+Route::resource('reservaHabitaciones','ReservaHabitacion\ReservaHabitacionesController', [
+  'parameters' => ['reservaHabitaciones'=>'reservaHabitacion']
 ]);
 
 /**
@@ -47,8 +60,11 @@ Route::resources([
 Route::resources([
     'autos' => 'ReservaAuto\AutosController',
     'companias' => 'ReservaAuto\CompaniasController',
-    'sucursales' => 'ReservaAuto\SucursalesController',
     'reserva_autos' => 'ReservaAuto\ReservaAutosController',
+]);
+
+Route::resource('sucursales', 'ReservaAuto\SucursalesController', [
+    'parameters' => ['sucursales' => 'sucursal']
 ]);
 
 /**

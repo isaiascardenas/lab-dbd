@@ -32,7 +32,7 @@ class VuelosController extends Controller
   	// $data["vuelos"] = Tramo::buscarVuelos(request());
 
 
-  	$vuelos = Tramo::all()->take(10);
+  	//$vuelos = Tramo::all()->take(10);
 
     return view('modulos.ReservaVuelo.vuelos.index', compact("vuelos"));
   }

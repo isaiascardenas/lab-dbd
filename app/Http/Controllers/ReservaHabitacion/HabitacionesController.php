@@ -15,7 +15,9 @@ class HabitacionesController extends Controller
      */
     public function index()
     {
-        return Habitacion::all();
+
+        $habitaciones = Habitacion::all();
+        return view('modulos.ReservaHabitacion.habitaciones.index', compact('habitaciones'));
 
     }
 
@@ -26,7 +28,7 @@ class HabitacionesController extends Controller
      */
     public function create()
     {
-        
+        return view('modulos.ReservaHabitacion.habitaciones.create');
     }
 
     /**
@@ -38,16 +40,23 @@ class HabitacionesController extends Controller
     public function store(Request $request)
     {
         $habitacionesData = $this->validate($request, [
-            
 
-            'descripcion' => 'requerid|string',
-            'capacidad_nino' => 'requerid|integer',
-            'capacidad_adulto' => 'requerid|integer',
-            'precio_por_noche' => 'requerid|integer',
-            'hotel_id' => 'requerid|integer'
+            'capacidad_nino' => 'required|integer',
+            'capacidad_adulto' => 'required|integer',
+            'precio_por_noche' => 'required|integer',
+            'descripcion' => 'required|string',
+            'hotel_id' => 'required|integer'
         ]);
 
-        return Habitacion::create($habitacionesData);
+        $habitacion = Habitacion::create($habitacionesData);
+
+        if ($habitacion->exists()) {
+        $response = ['success' => 'Creado con éxito!'];
+        } else {
+          $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/habitaciones')->with($response);
 
         
     }
@@ -58,10 +67,14 @@ class HabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Habitacion $habitacion)
     {
-        $habitacion = Habitacion::find($id);
-        return $habitacion;
+        if ($habitacion instanceof \Illuminate\Database\Eloquent\Model) {
+            return view('modulos.ReservaHabitacion.habitaciones.show', compact('habitacion'));
+        } else {
+          $response = ['error' => 'No existe la id solicitada'];
+          return redirect('/habitaciones')->with($response);
+        }
     }
 
     /**
@@ -72,7 +85,12 @@ class HabitacionesController extends Controller
      */
     public function edit(Habitacion $habitacion)
     {
-        
+        if ($habitacion instanceof \Illuminate\Database\Eloquent\Model) {
+            return view('modulos.ReservaHabitacion.habitaciones.edit', compact('habitacion'));
+        } else {
+          $response = ['error' => 'No es posible editar una id que no existe'];
+          return redirect('/habitaciones')->with($response);
+        }
     }
 
     /**
@@ -82,18 +100,16 @@ class HabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Habitacion $habitacion)
     {
-        $habitaciones = Habitaciones::find($id);
+        
 
         $this->validate($request, [
-            
-
-            'descripcion' => 'requerid|string',
-            'capacidad_nino' => 'requerid|integer',
-            'capacidad_adulto' => 'requerid|integer',
-            'precio_por_noche' => 'requerid|integer',
-            'hotel_id' => 'requerid|integer'
+            'capacidad_nino' => 'required|integer',
+            'capacidad_adulto' => 'required|integer',
+            'precio_por_noche' => 'required|integer',
+            'descripcion' => 'required|string',
+            'hotel_id' => 'required|integer'
         ]);
 
         $habitacion->descripcion = $request->get('descripcion');
@@ -102,9 +118,18 @@ class HabitacionesController extends Controller
         $habitacion->precio_por_noche = $request->get('precio_por_noche');
         $habitacion->hotel_id = $request->get('hotel_id');
 
-        $habitacion->save();
+        $dataUpdate = $habitacion->save();
 
-        return $habitacion;
+        if ($dataUpdate) 
+        {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } 
+        else 
+        {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
+
+        return redirect('/habitaciones/'.$habitacion->id.'/edit')->with($response);
 
         
     }
@@ -115,9 +140,16 @@ class HabitacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Habitacion $habitacion)
     {
-        Habitacion::destroy($id);
-        return Habitacion::all();
+        $response = [];
+        try {
+          $habitacion->delete();
+          $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+          $response = ['error' => 'Error al eliminar el registro!'];
+        }
+
+        return redirect('/habitaciones')->with($response);
     }
 }
