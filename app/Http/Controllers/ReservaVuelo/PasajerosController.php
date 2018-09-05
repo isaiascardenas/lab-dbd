@@ -15,7 +15,9 @@ class PasajerosController extends Controller
    */
   public function index()
   {
-    return Pasajero::all();
+    $pasajeros = Pasajero::all();
+
+    return view('modulos.ReservaVuelo.pasajeros.index', compact('pasajeros'));
   }
 
   /**
@@ -25,7 +27,7 @@ class PasajerosController extends Controller
    */
   public function create()
   {
-      //
+    return view('modulos.ReservaVuelo.pasajeros.create');
   }
 
   /**
@@ -36,11 +38,19 @@ class PasajerosController extends Controller
    */
   public function store(Request $request)
   {
-    return Pasajero::create($this->validate($request, [
+    $pasajero = Pasajero::create($this->validate($request, [
       'nombre' => 'required',
       'rut' => 'required',
-      'reserva_boleto_id' => 'required'
+      'reserva_boleto_id' => 'required|integer'
     ]));
+
+    if ($pasajero->exists()) {
+      $response = ['success' => 'Creado con éxito!'];
+    } else {
+      $response = ['error' => 'No se ha podido crear!'];
+    }
+
+    return redirect('/pasajeros')->with($response);
   }
 
   /**
@@ -51,7 +61,7 @@ class PasajerosController extends Controller
    */
   public function show(Pasajero $pasajero)
   {
-    return $pasajero;
+    return view('modulos.ReservaVuelo.pasajeros.show', compact('pasajero'));
   }
 
   /**
@@ -62,7 +72,7 @@ class PasajerosController extends Controller
    */
   public function edit(Pasajero $pasajero)
   {
-      //
+    return view('modulos.ReservaVuelo.pasajeros.edit', compact('pasajero'));
   }
 
   /**

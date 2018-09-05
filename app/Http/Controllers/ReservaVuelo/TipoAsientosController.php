@@ -15,7 +15,9 @@ class TipoAsientosController extends Controller
      */
     public function index()
     {
-      return TipoAsiento::all();
+      $tipoAsientos = TipoAsiento::all();
+
+      return view('modulos.ReservaVuelo.tipo-asientos.index', compact('tipoAsientos'));
     }
 
     /**
@@ -25,7 +27,7 @@ class TipoAsientosController extends Controller
      */
     public function create()
     {
-      // 
+      return view('modulos.ReservaVuelo.tipo-asientos.create');
     }
 
     /**
@@ -36,10 +38,18 @@ class TipoAsientosController extends Controller
      */
     public function store(Request $request)
     {
-      return Aeropuerto::create($this->validate($request, [
-        'factor_costo' => 'required',
-        'descripcion' => 'required'
-      ]));
+      $tipoAsiento = TipoAsiento::create($this->validate($request, [
+                  'factor_costo' => 'required',
+                  'descripcion' => 'required'
+                ]));
+
+      if ($tipoAsiento->exists()) {
+        $response = ['success' => 'Creado con éxito!'];
+      } else {
+        $response = ['error' => 'No se ha podido crear!'];
+      }
+
+      return redirect('/tipo-asientos')->with($response);
     }
 
     /**
@@ -50,7 +60,7 @@ class TipoAsientosController extends Controller
      */
     public function show(TipoAsiento $tipoAsiento)
     {
-      return $tipoAsiento;
+      return view('modulos.ReservaVuelo.tipo-asientos.show', compact('tipoAsiento'));
     }
 
     /**
@@ -61,7 +71,7 @@ class TipoAsientosController extends Controller
      */
     public function edit(TipoAsiento $tipoAsiento)
     {
-      // 
+      return view('modulos.ReservaVuelo.tipo-asientos.edit', compact('tipoAsiento'));
     }
 
     /**
@@ -73,12 +83,18 @@ class TipoAsientosController extends Controller
      */
     public function update(Request $request, TipoAsiento $tipoAsiento)
     {
-      $tipoAsiento->fill($this->validate($request, [
-        'factor_costo' => 'required',
+      $outcome = $tipoAsiento->fill($this->validate($request, [
+        'factor_costo' => 'required|numeric',
         'descripcion' => 'required'
       ]))->save();
 
-      return $tipoAsiento;
+      if ($outcome) {
+        $response = ['success' => 'Actualizado con éxito!'];
+      } else {
+        $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+      }
+
+      return redirect('/tipo-asientos/'.$tipoAsiento->id.'/edit')->with($response);
     }
 
     /**
@@ -89,8 +105,14 @@ class TipoAsientosController extends Controller
      */
     public function destroy(TipoAsiento $tipoAsiento)
     {
-      $tipoAsiento->delete();
+      $response = [];
+      try {
+        $tipoAsiento->delete();
+        $response = ['success' => 'Eliminado con éxito!'];
+      } catch (\Exception $e) {
+        $response = ['error' => 'Error al eliminar el registro!'];
+      }
 
-      return TipoAsiento::all();
+      return redirect('/tipo-asientos')->with($response);
     }
 }

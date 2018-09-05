@@ -1,4 +1,4 @@
-z<?php
+<?php
 
 namespace App\Http\Controllers\Paquetes;
 

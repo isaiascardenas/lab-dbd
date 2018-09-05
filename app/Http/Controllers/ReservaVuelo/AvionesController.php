@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Modulos\ReservaVuelo\Avion;
 use App\Http\Controllers\Controller;
 use App\Modulos\ReservaVuelo\Aerolinea;
-use Illuminate\Database\Eloquent\Model;
 
 class AvionesController extends Controller
 {
@@ -29,9 +28,9 @@ class AvionesController extends Controller
      */
     public function create()
     {
-      $aviones = Avion::all();
+      $aerolineas = Aerolinea::all();
 
-      return view('modulos.ReservaVuelo.aviones.index', compact('aviones'));
+      return view('modulos.ReservaVuelo.aviones.create', compact('aerolineas'));
     }
 
     /**
@@ -47,7 +46,7 @@ class AvionesController extends Controller
         'aerolinea_id' => 'required|integer'
       ]));
 
-      if ($avion instanceof Model) {
+      if ($avion->exists()) {
         $response = ['success' => 'Creado con éxito!'];
       } else {
         $response = ['error' => 'No se ha podido crear!'];
@@ -75,7 +74,9 @@ class AvionesController extends Controller
      */
     public function edit(Avion $avion)
     {
-      return view('modulos.ReservaVuelo.aerolineas.edit', compact('avion'));
+      $aerolineas = Aerolinea::all();
+
+      return view('modulos.ReservaVuelo.aviones.edit', compact('avion', 'aerolineas'));
     }
 
     /**
@@ -117,6 +118,6 @@ class AvionesController extends Controller
         $response = ['error' => 'Error al eliminar el registro!'];
       }
 
-      return redirect('/aerolineas')->with($response);
+      return redirect('/aviones')->with($response);
     }
 }

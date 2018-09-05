@@ -98,11 +98,9 @@ class Tramo extends Model
     $diff .= 'm';
 
     return $diff;
-
   }
 
   /* Funcionalidades */
-
   public function printPlane()
   {
   	$plane = '';
@@ -137,6 +135,15 @@ class Tramo extends Model
               : random_int(10000, 150000);
   }
 
+  public function asientosDisponibles()
+  {
+    $ids = $this->reservaBoleto->pluck('id');
+
+    AsientoAvion::where('tramo_id', '=', $this->id)->whereNotInt('id', $ids);
+
+    return [];
+  }
+
   /* Temporal -  */
   // Retorna array de instancias de clase \App\Modulos\ReservaVuelo\Vuelo
   /**
@@ -156,27 +163,35 @@ class Tramo extends Model
    */
   public static function buscarVuelos($params)
   {
+    // Validator::make($params, [
+    //   'origen_id' => 'required|integer',
+    //   'destino_id' => 'required|integer',
+    //   'tipo_vuelo' => 'required|integer|between:0,1',
+    //   'fecha_ida' => 'required|date',
+    //   'fecha_vuelta' => 'required_if:tipo_vuelo,1|date',
+    //   'pasajeros_adultos' => 'required|integer',
+    //   'pasajeros_ninos' => 'required|integer',
+    //   'tipo_pasaje' => 'required|integer|between:1,3'
+    // ]);
 
-  	$fechaIda = Carbon::createFromFormat('d-m-Y', $params['fecha_ida']);
+  	$fechaPartida = Carbon::createFromFormat('d-m-Y', $params['fecha_ida']);
 
-  	$query = static::where('origen_id', '=', $params['origen_id'])				// origen
-  				            ->where('destino_id', '=', $params['destino_id']);			// destino
-  				            // ->whereDate('fecha_partida', $fechaIda->format('Y-m-d'));
+    $tramos = static::all();
 
-  	// if ($fechaVuelta = Carbon::createFromFormat('d-m-Y', $params['fecha_vuelta'])) {
-  	// 	$query->whereDate('fecha_llegada', $fechaVuelta->format('Y-m-d'));
-  	// }
+    $vuelos = [];
+    
+    foreach ($tramos as $tramo) {
+      $asientosDisponibles = $tramo->asientosDisponibles();
+      if ($tramo->fecha_partida == $fechaPartida
+          && $tramo->origen_id == $params['origen_id']
+          && $tramo->destino_id == $params['destino_id']
+          && count($asientosDisponibles) > 0) {
+        $vuelos[] = new Vuelo([$tramo]);
+      }
+    }
 
-  	// Capacidad
-  	// $query->join('reserva_asientos', 'reserva_asientos.id_tramo', '=', 'tramos.id');
-  	// $query->where();
-  	
-  	// Asiento
-  	
+    // dijkstra($tramos, $params);
 
-  	// Tipo Asiento
-  	// $query->where('');
-
-  	return $query->get();
+  	return $vuelos;
   }
 }

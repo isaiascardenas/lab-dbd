@@ -100,17 +100,21 @@
         			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-globe"></i> App</a>
         			<a class="list-group-item list-group-item-action" href="/usuarios/">Usuarios</a>
         			<!-- RESERVA ACTIVIDADES -->
-        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-tasks"></i> Reserva Actividades</a>
+        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-tasks"></i> Actividades</a>
         			<!-- RESERVA AUTOS -->
-        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-car"></i> Reserva Autos</a>
+        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-car"></i> Autos</a>
         			<!-- RESERVA HOTELES -->
-        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-building"></i> Reserva Hoteles</a>
+        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-building"></i> Hoteles</a>
               <!-- RESERVA VUELOS -->
-        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-plane"></i> Reserva Vuelos</a>
+        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-plane"></i> Vuelos</a>
         			<a class="list-group-item list-group-item-action" href="/aerolineas/">Aerol&iacute;neas</a>
         			<a class="list-group-item list-group-item-action" href="/aeropuertos/">Aeropuertos<a>
-        			<a class="list-group-item list-group-item-action" href="/aviones/">Aviones</a>
-        			<a class="list-group-item list-group-item-action" href="/tramos/">Tramos</a>
+              <!--<a class="list-group-item list-group-item-action" href="/asientos/">Asientos</a>-->
+              <a class="list-group-item list-group-item-action" href="/aviones/">Aviones</a>
+              <a class="list-group-item list-group-item-action" href="/pasajeros/">Pasajeros</a>
+              <a class="list-group-item list-group-item-action" href="/reserva-boletos/">Reserva Boletos</a>
+        			<a class="list-group-item list-group-item-action" href="/tipo-asientos/">Tipo Asientos</a>
+              <a class="list-group-item list-group-item-action" href="/tramos/">Tramos</a>
         		</div>
         	</aside>
           <main class="col py-3">
@@ -134,6 +138,21 @@
           ], 
           'order': [[1, 'asc']]
         });
+      });
+
+      $('select.selectpicker').selectpicker({
+          noneSelectedText: 'No se ha seleccionado nada',
+          noneResultsText: 'Ningún resultado coincide con {0}',
+          selectOnTab: true
+      });
+
+      $('.fechas-vuelo').datepicker({
+          autoclose: true,
+          clearBtn: true,
+          endDate: '',
+          format: 'dd-mm-yyyy',
+          inputs: $('.datepicker'),
+          todayHighlight: true
       });
     </script>
     @yield('script')

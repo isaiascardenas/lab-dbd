@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <div id="fechas_vuelo" class="form-group form-row align-items-end">
+            <div id="fechas_vuelo" class="form-group form-row align-items-end fechas-vuelo">
                 <div class="col">
                     <label for="fecha_ida">Fecha Ida</label>
                     <div class="input-group">

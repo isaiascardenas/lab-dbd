@@ -25,7 +25,9 @@
 			<div class="col-9">
 				<select class="form-control" name="aerolinea_id" id="aerolinea_id">
 					@foreach($aerolineas as $aerolinea)
-					<option value="{{ $aerolinea->id }}" {{ $avion->aerolinea->id == $aerolinea->id?'selected':'' }}>{{ $aerolinea->nombre }}</option>
+					<option value="{{ $aerolinea->id }}" {{ $avion->aerolinea->id == $aerolinea->id?'selected':'' }}>
+            {{ $aerolinea->nombre }}
+          </option>
 					@endforeach
 				</select>
 			</div>

@@ -69,7 +69,7 @@
             selectOnTab: true
         });
 
-        $('#fechas_vuelo').datepicker({
+        $('.fechas-vuelo').datepicker({
             autoclose: true,
             clearBtn: true,
             endDate: '',
