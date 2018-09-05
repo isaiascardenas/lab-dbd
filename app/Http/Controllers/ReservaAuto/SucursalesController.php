@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\ReservaAuto;
 
+use App\Ciudad;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modulos\ReservaAuto\Sucursal;
+use App\Modulos\ReservaAuto\Compania;
 
 class SucursalesController extends Controller
 {
@@ -15,7 +17,8 @@ class SucursalesController extends Controller
      */
     public function index()
     {
-        return Sucursal::all();
+        $sucursales = Sucursal::with('compania', 'ciudad')->get();
+        return view('modulos.ReservaAuto.sucursales.index', compact('sucursales'));
     }
 
     /**
@@ -25,7 +28,12 @@ class SucursalesController extends Controller
      */
     public function create()
     {
-        //
+        $ciudades = Ciudad::all();
+        $companias = Compania::all();
+        return view('modulos.ReservaAuto.sucursales.create', compact(
+            'ciudades',
+            'companias'
+        ));
     }
 
     /**
@@ -36,10 +44,18 @@ class SucursalesController extends Controller
      */
     public function store(Request $request)
     {
-        return Sucursal::create($this->validate($request, [
+        $sucursal = Sucursal::create($this->validate($request, [
             'compania_id' => 'required',
             'ciudad_id' => 'required',
         ]));
+
+        if ($sucursal->exists()) {
+            $response = ['success' => 'Creado con éxito!'];
+        } else {
+            $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/sucursales')->with($response);
     }
 
     /**
@@ -48,9 +64,10 @@ class SucursalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Sucursal $sucursal)
     {
-        return Sucursal::find($id);
+        $sucursal->load('compania', 'ciudad');
+        return view('modulos.ReservaAuto.sucursales.show', compact('sucursal'));
     }
 
     /**
@@ -59,9 +76,12 @@ class SucursalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Sucursal $sucursal)
     {
-        //
+        $ciudades = Ciudad::all();
+        $companias = Compania::all();
+        $sucursal->load('compania', 'ciudad');
+        return view('modulos.ReservaAuto.sucursales.edit', compact('sucursal'));
     }
 
     /**
@@ -71,14 +91,20 @@ class SucursalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Sucursal $sucursal)
     {
-        $sucursal = Sucursal::find($id);
-        $sucursal->fill($this->validate($request, [
-            'nombre' => 'required',
+        $outcome = $sucursal->fill($this->validate($request, [
+            'compania_id' => 'required',
+            'ciudad_id' => 'required',
         ]))->save();
 
-        return $sucursal;
+        if ($outcome) {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } else {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
+
+        return redirect('/sucursales/'.$sucursal->id.'/edit')->with($response);
     }
 
     /**
@@ -87,10 +113,16 @@ class SucursalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Sucursal $sucursal)
     {
-        $sucursal = Sucursal::find($id);
-        $sucursal->delete();
-        return Sucursal::all();
+        $response = [];
+        try {
+            $sucursal->delete();
+            $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+            $response = ['error' => 'Error al eliminar el registro!'];
+        }
+
+        return redirect('/sucursales')->with($response);
     }
 }

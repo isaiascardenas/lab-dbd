@@ -16,7 +16,7 @@ class HotelesController extends Controller
     public function index()
     {
         $hoteles = Hotel::all();
-        return view('modulos.ReservaHabitacion.index', compact("hoteles"));
+        return view('modulos.ReservaHabitacion.hoteles.index', compact("hoteles"));
     }
 
     /**
@@ -26,7 +26,7 @@ class HotelesController extends Controller
      */
     public function create()
     {
-        return view('modulos.ReservaHabitacion.create');
+        return view('modulos.ReservaHabitacion.hoteles.create');
     }
 
     /**
@@ -64,11 +64,11 @@ class HotelesController extends Controller
      * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Hotel $hotel)
     {
-        $hotel=Hotel::find($id);
+        
         if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
-            return view('modulos.ReservaHabitacion.show', compact('hotel'));
+            return view('modulos.ReservaHabitacion.hoteles.show', compact('hotel'));
         } else {
           $response = ['error' => 'No existe la id solicitada'];
           return redirect('/hoteles')->with($response);
@@ -82,13 +82,13 @@ class HotelesController extends Controller
      * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Hotel $hotel)
     {
-        $hotel=Hotel::find($id);
+        
          
 
-        if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
-            return view('modulos.ReservaHabitacion.edit', compact('hotel'));
+        if ($hotel->exists()) {
+            return view('modulos.ReservaHabitacion.hoteles.edit', compact('hotel'));
         } else {
           $response = ['error' => 'No es posible editar una id que no existe'];
           return redirect('/hoteles')->with($response);
@@ -102,9 +102,9 @@ class HotelesController extends Controller
      * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Hotel $hotel)
     {
-        $hotel=Hotel::find($id);
+        
         $this->validate($request , [
 
         'estrellas' => 'required|integer',
@@ -139,9 +139,9 @@ class HotelesController extends Controller
      * @param  Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Hotel $hotel)
     {
-        $hotel=Hotel::find($id);
+        
         $response = [];
         try {
           $hotel->delete();

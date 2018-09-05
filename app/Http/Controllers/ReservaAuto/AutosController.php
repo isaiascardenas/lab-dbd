@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ReservaAuto;
 use Illuminate\Http\Request;
 use App\Modulos\ReservaAuto\Auto;
 use App\Http\Controllers\Controller;
+use App\Modulos\ReservaAuto\Sucursal;
 
 class AutosController extends Controller
 {
@@ -15,7 +16,8 @@ class AutosController extends Controller
      */
     public function index()
     {
-        return view('modulos.ReservaAuto.form', ['autos' => Auto::all()]);
+        $autos = Auto::all();
+        return view('modulos.ReservaAuto.autos.index', compact('autos'));
     }
 
     /**
@@ -25,7 +27,8 @@ class AutosController extends Controller
      */
     public function create()
     {
-        //
+        $sucursales = Sucursal::with('compania', 'ciudad')->get();
+        return view('modulos.ReservaAuto.autos.create', compact('sucursales'));
     }
 
     /**
@@ -36,13 +39,21 @@ class AutosController extends Controller
      */
     public function store(Request $request)
     {
-        return Auto::create($this->validate($request, [
+        $auto = Auto::create($this->validate($request, [
             'patente' => 'required',
             'descripcion' => 'required',
             'precio_hora' => 'required',
             'capacidad' => 'required',
             'sucursal_id' => 'required',
         ]));
+
+        if ($auto->exists()) {
+            $response = ['success' => 'Creado con éxito!'];
+        } else {
+            $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/autos')->with($response);
     }
 
     /**
@@ -53,7 +64,8 @@ class AutosController extends Controller
      */
     public function show(Auto $auto)
     {
-        return $auto;
+        $auto->load('sucursal.compania', 'sucursal.ciudad');
+        return view('modulos.ReservaAuto.autos.show', compact('auto'));
     }
 
     /**
@@ -62,9 +74,10 @@ class AutosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Auto $auto)
     {
-        //
+        $sucursales = Sucursal::with('compania', 'ciudad')->get();
+        return view('modulos.ReservaAuto.autos.edit', compact('auto', 'sucursales'));
     }
 
     /**
@@ -76,14 +89,21 @@ class AutosController extends Controller
      */
     public function update(Request $request, Auto $auto)
     {
-        $auto->fill($this->validate($request, [
+        $outcome = $auto->fill($this->validate($request, [
             'patente' => 'required',
+            'capacidad' => 'required',
             'descripcion' => 'required',
             'precio_hora' => 'required',
-            'capacidad' => 'required',
             'sucursal_id' => 'required',
         ]))->save();
-        return $auto;
+
+        if ($outcome) {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } else {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
+
+        return redirect('/autos/'.$auto->id.'/edit')->with($response);
     }
 
     /**
@@ -94,7 +114,14 @@ class AutosController extends Controller
      */
     public function destroy(Auto $auto)
     {
-        $auto->delete();
-        return Auto::all();
+        $response = [];
+        try {
+            $auto->delete();
+            $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+            $response = ['error' => 'Error al eliminar el registro!'];
+        }
+
+        return redirect('/autos')->with($response);
     }
 }
