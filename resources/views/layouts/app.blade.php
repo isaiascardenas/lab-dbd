@@ -22,10 +22,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- DateTimePicker-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     {{-- <!-- Datepicker --> --}}
-    {{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css"> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script> --}}
     <!-- Bootstrap Select -->
