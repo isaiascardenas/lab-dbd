@@ -24,7 +24,7 @@
             <div class="form-group form-row align-items-end">
                 <div class="col">
                     <label for="fecha_inicio">Fecha retiro</label>
-                    <input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control text-center datepicker" readonly="readonly">
+                    <input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control text-center" readonly="readonly">
                     <span class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                     </span>
@@ -32,7 +32,7 @@
 
                 <div class="col fecha_entrega">
                     <label for="fecha_termino">Fecha entrega</label>
-                    <input type="text" id="fecha_termino" name="fecha_termino" class="form-control text-center datepicker" readonly="readonly">
+                    <input type="text" id="fecha_termino" name="fecha_termino" class="form-control text-center" readonly="readonly">
                     <span class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                     </span>
@@ -63,3 +63,22 @@
         </form>
     </div>
 </div>
+
+<script>
+
+let fechaTermino = flatpickr('#fecha_termino', {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+});
+
+let fechaInicio = flatpickr('#fecha_inicio', {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minDate: "today",
+});
+
+fechaInicio.set("onChange", function(d) {
+    fechaTermino.set("minDate", d[0]);
+});
+
+</script>

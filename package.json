@@ -20,6 +20,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "flatpickr": "^4.5.2",
         "npm": "^5.8.0"
     }
 }
