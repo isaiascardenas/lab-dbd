@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ciudad;
 use App\Modulos\ReservaAuto\Auto;
 use App\Modulos\ReservaAuto\Sucursal;
 use App\Modulos\ReservaVuelo\Aeropuerto;
@@ -15,6 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $autos = Auto::all();
+        $ciudades = Ciudad::all();
         $actividades = Actividad::all();
         $tipoPasaje = TipoAsiento::all();
         $aeropuertos = Aeropuerto::all();

@@ -2,7 +2,7 @@
 
 @section('content')
 	<h2>
-    <i class="fas fa-map-marker-alt"></i> Aerol&iacute;neas
+    <i class="fas fa-map-marker-alt"></i> Actividades
   </h2>
 	
 	<hr>
@@ -10,8 +10,8 @@
 	@include('layouts.messages')
 	
 	<div class="form-group">
-		<a href="/aerolineas/create/" class="btn btn-primary">
-      <i class="fas fa-plus"></i> Nueva Aerol&iacute;nea
+		<a href="/actividades/create/" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Nueva Actividad
     </a>
 	</div>
 
@@ -19,18 +19,18 @@
 		<thead>
 			<tr>
 				<th class="no-sort"></th>
-				<th>Nombre</th>
+				<th>Descripcion</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($aerolineas as $aerolinea)
+			@foreach($actividades as $actividad)
 			<tr>
 				<td>
-          <a class="btn btn-sm btn-info" href="/aerolineas/{{ $aerolinea->id }}">
+          <a class="btn btn-sm btn-info" href="/actividades/{{ $actividad->id }}">
             <i class="fas fa-eye"></i>
           </a>
         </td>
-				<td>{{ $aerolinea->nombre }}</td>
+				<td>{{ $actividad->descripcion }}</td>
 			</tr>
 			@endforeach
 		</tbody>

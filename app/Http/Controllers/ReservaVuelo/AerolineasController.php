@@ -43,7 +43,7 @@ class AerolineasController extends Controller
       'nombre' => 'required'
     ]));
 
-    if ($aerolinea instanceof Model) {
+    if ($aerolinea->exists()) {
       $response = ['success' => 'Creado con éxito!'];
     } else {
       $response = ['error' => 'No se ha podido crear!'];

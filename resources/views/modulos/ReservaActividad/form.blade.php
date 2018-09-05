@@ -11,8 +11,8 @@
                     <label for="ubicacion_id">Ubicación</label>
                     <div class="form-group">
                         <select id="ubicacion_id" name="ubicacion_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
-                            @foreach ($actividades as $actividades)
-                            <option value="{{ $actividades->id }}">{{ $actividades->ciudad->nombre . ", " . $actividades->ciudad->pais->nombre }}</option>
+                            @foreach ($actividades as $actividad)
+                            <option value="{{ $actividad->id }}">{{ $actividad->ciudad->nombre . ", " . $actividad->ciudad->pais->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
