@@ -43,7 +43,7 @@
 
     <div class="form-group form-row align-items-end">
         <div class="col">
-            <label>Pasajeros</label>
+            <label>Integrantes</label>
             <div class="row">
                 <div class="col input-group">
                     <input type="number" name="max_adultos" class="form-control text-right" value="1" value="{{ $actividad->max_adultos }}">
@@ -85,15 +85,11 @@
 
 
 
-
-
-
-
     <div id="fechas_actividades" class="form-group form-row align-items-end">
         <div class="col">
             <label for="fecha_ida">Fecha Inicio</label>
             <div class="input-group">
-                <input type="text" id="datepicker" name="fecha_inicio" class="form-control text-center datepicker" readonly="readonly" value="{{ $actividad->fecha_inicio }}">
+                <input type="text" id="fecha_comienzoea" name="fecha_inicio" class="form-control text-center" readonly="readonly" value="{{ $actividad->fecha_inicio }}">
                 <span class="input-group-append">
                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                 </span>
@@ -107,9 +103,9 @@
         <div class="col">
             <label for="fecha_vuelta" class="fecha_termino">Fecha Termino</label>
             <div class="input-group">
-                <input type="text" id="datepicker" name="fecha_termino" class="form-control text-center datepicker fecha_termino" readonly="readonly" value="{{ $actividad->fecha_termino }}">
+                <input type="text" id="fecha_llegadaea" name="fecha_termino" class="form-control text-center" readonly="readonly" value="{{ $actividad->fecha_termino }}">
                 <span class="input-group-append">
-                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    <spa2018-09-07 21:01:53n class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                 </span>
             </div>
         </div>
@@ -117,27 +113,43 @@
 
 
 
-    <div class="text-right">
-      <a href="/actividades/{{ $actividad->id }}" class="btn btn-info">
-        <i class="fas fa-ban"></i> Cancelar
-      </a>
-      <button type="submit" class="btn btn-primary">
-        <i class="fas fa-save"></i> Actualizar
-      </button>
-    </div>
-  </form>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="text-right">
+            <a href="/actividades/{{ $actividad->id }}" class="btn btn-info">
+                <i class="fas fa-ban"></i> Cancelar
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Actualizar
+            </button>
+        </div>
+    </form>
 @endsection
 
 @section('script')
     <script>
+        let fechaTermino = flatpickr('#fecha_llegadaea', {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
 
-        $('#fechas_actividades').datepicker({
-            autoclose: true,
-            clearBtn: true,
-            endDate: '',
-            format: 'dd-mm-yyyy',
-            inputs: $('.datepicker'),
-            todayHighlight: true
+        let fechaInicio = flatpickr('#fecha_comienzoea', {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today",
+        });
+
+        fechaInicio.set("onChange", function(d) {
+            fechaTermino.set("minDate", d[0]);
         });
     </script>
 @endsection 

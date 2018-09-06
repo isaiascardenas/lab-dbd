@@ -18,7 +18,7 @@ class ActividadesController extends Controller
     public function index()
     {
         $actividades = Actividad::all();
-        return view('modulos.ReservaActividad.index', compact('actividades'));
+        return view('modulos.ReservaActividad.Reservas.index', compact('actividades'));
     }
 
     /**
@@ -29,29 +29,29 @@ class ActividadesController extends Controller
     public function create()
     {
         $ciudades = Ciudad::all();
-        return view('modulos.ReservaActividad.create', compact('ciudades'));
+        return view('modulos.ReservaActividad.Reservas.create', compact('ciudades'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage.ciudad_id
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $actividades= Actividad::create([$this->validate($request, [
+        $actividad = Actividad::create($this->validate($request, [
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
-            'descripcion' => 'required',
+            'descripcion' => 'required', 
             'max_ninos' => 'required',
             'max_adultos' => 'required',
             'costo_nino' => 'required',
             'costo_adulto' => 'required',
-            'ciudad_id' => 'required',
-        ])]);
+            'ciudad_id' => 'required'
+        ]));
 
-        if ($actividades->exists()) {
+        if ($actividad->exists()) {
           $response = ['success' => 'Creado con éxito!'];
         } else {
           $response = ['error' => 'No se ha podido crear!'];
@@ -70,7 +70,7 @@ class ActividadesController extends Controller
     public function show(Actividad  $actividad)
 
     {
-        return view('modulos.ReservaActividad.show', compact('actividad'));
+        return view('modulos.ReservaActividad.Reservas.show', compact('actividad'));
     }
 
     /**
@@ -82,7 +82,7 @@ class ActividadesController extends Controller
     public function edit(Actividad  $actividad)
     {
         $ciudades = Ciudad::all();
-        return view('modulos.ReservaActividad.edit', compact('actividad', 'ciudades'));
+        return view('modulos.ReservaActividad.Reservas.edit', compact('actividad', 'ciudades'));
     }
 
     /**
