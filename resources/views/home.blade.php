@@ -69,14 +69,14 @@
             selectOnTab: true
         });
 
-        $('.fechas-vuelo').datepicker({
-            autoclose: true,
-            clearBtn: true,
-            endDate: '',
-            format: 'dd-mm-yyyy',
-            inputs: $('.datepicker'),
-            todayHighlight: true
-        });
+        // $('.fechas-vuelo').datepicker({
+        //     autoclose: true,
+        //     clearBtn: true,
+        //     endDate: '',
+        //     format: 'dd-mm-yyyy',
+        //     inputs: $('.datepicker'),
+        //     todayHighlight: true
+        // });
 
         $("input[name=tipo_vuelo]").change(function(){
             var $target = $(".vuelo-vuelta");

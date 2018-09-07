@@ -2,9 +2,8 @@
 
 namespace App\Modulos\ReservaVuelo;
 
-use Illuminate\Database\Eloquent\Model;
-
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Tramo extends Model
 {
@@ -50,54 +49,30 @@ class Tramo extends Model
 
   public function horarioPartida()
 	{
-		return Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_partida)->format('d-m-Y H:i');
+		return Carbon::parse($this->fecha_partida)->format('d-m-Y H:i');
 	}
 
 	public function horarioLlegada()
 	{
-		return Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_llegada)->format('d-m-Y H:i');
+		return Carbon::parse($this->fecha_llegada)->format('d-m-Y H:i');
 	}
 
 	public function horaPartida()
 	{
-		return Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_partida)->format('H:i');
+		return Carbon::parse($this->fecha_partida)->format('H:i');
 	}
 
 	public function horaLlegada()
 	{
-		return Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_llegada)->format('H:i');
+		return Carbon::parse($this->fecha_llegada)->format('H:i');
 	}
 
 	public function duracion()
   {
-  	$fechaPartida = Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_partida);
-  	$fechaLlegada = Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_llegada);
+  	$fechaPartida = Carbon::parse($this->fecha_partida);
+  	$fechaLlegada = Carbon::parse($this->fecha_llegada);
 
-  	$diff = '';
-
-  	$diff .= $fechaLlegada->diffInHours($fechaPartida);
-  	$diff .= 'h';
-  	$diff .= ' ';
-  	$diff .= $fechaLlegada->diffInMinutes($fechaPartida);
-  	$diff .= 'm';
-
-  	return $diff;
-  }
-
-  public function tiempoEscala(Tramo $tramo)
-  {
-    $fechaLlegada = Carbon::createFromFormat('Y-m-d H:i:s', $this->fecha_llegada);
-    $fechaPartida = Carbon::createFromFormat('Y-m-d H:i:s', $tramo->fecha_partida);
-
-    $diff = '';
-
-    $diff .= $fechaPartida->diffInHours($fechaLlegada);
-    $diff .= 'h';
-    $diff .= ' ';
-    $diff .= $fechaPartida->diffInMinutes($fechaLlegada);
-    $diff .= 'm';
-
-    return $diff;
+  	return $fechaLlegada->diff($fechaPartida)->format('%Hh %im');
   }
 
   /* Funcionalidades */
@@ -137,11 +112,18 @@ class Tramo extends Model
 
   public function asientosDisponibles()
   {
-    $ids = $this->reservaBoleto->pluck('id');
+    $totales = $this->asientos->pluck('id')->toArray();
+    $reservados = $this->reservaBoleto->pluck('id')->toArray();
 
-    AsientoAvion::where('tramo_id', '=', $this->id)->whereNotInt('id', $ids);
+    return array_diff($totales, $reservados);
+  }
 
-    return [];
+  private static function buscarConEscala($tramoOrigen, $params)
+  {
+    /* array de Vuelo's */
+    $escalas = [];
+
+    return $escalas;
   }
 
   /* Temporal -  */
@@ -158,39 +140,31 @@ class Tramo extends Model
    *    'pasajeros_ninos',  # 
    *    'tipo_pasaje',      #
    * ];
-   *
-   *
    */
   public static function buscarVuelos($params)
   {
-    // Validator::make($params, [
-    //   'origen_id' => 'required|integer',
-    //   'destino_id' => 'required|integer',
-    //   'tipo_vuelo' => 'required|integer|between:0,1',
-    //   'fecha_ida' => 'required|date',
-    //   'fecha_vuelta' => 'required_if:tipo_vuelo,1|date',
-    //   'pasajeros_adultos' => 'required|integer',
-    //   'pasajeros_ninos' => 'required|integer',
-    //   'tipo_pasaje' => 'required|integer|between:1,3'
-    // ]);
-
   	$fechaPartida = Carbon::createFromFormat('d-m-Y', $params['fecha_ida']);
 
-    $tramos = static::all();
+    $tramos = static::where('origen_id', '=', $params['origen_id'])
+                      ->whereDate('fecha_partida', '=', $fechaPartida->format('Y-m-d'))
+                      ->get();
 
     $vuelos = [];
     
     foreach ($tramos as $tramo) {
-      $asientosDisponibles = $tramo->asientosDisponibles();
-      if ($tramo->fecha_partida == $fechaPartida
-          && $tramo->origen_id == $params['origen_id']
-          && $tramo->destino_id == $params['destino_id']
-          && count($asientosDisponibles) > 0) {
-        $vuelos[] = new Vuelo([$tramo]);
+      if ($tramo->destino_id == $params['destino_id']) {
+        $asientosDisponibles = $tramo->asientosDisponibles();
+        
+        if (count($asientosDisponibles) > 0) {
+          $vuelos[] = new Vuelo([$tramo->id]);
+        }
+      }
+      else {
+        $conEscalas = static::buscarConEscala($tramo, $params);
+
+        $vuelos = array_merge($vuelos, $conEscalas);
       }
     }
-
-    // dijkstra($tramos, $params);
 
   	return $vuelos;
   }

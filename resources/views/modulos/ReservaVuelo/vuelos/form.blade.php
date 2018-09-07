@@ -46,11 +46,11 @@
                 </div>
             </div>
 
-            <div id="fechas_vuelo" class="form-group form-row align-items-end fechas-vuelo">
+            <div class="form-group form-row align-items-end fechas-pareadas">
                 <div class="col">
                     <label for="fecha_ida">Fecha Ida</label>
                     <div class="input-group">
-                        <input type="text" id="fecha_ida" name="fecha_ida" class="form-control text-center datepicker" readonly="readonly">
+                        <input type="text" id="fecha_ida" name="fecha_ida" class="form-control text-center datepicker fecha-inicio" readonly="readonly">
                         <span class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </span>
@@ -64,7 +64,7 @@
                 <div class="col">
                     <label for="fecha_vuelta" class="vuelo-vuelta">Fecha Vuelta</label>
                     <div class="input-group">
-                        <input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control text-center datepicker vuelo-vuelta" readonly="readonly">
+                        <input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control text-center datepicker vuelo-vuelta fecha-termino" readonly="readonly">
                         <span class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </span>
@@ -105,3 +105,34 @@
         </form>
     </div>
 </div>
+
+<script>
+  var flatpickrFormat = {
+    enableTime: false,
+    dateFormat: "d-m-Y",
+    minDate: "today"
+  };
+
+  $('.fechas-pareadas').each(function(){
+    $fechaInicio = $(this).find('.fecha-inicio');
+    $fechaTermino = $(this).find('.fecha-termino');
+
+    $fechaInicio.flatpickr(flatpickrFormat);
+    $fechaTermino.flatpickr(flatpickrFormat);
+
+    $fechaInicio.on('change', function(){
+      $fechaInicio.flatpickr({
+        minDate: $fechaInicio.val()
+      });
+      if($fechaInicio.val() < $fechaTermino.val()){
+        $fechaTermino.val($fechaInicio.val());
+      }
+    });
+
+    $fechaTermino.on('change', function(){
+      if($fechaInicio.val() < $fechaTermino.val()){
+        $fechaInicio.val($fechaTermino.val());
+      }
+    });
+  });
+</script>

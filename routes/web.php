@@ -71,6 +71,7 @@ Route::resource('sucursales', 'ReservaAuto\SucursalesController', [
  *  Proceso de reserva de vuelos
  */
 Route::post('/vuelos/',             'ReservaVuelo\VuelosController@index');   // POST => filtros
+Route::get('/vuelos/',             'ReservaVuelo\VuelosController@index');   // POST => filtros
 Route::post('/vuelos/details/',     'ReservaVuelo\VuelosController@show');    // POST => [tramo_1, tramo_2]
 Route::post('/vuelos/reserva/',     'ReservaVuelo\VuelosController@reserva'); // POST => [tramo_1, tramo_2] tras confirmacion en /vuelos/details/
 
