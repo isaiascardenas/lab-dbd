@@ -93,7 +93,8 @@
             @yield('content')
         </main>
 
-        <footer  style="background-color: #ce93d8 !important;">
+        <footer  style="background-color: #ce93d8 !important;
+            position: fixed; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.7;}">
             <center>    
                 &copy; 2018 Tetravago Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
             </center>

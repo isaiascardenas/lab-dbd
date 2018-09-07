@@ -10427,6 +10427,7 @@ a.text-dark:focus {
 
 .nav-link {
   color: #38006b !important;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .nav-pills .nav-link.active,
@@ -10445,7 +10446,16 @@ a.text-dark:focus {
   border-color: #38006b !important;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+}
+
 body {
   background-color: #eceff1 !important;
+  background: url("/images/city.jpg");
 }
 
