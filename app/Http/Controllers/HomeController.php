@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ciudad;
 use Carbon\Carbon;
+use App\OrdenCompra;
 use App\Modulos\ReservaAuto\Auto;
 use App\Modulos\ReservaAuto\Sucursal;
 use App\Modulos\ReservaVuelo\Aeropuerto;
@@ -12,6 +13,7 @@ use App\Modulos\ReservaAuto\ReservaAuto;
 use App\Modulos\ReservaVuelo\TipoAsiento;
 use App\Modulos\ReservaActividad\Actividad;
 use App\Modulos\ReservaHabitacion\Habitacion;
+// use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -42,7 +44,7 @@ class HomeController extends Controller
         ));
     }
 
-    public function payAll()
+    public function pay()
     {
         // Here make a order and link it with all reservations
         //
@@ -50,7 +52,7 @@ class HomeController extends Controller
           'costo_total' => 0,
           'fecha_generado' => Carbon::now(),
           'detalle' => '',
-          'user_id' => ''
+          'user_id' => request()->user()->id
         ]);
         //
         //
@@ -58,7 +60,7 @@ class HomeController extends Controller
             if ($reserva['tipo'] == 'auto') {
                 $reserva['reserva']['detalle']->save();
             } else if ($reserva['tipo'] == 'hotel') {
-              
+                $reserva['reserva']['detalle']->save();
             } else if ($reserva['tipo'] == 'vuelo') {
                 $reserva_boleto = $reserva['reserva']['detalle'];
                 $reserva_boleto->save(); // pasaje
@@ -68,13 +70,13 @@ class HomeController extends Controller
                 $pasajero->save();   // pasajero
 
             } else if ($reserva['tipo'] == 'actividad') {
-              # code...
+                $reserva['reserva']['detalle']->save();
             }
         });
 
-        request()->sesison()->forget('reservas');
+        request()->session()->forget('reservas');
 
-        return view('cart', compact('reservas'));
+        return redirect('/cart')->with('success', 'Orden de compra generada');
     }
 
     public function deleteFromcart()
@@ -85,7 +87,7 @@ class HomeController extends Controller
 
         $reservas = request()->session()->put('reservas', $reservas);
 
-        return redirect('/cart')->with('success', 'Reserva Eliminada!');
+        return redirect('/cart', compact('reservas'))->with('success', 'Reserva Eliminada!');
     }
 
     public function cart()

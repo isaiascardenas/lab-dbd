@@ -21,26 +21,16 @@ class VuelosController extends Controller
    */
   public function index()
   {
-    // $params = $this->validate(request(), [
-    //   'origen_id' => 'required|integer',
-    //   'destino_id' => 'required|integer',
-    //   'tipo_vuelo' => 'required|integer|between:0,1',
-    //   'fecha_ida' => 'required|date',
-    //   'fecha_vuelta' => 'required_if:tipo_vuelo,1|date',
-    //   'pasajeros_adultos' => 'required|integer',
-    //   'pasajeros_ninos' => 'required|integer',
-    //   'tipo_pasaje' => 'required|integer|between:1,3'
-    // ]);
-    $params = [
-      'origen_id' => 1,
-      'destino_id' => 2,
-      'tipo_vuelo' => 0,
-      'fecha_ida' => '01-01-2018',
-      // 'fecha_vuelta' => '01-01-2018',
-      'pasajeros_adultos' => 2,
-      'pasajeros_ninos' => 0,
-      'tipo_pasaje' => 1
-    ];
+    $params = $this->validate(request(), [
+      'origen_id' => 'required|integer',
+      'destino_id' => 'required|integer',
+      'tipo_vuelo' => 'required|integer|between:0,1',
+      'fecha_ida' => 'required|date',
+      'fecha_vuelta' => 'required_if:tipo_vuelo,1|date',
+      'pasajeros_adultos' => 'required|integer',
+      'pasajeros_ninos' => 'required|integer',
+      'tipo_pasaje' => 'required|integer|between:1,3'
+    ]);
 
     $vuelos = Tramo::buscarVuelos($params);
 
