@@ -30,4 +30,11 @@ class ReservaActividad extends Model
     {
         return $this->belongsTo(Actividad::class);
     }
+
+    public function precio($formato = FALSE)
+    {
+      return $formato
+                ? '$ '.number_format($this->costo, 0, ',', '.')
+                : $this->costo;
+    }
 }

@@ -64,7 +64,7 @@
                         <br/>
                         <span> Costo: {{ $reserva['reserva']['detalle']->precio(TRUE) }} </span>
                       </p>
-                  
+
                   @elseif ($reserva['tipo'] == 'vuelo')
                     <div class="col-1">
                       <span class="badge badge-dark badge-pill">
@@ -92,19 +92,29 @@
 
                         Pasajero: {{ $reserva['reserva']['extra']->nombre . ' / ' . $reserva['reserva']['extra']->rut}}
                         <br/>
-                      </p>              
-                 
-                  @elseif ($reserva['tipo'] == 'actividad')
-                    <div class="col-1">
-                      <span class="badge badge-info badge-pill">
-                        Actividad
-                      </span>
-                    </div>
-                    <div class="col">
-                      <p class="card-text">
-                        
                       </p>
-                  @endif
+
+                  @elseif ($reserva['tipo'] == 'actividad')
+                      <div class="col-1">
+                          <span class="badge badge-info badge-pill">
+                              Actividad
+                          </span>
+                      </div>
+                      <div class="col">
+                          <p class="card-text">
+                          Ciudad: {{ $reserva['reserva']['detalle']->actividad->ciudad->nombre }}
+                          <br/>
+                          Inicio: {{ $reserva['reserva']['detalle']->actividad->fecha_inicio }}
+                          <br/>
+                          Termino: {{ $reserva['reserva']['detalle']->actividad->fecha_termino }}
+                          <br/>
+                          Cant. Niños: {{ $reserva['reserva']['detalle']->capacidad_niños }}
+                          <br/>
+                          Cant. Adultos: {{ $reserva['reserva']['detalle']->capacidad_adultos }}
+                          <br/>
+                          <span> Costo: {{ $reserva['reserva']['detalle']->precio(TRUE) }} </span>
+                          </p>
+                      @endif
                 </div>
                 <div class="col-2">
                   <form

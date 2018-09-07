@@ -64,13 +64,9 @@
               </span >
           </p>
           <div class="text-right">
-            <form action="/actividad/details/" method="post">
-              {{ csrf_field() }}
-              {{-- <input type="hidden" name="tramos[]" value="{{ $tramo->id }}"> --}}
-              <button type="submit" class="btn btn-primary">
-                Continuar
-              </button>
-            </form>
+              <a class="btn btn-sm btn-info" href="reserva_actividades/create/{{ $actividad->id }}">
+                  Reservar
+              </a>
           </div>
         </div>
       </div>
