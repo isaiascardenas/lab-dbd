@@ -42,7 +42,7 @@ class VuelosController extends Controller
       'tipo_pasaje' => 1
     ];
 
-  	$vuelos = Tramo::buscarVuelos($params);
+    $vuelos = Tramo::buscarVuelos($params);
 
     request()->session()->push('busqueda.vuelos', $params);
 
@@ -83,13 +83,12 @@ class VuelosController extends Controller
       $tipoAsiento = TipoAsiento::find($paramsVuelo['tipo_pasaje']);
 
       for($i = 0; $i < $pasajeros; $i++) {
-        
         $reservaBoleto = new reservaBoleto();
 
         $pasajero = new Pasajero([
             'nombre' => $request['pasajero_nombre'][$i],
             'rut' => $request['pasajero_rut'][$i],
-            'reserva_boleto_id' => $reservaBoleto->id
+            'reserva_boleto_id' => null
         ]);
 
         $asientos = $tramo->asientosDisponibles();
@@ -101,11 +100,12 @@ class VuelosController extends Controller
 
         $reservaBoleto->tramo_id = $tramo_id;
 
-        // $reservaBoleto->pasajero = $pasajero;
-
         request()->session()->push('reservas', [
               'tipo' => 'vuelo',
-              'reserva' => $reservaBoleto->load('tramo'),
+              'reserva' => [
+                'detalle' => $reservaBoleto->load('tramo'),
+                'extra' => $pasajero,
+              ]
             ]);
       }
     }

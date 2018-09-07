@@ -16,11 +16,11 @@
                 <span class="font-weight-bold">{{ $vuelo->origen()->horaPartida() }}</span>
                 <span class="text-muted">{{ "(" . $vuelo->origen()->codigo . ") " . $vuelo->origen()->nombre }}</span>
               </div>
-              
+
               <div class="col-1">
                 <i class="fas fa-angle-right"></i>
               </div>
-              
+
               <div class="col">
                 <span class="font-weight-bold">{{ $vuelo->destino()->horaLlegada() }}</span>
                 <span class="text-muted">{{ "(" . $vuelo->destino()->codigo . ") " . $vuelo->destino()->nombre }}</span>
@@ -35,7 +35,7 @@
           <div class="col-2 text-muted">
               {{ $vuelo->numeroEscalas() }} escala(s)
           </div>
-          
+
           <div class="col-2 text-right font-weight-bold">
               {{ $vuelo->precio(TRUE) }}
           </div>

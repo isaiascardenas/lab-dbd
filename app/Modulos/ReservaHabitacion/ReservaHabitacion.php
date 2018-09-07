@@ -25,4 +25,11 @@ class ReservaHabitacion extends Model
     public function ordenCompra(){
         return $this->belongsTo(OrdenCompra::class);
     }
+
+    public function precio($formato = FALSE)
+    {
+      return $formato
+                ? '$ '.number_format($this->costo, 0, ',', '.')
+                : $this->costo;
+    }
 }
