@@ -32,4 +32,9 @@ class ReservaBoleto extends Model
   {
     return $this->belongsTo(OrdenCompra::class);
   }
+
+  public function pasajero()
+  {
+    return $this->belongsTo(Pasajero::class);
+  }
 }

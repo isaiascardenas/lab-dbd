@@ -106,8 +106,8 @@ class Tramo extends Model
   public function precio($formato = FALSE)
   {
     return $formato
-              ? '$ '.number_format(random_int(10000, 150000), 0, ',', '.')
-              : random_int(10000, 150000);
+              ? '$ '.number_format($this->costo, 0, ',', '.')
+              : $this->costo;
   }
 
   public function asientosDisponibles()
@@ -151,11 +151,13 @@ class Tramo extends Model
 
     $vuelos = [];
     
+    $pasajeros = intval($params['pasajeros_adultos']) + intval($params['pasajeros_ninos']);
+
     foreach ($tramos as $tramo) {
       if ($tramo->destino_id == $params['destino_id']) {
         $asientosDisponibles = $tramo->asientosDisponibles();
-        
-        if (count($asientosDisponibles) > 0) {
+
+        if (count($asientosDisponibles) > $pasajeros) {
           $vuelos[] = new Vuelo([$tramo->id]);
         }
       }

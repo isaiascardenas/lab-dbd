@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\ReservaVuelo;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Modulos\ReservaVuelo\Tramo;
 use App\Modulos\ReservaVuelo\Vuelo;
+use App\Modulos\ReservaVuelo\TipoAsiento;
+use App\Modulos\ReservaVuelo\ReservaBoleto;
 
 class VuelosController extends Controller
 {
@@ -40,7 +43,7 @@ class VuelosController extends Controller
 
   	$vuelos = Tramo::buscarVuelos($params);
 
-    session(['params_vuelo' => $params]);
+    request()->session->push('busqueda', ['vuelos' => $params]);
 
     return view('modulos.ReservaVuelo.vuelos.index', compact('vuelos'));
   }
@@ -61,29 +64,50 @@ class VuelosController extends Controller
 
     $vuelo = new Vuelo($tramos);
 
-    $paramsVuelo = session('params_vuelo');
+    $paramsVuelo = request()->session()->get('busqueda')['vuelos'];
 
     return view('modulos.ReservaVuelo.vuelos.show', compact('vuelo', 'paramsVuelo'));
   }
 
   public function reserva(Request $request)
   {
-    $paramsVuelo = $request->session->get('params_vuelo');
+    $paramsVuelo = request()->session()->get('busqueda')['vuelos'];
 
     foreach ($request['tramos'] as $tramo_id) {
-      $reservaBoleto = new reservaBoleto();
+      $pasajeros = intval($paramsVuelo['pasajeros_ninos']) + intval($paramsVuelo['pasajeros_adultos']);
+      
+      $tramo = Tramo::find($tramo_id);
+      $tipoAsiento = TipoAsiento::find($paramsVuelo['tipo_pasaje']);
 
-      $reservaBoleto->fecha_reserva = Carbon::now();
-      $reservaBoleto->descuento = 0.0;
-      $reservaBoleto->costo = $request['costo'];
-      $reservaBoleto->asiento_avion_id = '';
+      for($i = 0; $i < $pasajeros; $i++) {
+        
+        $reservaBoleto = new reservaBoleto();
 
-      $reservaBoleto->tramo_id = $tramo_id;
+        $pasajero = new Pasajero([
+            'nombre' => $request['pasajero_nombre'][$i],
+            'rut' => $request['pasajero_rut'][$i],
+            'reserva_boleto_id' => $reservaBoleto->id
+        ]);
 
-      $request->session->push('cart', $reservaBoleto);
+        $asientos = $tramo->asientosDisponibles();
+        $reservaBoleto->asiento_avion_id = array_pop($asientos);
+        
+        $reservaBoleto->fecha_reserva = Carbon::now();
+        $reservaBoleto->descuento = 0.0;
+        $reservaBoleto->costo = $tramo->costo * $tipoAsiento->factor_costo;
+
+        $reservaBoleto->tramo_id = $tramo_id;
+
+        // $reservaBoleto->pasajero = $pasajero;
+
+        request()->session()->push('reservas', [
+              'tipo' => 'vuelo',
+              'reserva' => $reservaBoleto->load('tramo'),
+            ]);
+      }
     }
-    $request->session->forget('params_vuelo');
+    request()->session()->forget('params_vuelo');
   	
-    return view('cart');
+    return redirect('/cart');
   }
 }

@@ -66,22 +66,23 @@
           <h5>Pasajero #{{ $i }}</h5>
           <div class="form-group">
             <label>Nombre</label>
-            <input type="text" class="form-control" name="pasajero_nombre[]">
+            <input type="text" class="form-control" name="pasajero_nombre[]" value="A{{ $i }}">
           </div>
 
           <div class="form-group">
             <label>Rut</label>
-            <input type="text" class="form-control" name="pasajero_rut[]">
+            <input type="text" class="form-control" name="pasajero_rut[]" value="{{ $i }}">
           </div>
         </div>
         @endfor
       </div>
       <div class="text-right">
-        <form method="post" action="{{ action('ReservaVuelo\VuelosController@reserva') }}">
+        <form method="post" action="{{ action('ReservaVuelo\VuelosController@reserva') }}" onsubmit="return confirm('¿Está seguro que desea agregar al carrito?')">
           {{ csrf_field() }}
           @foreach ($vuelo->itinerario() as $tramo)
           <input type="hidden" name="tramos[]" value="{{ $tramo->id }}">
           @endforeach
+
     			<button type="submit" class="btn btn-primary">
     				<i class="fas fa-shopping-cart"></i> Agregar al carrito
     			</button>

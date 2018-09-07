@@ -16,6 +16,7 @@ $factory->define(Tramo::class, function (Faker $faker) {
         'codigo'    => $faker->unique()->regexify('[A-Z]{2}[0-9]{3}'),
         'fecha_partida' => $fechaPartida,
         'fecha_llegada' => $fechaLlegada,
+        'costo'       => rand(50000, 1000000),
         'avion_id'    => $aviones->random()->id,
         'origen_id'   => $aeropuertos->random()->id,
         'destino_id'  => $aeropuertos->random()->id
