@@ -24,18 +24,22 @@
             <div class="form-group form-row align-items-end">
                 <div class="col">
                     <label for="fecha_inicio">Fecha retiro</label>
-                    <input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control text-center" readonly="readonly">
-                    <span class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                    </span>
+                    <div class="input-group">
+                      <input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control text-center" readonly="readonly">
+                      <span class="input-group-append">
+                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                      </span>
+                    </div>
                 </div>
 
                 <div class="col fecha_entrega">
                     <label for="fecha_termino">Fecha entrega</label>
-                    <input type="text" id="fecha_termino" name="fecha_termino" class="form-control text-center" readonly="readonly">
-                    <span class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                    </span>
+                    <div class="input-group">
+                      <input type="text" id="fecha_termino" name="fecha_termino" class="form-control text-center" readonly="readonly">
+                      <span class="input-group-append">
+                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                      </span>
+                    </div>
                 </div>
             </div>
 
