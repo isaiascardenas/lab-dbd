@@ -60,7 +60,7 @@ class HomeController extends Controller
             if ($reserva['tipo'] == 'auto') {
                 $reserva['reserva']['detalle']->save();
             } else if ($reserva['tipo'] == 'hotel') {
-              
+                $reserva['reserva']['detalle']->save();
             } else if ($reserva['tipo'] == 'vuelo') {
                 $reserva_boleto = $reserva['reserva']['detalle'];
                 $reserva_boleto->save(); // pasaje
@@ -70,13 +70,13 @@ class HomeController extends Controller
                 $pasajero->save();   // pasajero
 
             } else if ($reserva['tipo'] == 'actividad') {
-              # code...
+                $reserva['reserva']['detalle']->save();
             }
         });
 
         request()->session()->forget('reservas');
 
-        return view('cart', compact('reservas'));
+        return redirect('/cart')->with('success', 'Orden de compra generada');
     }
 
     public function deleteFromcart()

@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+    @isset($success)
+      <div class="alert alert-light" role="alert">
+        {{ $success }}
+      </div>
+    @endif
+
     @empty($reservas)
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Tu carrito esta vacío</h4>
