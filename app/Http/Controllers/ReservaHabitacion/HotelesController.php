@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\ReservaHabitacion;
 
-use App\Modulos\ReservaHabitacion\Hotel;
+use App\Ciudad;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modulos\ReservaHabitacion\Hotel;
+
 
 class HotelesController extends Controller
 {
@@ -26,7 +28,8 @@ class HotelesController extends Controller
      */
     public function create()
     {
-        return view('modulos.ReservaHabitacion.hoteles.create');
+        $ciudades = Ciudad::all();
+        return view('modulos.ReservaHabitacion.hoteles.create', compact("ciudades"));
     }
 
     /**
@@ -48,7 +51,7 @@ class HotelesController extends Controller
 
         $hotel = Hotel::create($hotelData);
 
-        if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
+        if ($hotel->exists()) {
         $response = ['success' => 'Creado con éxito!'];
         } else {
           $response = ['error' => 'No se ha podido crear!'];
@@ -67,8 +70,8 @@ class HotelesController extends Controller
     public function show(Hotel $hotel)
     {
         
-        if ($hotel instanceof \Illuminate\Database\Eloquent\Model) {
-            return view('modulos.ReservaHabitacion.hoteles.show', compact('hotel'));
+        if ($hotel->exists()) {
+        return view('modulos.ReservaHabitacion.hoteles.show', compact('hotel'));
         } else {
           $response = ['error' => 'No existe la id solicitada'];
           return redirect('/hoteles')->with($response);

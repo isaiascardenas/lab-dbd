@@ -44,9 +44,11 @@ Route::resource('habitaciones','ReservaHabitacion\HabitacionesController', [
   'parameters' => ['habitaciones'=>'habitacion']
 ]);
 
-Route::resource('reservaHabitaciones','ReservaHabitacion\ReservaHabitacionesController', [
+Route::resource('reserva_habitaciones','ReservaHabitacion\ReservaHabitacionesController', [
   'parameters' => ['reservaHabitaciones'=>'reservaHabitacion']
 ]);
+
+Route::post('/reserva_habitacion/create',             'ReservaHabitacion\ReservaHabitacionesController@create');
 
 /**
  * Paquetes

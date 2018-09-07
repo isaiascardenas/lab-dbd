@@ -31,6 +31,7 @@ class HomeController extends Controller
             'autos',
             'hoteles',
             'paquetes',
+            'ciudades',
             'sucursales',
             'tipoPasaje',
             'actividades',

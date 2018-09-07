@@ -25,7 +25,7 @@
       
       <label class="col" for="nombre">estrellas</label>
       <div class="col">
-        <input type="number" class="form-control" name="estrellas" id="estrellas_id" value="{{ $hotel->estrellas }}">
+        <input type="number" class="form-control" name="estrellas" id="estrellas_id" value="{{ $hotel->estrellas }}" max ="5" min = "1">
       </div>
     </div>
 
