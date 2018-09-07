@@ -1,54 +1,49 @@
 @extends('layouts.admin')
 
 @section('content')
-	<h2>
-    <i class="fas fa-map-marker-alt"></i> Actividades
-  </h2>
-	
-	<hr>
+    <h2>
+        <i class="fas fa-ticket-alt"></i> Escoge una actividad
+    </h2>
 
-	@include('layouts.messages')
-	
-	<div class="form-group">
-		<a href="/actividades/create/" class="btn btn-primary">
-      <i class="fas fa-plus"></i> Nueva Actividad
-    </a>
-	</div>
+    <hr>
 
-	<table class="table table-hover table-bordered table-sm datatable">
-		<thead>
-			<tr>
-				<th class="no-sort"></th>
-				<th>Descripcion</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach($actividades as $actividad)
-			<tr>
-				<td>
-          <a class="btn btn-sm btn-info" href="/actividades/{{ $actividad->id }}">
-            <i class="fas fa-eye"></i>
-          </a>
-        </td>
-				<td>{{ $actividad->descripcion }}</td>
-			</tr>
-			@endforeach
-		</tbody>
-	</table>
-@endsection
+    @include('layouts.messages')
 
-@section('script')
-  <script>
-    $(document).ready(function() {
-        $('.datatable').DataTable({
-          'language': {
-            'url': 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json'
-          },
-          'columnDefs': [
-            {'targets': 'no-sort', 'orderable': false}
-          ], 
-          'order': [[1, 'asc']]
-        });
-    } );
-  </script>
+    <div class="form-group">
+        <a href="/reserva-boletos/create/" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nueva Reserva de actividad
+        </a>
+    </div>
+
+    <table class="table table-hover table-bordered table-sm datatable">
+        <thead>
+            <tr>
+                <th class="no-sort"></th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Termino</th>
+                <th>Descuento</th>
+                <th>Costo</th>
+                <th>Tramo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($reservaBoletos as $reservaBoleto)
+                <tr>
+                    <td>
+                        <a class="btn btn-sm btn-info" href="/reserva-boletos/{{ $reservaBoleto->id }}">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
+                    <td>{{ $reservaBoleto->fecha_reserva }}</td>
+                    <td>{{ $reservaBoleto->descuento }}</td>
+                    <td>{{ $reservaBoleto->costo }}</td>
+                    <td>
+                        <a href="/tramos/{{ $reservaBoleto->tramo_id }}">
+                            {{ $reservaBoleto->tramo->codigo }}
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @endsection
