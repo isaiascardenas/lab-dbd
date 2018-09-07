@@ -9,7 +9,46 @@
 @import '~bootstrap/scss/bootstrap';
 
 .navbar-laravel {
-  background-color: #fff;
+
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+
+
+
+.navbar-light .navbar-brand {
+	color: #eceff1 !important;
+}
+
+.navbar{
+	background-color: #6a1b9a;
+	color: #FFFFFF;	
+}
+
+.nav-link{
+	color: #38006b !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+	background-color: #9c4dcc !important;
+	color: #FFFFFF !important;
+}
+
+
+.btn-primary{
+	background-color: #9c4dcc !important;
+	border-color: #38006b !important;
+}
+
+.page-item.active .page-link{
+	background-color: #9c4dcc !important;
+	border-color: #38006b !important;
+}
+
+
+body
+{
+	background-image: 'https://wallpaper-house.com/data/out/10/wallpaper2you_399418.jpg';
+	background-color: #eceff1 !important;
+
+}
