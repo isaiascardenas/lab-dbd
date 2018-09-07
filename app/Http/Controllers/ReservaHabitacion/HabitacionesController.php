@@ -4,7 +4,9 @@ namespace App\Http\Controllers\ReservaHabitacion;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modulos\ReservaHabitacion\Hotel;
 use App\Modulos\ReservaHabitacion\Habitacion;
+
 
 class HabitacionesController extends Controller
 {
@@ -28,7 +30,8 @@ class HabitacionesController extends Controller
      */
     public function create()
     {
-        return view('modulos.ReservaHabitacion.habitaciones.create');
+        $hoteles = Hotel::all();
+        return view('modulos.ReservaHabitacion.habitaciones.create', compact("hoteles"));
     }
 
     /**
@@ -69,7 +72,7 @@ class HabitacionesController extends Controller
      */
     public function show(Habitacion $habitacion)
     {
-        if ($habitacion instanceof \Illuminate\Database\Eloquent\Model) {
+        if ($habitacion->exists()) {
             return view('modulos.ReservaHabitacion.habitaciones.show', compact('habitacion'));
         } else {
           $response = ['error' => 'No existe la id solicitada'];
@@ -85,7 +88,7 @@ class HabitacionesController extends Controller
      */
     public function edit(Habitacion $habitacion)
     {
-        if ($habitacion instanceof \Illuminate\Database\Eloquent\Model) {
+        if ($habitacion->exists()) {
             return view('modulos.ReservaHabitacion.habitaciones.edit', compact('habitacion'));
         } else {
           $response = ['error' => 'No es posible editar una id que no existe'];

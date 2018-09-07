@@ -22,7 +22,7 @@
 		<div class="form-group row">
 			<label class="col" for="nombre">estrellas</label>
 			<div class="col">
-				<input type="number" class="form-control" name="estrellas" id="estrellas">
+				<input type="number" class="form-control" name="estrellas" id="estrellas" max ="5" min = "1">
 			</div>
 		</div>
 
@@ -34,11 +34,14 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col" for="nombre">ciudad</label>
-			<div class="col">
-				<input type="number" class="form-control" name="ciudad_id" id="ciudad ">
-			</div>
-		</div>
+            <select id="ciudad" name="ciudad_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
+                @foreach ($ciudades as $ciudad)
+                    <option value="{{ $ciudad->id }}">
+                    {{ $ciudad->nombre }}, {{$ciudad->pais->nombre }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
 		<div class="text-right">
 

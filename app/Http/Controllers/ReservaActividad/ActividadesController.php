@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\ReservaActividad;
 
+use App\Ciudad;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaActividad\Actividad;
 
 class ActividadesController extends Controller
@@ -15,7 +17,8 @@ class ActividadesController extends Controller
      */
     public function index()
     {
-        return Actividad::all();
+        $actividades = Actividad::all();
+        return view('modulos.ReservaActividad.Reservas.index', compact('actividades'));
     }
 
     /**
@@ -25,27 +28,37 @@ class ActividadesController extends Controller
      */
     public function create()
     {
-        //
+        $ciudades = Ciudad::all();
+        return view('modulos.ReservaActividad.Reservas.create', compact('ciudades'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage.ciudad_id
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        return Actividad::create([$this->validate($request, [
+        $actividad = Actividad::create($this->validate($request, [
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
-            'descripcion' => 'required',
+            'descripcion' => 'required', 
             'max_ninos' => 'required',
             'max_adultos' => 'required',
             'costo_nino' => 'required',
             'costo_adulto' => 'required',
-            'ciudad_id' => 'required',
-        ])]);
+            'ciudad_id' => 'required'
+        ]));
+
+        if ($actividad->exists()) {
+          $response = ['success' => 'Creado con éxito!'];
+        } else {
+          $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/actividades')->with($response);
+
     }
 
     /**
@@ -57,8 +70,7 @@ class ActividadesController extends Controller
     public function show(Actividad  $actividad)
 
     {
-        return $actividad;
-        return Actividad::find($id);
+        return view('modulos.ReservaActividad.Reservas.show', compact('actividad'));
     }
 
     /**
@@ -67,9 +79,10 @@ class ActividadesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Actividad  $actividad)
     {
-        //
+        $ciudades = Ciudad::all();
+        return view('modulos.ReservaActividad.Reservas.edit', compact('actividad', 'ciudades'));
     }
 
     /**
@@ -79,19 +92,26 @@ class ActividadesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Actividad $actividad)
     {
-        $actividad = Actividad::find($id);
-        $actividad->fecha_inicio = $request->fecha_inicio;
-        $actividad->fecha_termino = $request->fecha_termino;
-        $actividad->descripcion = $request->descripcion;
-        $actividad->max_ninos = $request->max_ninos;
-        $actividad->max_adultos = $request->max_adultos;
-        $actividad->costo_nino = $request->costo_nino;
-        $actividad->costo_adulto = $request->costo_adulto;
-        $actividad->ciudad_id = $request->ciudad_id;
-        $actividad->save();
-        return $actividad;
+        $outcome = $actividad->fill($this->validate($request, [
+          'fecha_inicio' => 'required',
+          'fecha_termino' => 'required',
+          'descripcion' => 'required', 
+          'max_ninos' => 'required',
+          'max_adultos' => 'required',
+          'costo_nino' => 'required',
+          'costo_adulto' => 'required',
+          'ciudad_id' => 'required'
+        ]))->save();
+
+        if ($outcome) {
+          $response = ['success' => 'Actualizado con éxito!'];
+        } else {
+          $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
+
+        return redirect('/actividades/'.$actividad->id.'/edit')->with($response);
     }
 
     /**
@@ -100,10 +120,16 @@ class ActividadesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Actividad $actividad)
     {
-        $actividad = Actividad::find($id);
-        $actividad->delete();
-        return Actividad::all();
+        $response = [];
+    try {
+      $actividad->delete();
+      $response = ['success' => 'Eliminado con éxito!'];
+    } catch (\Exception $e) {
+      $response = ['error' => 'Error al eliminar el registro!'];
+    }
+
+    return redirect('/actividades')->with($response);
     }
 }
