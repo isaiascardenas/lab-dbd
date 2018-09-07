@@ -26,8 +26,11 @@ class ReservaAutosController extends Controller
             ->whereNotIn('id', $autosReservados)
             ->get();
 
-        session(['inicio_reserva' => request('fecha_inicio') . ':00']);
-        session(['termino_reserva' => request('fecha_termino') . ':00']);
+        request()->session()->put('busqueda.autos', [
+          'costo' => 0,
+          'inicio_reserva' => request('fecha_inicio') . ':00',
+          'termino_reserva' => request('fecha_termino') . ':00'
+        ]);
 
         return view('modulos.ReservaAuto.reservas.index', compact('autos'));
     }
@@ -39,12 +42,10 @@ class ReservaAutosController extends Controller
      */
     public function reservar(Auto $auto)
     {
-        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', session('inicio_reserva'));
-        $termino = Carbon::createFromFormat('Y-m-d H:m:s', session('termino_reserva'));
+        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.autos.inicio_reserva'));
+        $termino = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.autos.termino_reserva'));
 
-        session([
-            'costo' => $inicio->diffInHours($termino) * $auto->precio_hora
-        ]);
+        request()->session()->put('busqueda.autos.costo', $inicio->diffInHours($termino) * $auto->precio_hora);
 
         return view('modulos.ReservaAuto.reservas.reservar', compact('auto'));
     }
@@ -62,11 +63,11 @@ class ReservaAutosController extends Controller
     public function store(Request $request)
     {
         $reserva = new ReservaAuto([
-            'fecha_inicio' => session('inicio_reserva'),
-            'fecha_termino' => session('termino_reserva'),
+            'fecha_inicio' => request()->session()->get('busqueda.autos.inicio_reserva'),
+            'fecha_termino' => request()->session()->get('busqueda.autos.termino_reserva'),
             'fecha_reserva' => Carbon::now()->toDateTimeString(),
             'descuento' => 1,
-            'costo' => session('costo'),
+            'costo' => request()->session()->get('busqueda.autos.costo'),
             'auto_id' => request('auto_id'),
             'orden_compra_id' => null,
         ]);
@@ -77,20 +78,11 @@ class ReservaAutosController extends Controller
             $response = ['error' => 'Ups, hubo un problema... intenta de nuevo'];
         }
 
-        // if (count(session('reservas')) == 0) {
-            // session([
-                // 'reservas' => [
-                    // [
-                        // 'tipo' => 'auto',
-                        // 'reserva' => $reserva->load('auto'),
-                    // ]
-                // ]
-            // ]);
-        // }
-
-        request()->session()->push('reservas' ,[
+        request()->session()->push('reservas', [
             'tipo' => 'auto',
-            'reserva' => $reserva->load('auto'),
+            'reserva' => [
+              'detalle' => $reserva->load('auto')
+            ]
         ]);
 
         return redirect('/cart')->with($response);

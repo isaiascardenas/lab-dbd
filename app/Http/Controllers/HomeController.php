@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ciudad;
+use Carbon\Carbon;
 use App\Modulos\ReservaAuto\Auto;
 use App\Modulos\ReservaAuto\Sucursal;
 use App\Modulos\ReservaVuelo\Aeropuerto;
@@ -45,29 +46,46 @@ class HomeController extends Controller
     {
         // Here make a order and link it with all reservations
         //
-        collect(session('reservas'))->each(function ($reserva) {
+        $orden = OrdenCompra::create([
+          'costo_total' => 0,
+          'fecha_generado' => Carbon::now(),
+          'detalle' => '',
+          'user_id' => ''
+        ]);
+        //
+        //
+        collect(request()->session()->get('reservas'))->each(function ($reserva) {
             if ($reserva['tipo'] == 'auto') {
-                $reserva['reserva']->save();
+                $reserva['reserva']['detalle']->save();
+            } else if ($reserva['tipo'] == 'hotel') {
+              
+            } else if ($reserva['tipo'] == 'vuelo') {
+                $reserva_boleto = $reserva['reserva']['detalle'];
+                $reserva_boleto->save(); // pasaje
+                
+                $pasajero = $reserva['reserva']['extra'];
+                $pasajero->reserva_boleto_id = $reserva_boleto->id;
+                $pasajero->save();   // pasajero
+
+            } else if ($reserva['tipo'] == 'actividad') {
+              # code...
             }
         });
 
-        session(['reservas' => []]);
-        $reservas = session('reservas');
+        request()->sesison()->forget('reservas');
 
         return view('cart', compact('reservas'));
     }
 
     public function deleteFromcart()
     {
-        return request('reserva_id');
-        $reservas = collect(session('reservas'));
-        collect(session('reservas'))->each(function ($reserva) {
-            if ($reserva['tipo'] == 'auto') {
-                $reserva['reserva']->save();
-            }
-        });
+        $reservas = request()->session()->get('reservas');
 
-        return view('cart', compact('reservas'));
+        unset($reservas[request('reserva_id')]);
+
+        $reservas = request()->session()->put('reservas', $reservas);
+
+        return redirect('/cart')->with('success', 'Reserva Eliminada!');
     }
 
     public function cart()

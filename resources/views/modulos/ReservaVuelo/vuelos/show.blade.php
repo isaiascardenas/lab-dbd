@@ -59,35 +59,34 @@
 			</table>
 
       <h3>Agregar pasajero(s)</h3>
-
-      <div class="row">
-        @for($i = 1; $i <= intval($paramsVuelo['pasajeros_adultos']) + intval($paramsVuelo['pasajeros_ninos']); $i++)
-        <div class="col-6">
-          <h5>Pasajero #{{ $i }}</h5>
-          <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" class="form-control" name="pasajero_nombre[]" value="A{{ $i }}">
-          </div>
-
-          <div class="form-group">
-            <label>Rut</label>
-            <input type="text" class="form-control" name="pasajero_rut[]" value="{{ $i }}">
-          </div>
-        </div>
-        @endfor
-      </div>
-      <div class="text-right">
-        <form method="post" action="{{ action('ReservaVuelo\VuelosController@reserva') }}" onsubmit="return confirm('¿Está seguro que desea agregar al carrito?')">
+      <form method="post" action="{{ action('ReservaVuelo\VuelosController@reserva') }}" onsubmit="return confirm('¿Está seguro que desea agregar al carrito?')">
           {{ csrf_field() }}
-          @foreach ($vuelo->itinerario() as $tramo)
-          <input type="hidden" name="tramos[]" value="{{ $tramo->id }}">
-          @endforeach
+        <div class="row">
+          @for($i = 1; $i <= intval($paramsVuelo['pasajeros_adultos']) + intval($paramsVuelo['pasajeros_ninos']); $i++)
+          <div class="col-6">
+            <h5>Pasajero #{{ $i }}</h5>
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" class="form-control" name="pasajero_nombre[]" value="A{{ $i }}">
+            </div>
 
-    			<button type="submit" class="btn btn-primary">
-    				<i class="fas fa-shopping-cart"></i> Agregar al carrito
-    			</button>
-        </form>
-      </div>
+            <div class="form-group">
+              <label>Rut</label>
+              <input type="text" class="form-control" name="pasajero_rut[]" value="{{ $i }}">
+            </div>
+          </div>
+          @endfor
+        </div>
+        <div class="text-right">
+            @foreach ($vuelo->itinerario() as $tramo)
+            <input type="hidden" name="tramos[]" value="{{ $tramo->id }}">
+            @endforeach
+
+      			<button type="submit" class="btn btn-primary">
+      				<i class="fas fa-shopping-cart"></i> Agregar al carrito
+      			</button>
+        </div>
+      </form>
 		</div>
 	</div>
 @endsection

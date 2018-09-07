@@ -27,21 +27,24 @@ class ReservaHabitacionesController extends Controller
         $request_estrellas = request('estrellas');
 
         $hoteles = Hotel::where('ciudad_id', $request_destino)
-        ->where('estrellas', $request_estrellas)
-        ->pluck('id');
+                          ->where('estrellas', $request_estrellas)
+                          ->pluck('id');
 
         $habitacionesNoDisp = ReservaHabitacion::whereDate('fecha_inicio', '<', $request_fecha_termino)
-        ->whereDate('fecha_termino', '>', $request_fecha_inicio)
-        ->pluck('habitacion_id');
+                          ->whereDate('fecha_termino', '>', $request_fecha_inicio)
+                          ->pluck('habitacion_id');
 
 
         $habitacionDisp = Habitacion::all()->whereIn('hotel_id', $hoteles)
-        ->where('capacidad_adulto', '>=', $request_adultos)
-        ->where('capacidad_nino', '>=', $request_ninos)
-        ->whereNotIn('id',$habitacionesNoDisp);
+                          ->where('capacidad_adulto', '>=', $request_adultos)
+                          ->where('capacidad_nino', '>=', $request_ninos)
+                          ->whereNotIn('id',$habitacionesNoDisp);
 
-        session(['inicio_reserva' => $request_fecha_inicio . ':00']);
-        session(['termino_reserva' => $request_fecha_termino . ':00']);
+        request()->session()->put('busqueda.hoteles', [
+          'costo' => 0,
+          'inicio_reserva' => $request_fecha_inicio . ':00',
+          'termino_reserva' => $request_fecha_termino . ':00'
+        ]);
 
         return view('modulos.ReservaHabitacion.reservas.index', compact('habitacionDisp','request_fecha_inicio','request_fecha_termino'));
     }
@@ -53,12 +56,11 @@ class ReservaHabitacionesController extends Controller
      */
     public function reservar(Habitacion $habitacion)
     {
-        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', session('inicio_reserva'));
-        $termino = Carbon::createFromFormat('Y-m-d H:m:s', session('termino_reserva'));
+        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.hoteles.inicio_reserva'));
+        $termino = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.hoteles.termino_reserva'));
 
-        session([
-            'costo' => $inicio->diffInHours($termino) * $habitacion->precio_por_noche
-        ]);
+        request()->session()->put('busqueda.hoteles.costo', $inicio->diffInHours($termino) * $habitacion->precio_por_noche);
+        
         $habitacion->load('hotel');
 
         return view('modulos.ReservaHabitacion.reservas.create', compact('habitacion'));
@@ -72,12 +74,12 @@ class ReservaHabitacionesController extends Controller
      */
     public function store(Request $request)
     {
-        $reserva = new ReservaHabitacion ([
-            'fecha_inicio' => session('inicio_reserva'),
-            'fecha_termino' => session('termino_reserva'),
+        $reserva = new ReservaHabitacion([
+            'fecha_inicio' => request()->session()->get('busqueda.hoteles.inicio_reserva'),
+            'fecha_termino' => request()->session()->get('busqueda.hoteles.termino_reserva'),
             'fecha_reserva' => Carbon::now()->toDateTimeString(),
             'descuento' => 1,
-            'costo' => session('costo'),
+            'costo' => request()->session()->get('busqueda.hoteles.costo'),
             'habitacion_id' => request('habitacion_id'),
             'orden_compra_id' => null,
         ]);
@@ -88,23 +90,15 @@ class ReservaHabitacionesController extends Controller
             $response = ['error' => 'Ups, hubo un problema... intenta de nuevo'];
         }
 
-        if (count(session('reservas')) == 0) {
-            session([
-                'reservas' => [
-                    [
-                        'tipo' => 'hotel',
-                        'reserva' => $reserva->load('habitacion'),
-                    ]
-                ]
-            ]);
-        }
-        session('reservas')[] = [
+        request()->session()->push('reservas', [
             'tipo' => 'hotel',
-            'reserva' => $reserva->load('habitacion'),
-        ];
+            'reserva' => [
+              'detalle' => $reserva->load('habitacion')
+            ]
+        ]);
 
 
-        return back()->with($response);
+        return redirect('/cart')->with($response);
     }
 
     /**
@@ -139,8 +133,6 @@ class ReservaHabitacionesController extends Controller
     public function update(Request $request,$id)
     {
         $reservaHabitacion = $this->validate($request , [
-        
-
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
             'fecha_reserva' => 'required',

@@ -41,9 +41,14 @@ class ReservaActividadesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Actividad $actividad)
     {
-        //
+        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', $actividad->fecha_inicio);
+        $termino = Carbon::createFromFormat('Y-m-d H:m:s', $actividad->fecha_termino);
+
+        request()->session()->put('busqueda.autos.costo', $inicio->diffInHours($termino) * $actividad);
+
+        return view('modulos.ReservaActividad.reservas.create', compact('actividad'));
     }
 
     /**
