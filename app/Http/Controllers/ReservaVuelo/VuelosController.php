@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\ReservaVuelo;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Tramo;
-use App\Vuelo;
+use App\Modulos\ReservaVuelo\Tramo;
+use App\Modulos\ReservaVuelo\Vuelo;
+use App\Modulos\ReservaVuelo\TipoAsiento;
+use App\Modulos\ReservaVuelo\ReservaBoleto;
 
 class VuelosController extends Controller
 {
@@ -17,24 +20,32 @@ class VuelosController extends Controller
    */
   public function index()
   {
-  	
-  	// $this->validate(request(), [
-  	// 	'origen_id' 		=> 'required|integer',
-  	// 	'destino_id' 		=> 'required|integer',
-  	// 	'tipo_vuelo' 		=> 'required|integer|between:0,1',
-  	// 	'fecha_ida'			=> 'required|date',
-  	// 	'fecha_vuelta' 		=> 'required_if:tipo_vuelo,1|date',
-  	// 	'pasajeros_adultos' => 'required|integer',
-  	// 	'pasajeros_ninos' 	=> 'required|integer',
-  	// 	'tipo_pasaje' 		=> 'required|integer|between:1,3'
-  	// ]);
-  	
-  	// $data["vuelos"] = Tramo::buscarVuelos(request());
+    // $params = $this->validate(request(), [
+    //   'origen_id' => 'required|integer',
+    //   'destino_id' => 'required|integer',
+    //   'tipo_vuelo' => 'required|integer|between:0,1',
+    //   'fecha_ida' => 'required|date',
+    //   'fecha_vuelta' => 'required_if:tipo_vuelo,1|date',
+    //   'pasajeros_adultos' => 'required|integer',
+    //   'pasajeros_ninos' => 'required|integer',
+    //   'tipo_pasaje' => 'required|integer|between:1,3'
+    // ]);
+    $params = [
+      'origen_id' => 1,
+      'destino_id' => 2,
+      'tipo_vuelo' => 0,
+      'fecha_ida' => '01-01-2018',
+      // 'fecha_vuelta' => '01-01-2018',
+      'pasajeros_adultos' => 2,
+      'pasajeros_ninos' => 0,
+      'tipo_pasaje' => 1
+    ];
 
+  	$vuelos = Tramo::buscarVuelos($params);
 
-  	//$vuelos = Tramo::all()->take(10);
+    request()->session()->push('busqueda.vuelos', $params);
 
-    return view('modulos.ReservaVuelo.vuelos.index', compact("vuelos"));
+    return view('modulos.ReservaVuelo.vuelos.index', compact('vuelos'));
   }
 
   /**
@@ -43,22 +54,61 @@ class VuelosController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show()
+  public function show(Request $request)
   {
-    $this->validate(request(), [
-      'tramo' => 'required'
+    $this->validate($request, [
+      'tramos' => 'required|array'
     ]);
 
-    $tramos = array_values(request("tramo"));
+    $tramos = array_values(request('tramos'));
 
     $vuelo = new Vuelo($tramos);
 
-    return view('modulos.ReservaVuelo.vuelos.show', compact("vuelo"));
+    $paramsVuelo = request()->session()->get('busqueda');
+    dd($paramsVuelo);
+
+    return view('modulos.ReservaVuelo.vuelos.show', compact('vuelo', 'paramsVuelo'));
   }
 
   public function reserva(Request $request)
   {
-  	// Agrega al carro y redirige a /cart
-      return view('cart');
+    $paramsVuelo = request()->session()->get('busqueda')['vuelos'];
+
+    foreach ($request['tramos'] as $tramo_id) {
+      $pasajeros = intval($paramsVuelo['pasajeros_ninos']) + intval($paramsVuelo['pasajeros_adultos']);
+      
+      $tramo = Tramo::find($tramo_id);
+      $tipoAsiento = TipoAsiento::find($paramsVuelo['tipo_pasaje']);
+
+      for($i = 0; $i < $pasajeros; $i++) {
+        
+        $reservaBoleto = new reservaBoleto();
+
+        $pasajero = new Pasajero([
+            'nombre' => $request['pasajero_nombre'][$i],
+            'rut' => $request['pasajero_rut'][$i],
+            'reserva_boleto_id' => $reservaBoleto->id
+        ]);
+
+        $asientos = $tramo->asientosDisponibles();
+        $reservaBoleto->asiento_avion_id = array_pop($asientos);
+        
+        $reservaBoleto->fecha_reserva = Carbon::now();
+        $reservaBoleto->descuento = 0.0;
+        $reservaBoleto->costo = $tramo->costo * $tipoAsiento->factor_costo;
+
+        $reservaBoleto->tramo_id = $tramo_id;
+
+        // $reservaBoleto->pasajero = $pasajero;
+
+        request()->session()->push('reservas', [
+              'tipo' => 'vuelo',
+              'reserva' => $reservaBoleto->load('tramo'),
+            ]);
+      }
+    }
+    request()->session()->forget('params_vuelo');
+  	
+    return redirect('/cart');
   }
 }

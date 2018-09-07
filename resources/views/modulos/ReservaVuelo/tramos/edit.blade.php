@@ -7,9 +7,9 @@
 	
 	@include('layouts.messages')
 
-	<form method="post" action="{{ action('ReservaVuelo\TramosController@update', $tramo->id) }}" method="post">
+	<form method="post" action="{{ action('ReservaVuelo\TramosController@update', $tramo->id) }}">
 		{{ csrf_field() }}
-        <input name="_method" type="hidden" value="PATCH">
+    <input name="_method" type="hidden" value="PATCH">
 
 		<div class="form-group row">
 			<label class="col-3" for="codigo">Código</label>
@@ -18,74 +18,85 @@
 			</div>
 		</div>
 
-		<div class="form-group row">
-			<label class="col-3" for="fecha_partida">Fecha Partida</label>
-			<div class="col-9">
-				<input type="text" class="form-control" name="fecha_partida" id="fecha_partida" value="{{ $tramo->fecha_partida }}">
-			</div>
-		</div>
+    <div class="form-group row">
+      <label class="col-3" for="avion_id">Avión</label>
+      <div class="col-9">
+        <select class="form-control selectpicker" name="avion_id" id="avion_id" title="Seleccione Avión (Aerolínea)" data-live-search="true">
+          @foreach($aviones as $avion)
+          <option value="{{ $avion->id }}" {{ $tramo->avion->id == $avion->id?'selected':'' }}>
+            {{ $avion->descripcion .' ('. $avion->aerolinea->nombre .')' }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+    </div>
 
-		<div class="form-group row">
-			<label class="col-3" for="fecha_llegada">Fecha Llegada</label>
-			<div class="col-9">
-				<input type="text" class="form-control" name="fecha_llegada" id="fecha_llegada" value="{{ $tramo->fecha_llegada }}">
-			</div>
-		</div>
-	
-		<div class="form-group row">
-			<label class="col-3" for="aerolinea_id">Aerol&iacute;nea</label>
-			<div class="col-9">
-				<select class="form-control" name="aerolinea_id" id="aerolinea_id">
-					<option>Seleccione Aerol&iacute;nea</option>
-					@foreach($aerolineas as $aerolinea)
-					<option value="{{ $aerolinea->id }}" {{ $aerolinea->id == $tramo->avion->aerolinea->id?'selected':'' }}>{{ $aerolinea->nombre }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
+    <div class="form-group form-row align-items-end fechas-vuelo">
+  		<div class="col">
+  			<label for="fecha_partida">Fecha Partida</label>
+  			<div class="input-group">
+          <input type="text" id="fecha_partida" name="fecha_partida" class="form-control text-center datepicker" readonly="readonly" value="{{ $tramo->fecha_partida }}">
+          <span class="input-group-append">
+              <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+          </span>
+        </div>
+  		</div>
 
-		<div class="form-group row">
-			<label class="col-3" for="avion_id">Avi&oacute;n</label>
-			<div class="col-9">
-				<select class="form-control" name="avion_id" id="avion_id">
-					@foreach($aviones as $avion)
-					<option value="{{ $avion->id }}" {{ $avion->id == $tramo->avion_id?'selected':'' }}>{{ $avion->modelo }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
+      <div class="col-1 text-center">
+        <i class="fas fa-arrow-right fa-2x vuelo-vuelta"></i>
+      </div>
 
-		<div class="form-group row">
-			<label class="col-3" for="origen_id">Aeropuerto Origen</label>
-			<div class="col-9">
-				<select class="form-control" name="origen_id" id="origen_id">
-					@foreach($aeropuertos as $aeropuerto)
-					<option value="{{ $aeropuerto->id }}" {{ $aeropuerto->id == $tramo->origen->id?'selected':'' }}>{{ $aeropuerto->nombre }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
+      <div class="col">
+          <label for="fecha_llegada" class="vuelo-vuelta">Fecha Llegada</label>
+          <div class="input-group">
+              <input type="text" id="fecha_llegada" name="fecha_llegada" class="form-control text-center datepicker vuelo-vuelta" readonly="readonly" value="{{ $tramo->fecha_llegada }}">
+              <span class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+              </span>
+          </div>
+      </div>
+    </div>
 
-		<div class="form-group row">
-			<label class="col-3" for="destino_id">Aeropuerto Destino</label>
-			<div class="col-9">
-				<select class="form-control" name="destino_id" id="destino_id">
-					@foreach($aeropuertos as $aeropuerto)
-					<option value="{{ $aeropuerto->id }}" {{ $aeropuerto->id == $tramo->destino->id?'selected':'' }}>{{ $aeropuerto->nombre }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
+    <div class="form-group form-row align-items-end">
+		  <div class="col">
+  			<label for="origen_id">Aeropuerto Origen</label>
+  			<div class="input-group">
+  				<select class="form-control selectpicker" name="origen_id" id="origen_id" title="Aeropuerto de Origen" data-live-search="true">
+  					@foreach($aeropuertos as $aeropuerto)
+  					<option value="{{ $aeropuerto->id }}" {{ $aeropuerto->id == $tramo->origen->id?'selected':'' }}>
+              {{ '('. $aeropuerto->ciudad->pais->nombre .', '.$aeropuerto->ciudad->nombre.') ' . $aeropuerto->nombre }}
+            </option>
+  					@endforeach
+  				</select>
+  			</div>
+  		</div>
+
+      <div class="col-1 text-center">
+        <i class="fas fa-arrow-right fa-2x"></i>
+      </div>
+
+  		<div class="col">
+  			<label for="destino_id">Aeropuerto Destino</label>
+  			<div class="input-group">
+  				<select class="form-control selectpicker" name="destino_id" id="destino_id" title="Aeropuerto de Destino" data-live-search="true">
+  					@foreach($aeropuertos as $aeropuerto)
+  					<option value="{{ $aeropuerto->id }}" {{ $aeropuerto->id == $tramo->destino->id?'selected':'' }}>
+              {{ '('. $aeropuerto->ciudad->pais->nombre .', '.$aeropuerto->ciudad->nombre.') ' . $aeropuerto->nombre }}
+            </option>
+  					@endforeach
+  				</select>
+  			</div>
+  		</div>
+    </div>
 
 		<div class="text-right">
-			<a href="{{ url()->previous() }}" class="btn btn-info"><i class="fas fa-ban"></i> Cancelar</a>
-			<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Actualizar</button>
+			<a href="/tramos/{{ $tramo->id }}" class="btn btn-info">
+        <i class="fas fa-ban"></i> Cancelar
+      </a>
+			
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> Actualizar
+      </button>
 		</div>
 	</form>
-
-	<script>
-		$(function(){
-
-		});
-	</script>
 @endsection

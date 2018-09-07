@@ -17,7 +17,8 @@ class AsientosController extends Controller
      */
     public function index()
     {
-      return Asiento::all();
+      $asientos = Asiento::all();
+      return view('modulos.ReservaVuelo.asientos.index', compact('asientos'));
     }
 
     /**
@@ -27,7 +28,7 @@ class AsientosController extends Controller
      */
     public function create()
     {
-      // 
+      return view('modulos.ReservaVuelo.asientos.create');
     }
 
     /**
@@ -38,10 +39,17 @@ class AsientosController extends Controller
      */
     public function store(Request $request)
     {
-      return Aeropuerto::create($this->validate($request, [
+      $asiento = Asiento::create($this->validate($request, [
         'codigo' => 'required',
         'tipo_asiento_id' => 'required|integer'
       ]));
+
+      if ($asiento) {
+        $outcome = ['success' => 'Creado con éxito!'];
+      } else {
+        $outcome = ['error' => 'No se ha podido crear!'];
+      }
+      return redirect('/asientos')->with($outcome);
     }
 
     /**
@@ -52,7 +60,7 @@ class AsientosController extends Controller
      */
     public function show(Asiento $asiento)
     {
-      return $asiento;
+      return view('modulos.ReservaVuelo.asientos.show', compact('asiento'));
     }
 
     /**
@@ -63,7 +71,7 @@ class AsientosController extends Controller
      */
     public function edit(Asiento $asiento)
     {
-      // 
+      return view('modulos.ReservaVuelo.asientos.edit', compact('asiento'));
     }
 
     /**
@@ -80,7 +88,7 @@ class AsientosController extends Controller
         'tipo_asiento_id' => 'required|integer'
       ]))->save();
       
-      return $asiento;
+      return view('modulos.ReservaVuelo.asientos.edit', compact('asiento'))->with(['success' => 'Actualizado!']);
     }
 
     /**

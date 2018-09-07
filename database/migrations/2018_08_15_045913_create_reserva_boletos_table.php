@@ -26,7 +26,7 @@ class CreateReservaBoletosTable extends Migration
             $table->foreign('tramo_id')
                       ->references('id')
                       ->on('tramos');
-            $table->integer('orden_compra_id');
+            $table->integer('orden_compra_id')->nullable();
             // $table->foreign('orden_compra_id')
             //           ->references('id')
             //           ->on('orden_compra');

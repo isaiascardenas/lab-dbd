@@ -9,14 +9,14 @@
 	
 	@include('layouts.messages')
 
-	<form method="post" action="{{ action('ReservaVuelo\AvionesController@update', $avion->id) }}" method="post">
+	<form method="post" action="{{ action('ReservaVuelo\AvionesController@update', $avion->id) }}">
 		{{ csrf_field() }}
     <input name="_method" type="hidden" value="PATCH">
 
 		<div class="form-group row">
-			<label class="col-3" for="modelo">Modelo</label>
+			<label class="col-3" for="descripcion">Descripción</label>
 			<div class="col-9">
-				<input type="text" class="form-control" name="modelo" id="modelo" value="{{ $avion->modelo }}">
+				<input type="text" class="form-control" name="descripcion" id="descripcion" value="{{ $avion->descripcion }}">
 			</div>
 		</div>
 
@@ -25,7 +25,9 @@
 			<div class="col-9">
 				<select class="form-control" name="aerolinea_id" id="aerolinea_id">
 					@foreach($aerolineas as $aerolinea)
-					<option value="{{ $aerolinea->id }}" {{ $avion->aerolinea->id == $aerolinea->id?'selected':'' }}>{{ $aerolinea->nombre }}</option>
+					<option value="{{ $aerolinea->id }}" {{ $avion->aerolinea->id == $aerolinea->id?'selected':'' }}>
+            {{ $aerolinea->nombre }}
+          </option>
 					@endforeach
 				</select>
 			</div>

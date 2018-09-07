@@ -28,6 +28,12 @@ class HomeController extends Controller
         // "paquetes" => Paquetes::all()
         $paquetes = [];
 
+        request()->session()->forget('busqueda');
+        request()->session()->forget('reservas');
+        request()->session()->forget('inicio_reserva');
+        request()->session()->forget('termino_reserva');
+        request()->session()->forget('costo');
+dd(request()->session());
         return view('home', compact(
             'autos',
             'hoteles',
@@ -72,8 +78,9 @@ class HomeController extends Controller
 
     public function cart()
     {
-        $reservas = session('reservas');
-
+        // request()->session()->forget('reservas');
+        $reservas = request()->session()->get('reservas');
+        // dd($reservas);
         return view('cart', compact('reservas'));
     }
 }

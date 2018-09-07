@@ -5,7 +5,6 @@ namespace App\Http\Controllers\ReservaVuelo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modulos\ReservaVuelo\Aerolinea;
-use Illuminate\Database\Eloquent\Model;
 
 class AerolineasController extends Controller
 {

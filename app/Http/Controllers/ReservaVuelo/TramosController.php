@@ -20,7 +20,9 @@ class TramosController extends Controller
    */
   public function index()
   {
-    return Tramo::all();
+    $tramos = Tramo::all();
+
+    return view('modulos.ReservaVuelo.tramos.index', compact('tramos'));
   }
 
   /**
@@ -30,7 +32,10 @@ class TramosController extends Controller
    */
   public function create()
   {
-    //
+    $aviones = Avion::all();
+    $aeropuertos = Aeropuerto::all();
+
+    return view('modulos.ReservaVuelo.tramos.create', compact('aviones', 'aeropuertos'));
   }
 
   /**
@@ -41,14 +46,22 @@ class TramosController extends Controller
    */
   public function store(Request $request)
   {
-    return Tramo::create($this->validate($request, [
-      'codigo'    => 'required',
-      'fecha_partida' => 'required|date',
-      'fecha_llegada' => 'required|date',
-      'avion_id'    => 'required|integer',
-      'origen_id'   => 'required|integer',
-      'destino_id'  => 'required|integer'
-    ]));
+    $tramo = Tramo::create($this->validate($request, [
+                'codigo' => 'required',
+                'fecha_partida' => 'required|date',
+                'fecha_llegada' => 'required|date',
+                'avion_id' => 'required|integer',
+                'origen_id' => 'required|integer',
+                'destino_id' => 'required|integer'
+              ]));
+
+    if ($tramo->exists()) {
+      $response = ['success' => 'Creado con éxito!'];
+    } else {
+      $response = ['error' => 'No se ha podido crear!'];
+    }
+
+    return redirect('/tramos')->with($response);
   }
 
   /**
@@ -59,7 +72,7 @@ class TramosController extends Controller
    */
   public function show(Tramo $tramo)
   {
-    return $tramo;
+    return view('modulos.ReservaVuelo.tramos.show', compact('tramo'));
   }
 
   /**
@@ -70,7 +83,10 @@ class TramosController extends Controller
    */
   public function edit(Tramo $tramo)
   {
-    //
+    $aviones = Avion::all();
+    $aeropuertos = Aeropuerto::all();
+
+    return view('modulos.ReservaVuelo.tramos.edit', compact('tramo', 'aviones', 'aeropuertos'));
   }
 
   /**
@@ -82,7 +98,7 @@ class TramosController extends Controller
    */
   public function update(Request $request, Tramo $tramo)
   {
-    $tramo->fill($this->validate($request, [
+    $outcome = $tramo->fill($this->validate($request, [
       'codigo'        => 'required',
       'fecha_partida' => 'required|date',
       'fecha_llegada' => 'required|date',
@@ -91,7 +107,13 @@ class TramosController extends Controller
       'destino_id'    => 'required|integer'
     ]))->save();
     
-    return $tramo;
+    if ($outcome) {
+      $response = ['success' => 'Actualizado con éxito!'];
+    } else {
+      $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+    }
+
+    return redirect('/tramos/'.$tramo->id.'/edit')->with($response);
   }
 
   /**
@@ -102,8 +124,14 @@ class TramosController extends Controller
    */
   public function destroy(Tramo $tramo)
   {
-    $tramo->delete();
+    $response = [];
+    try {
+      $tramo->delete();
+      $response = ['success' => 'Eliminado con éxito!'];
+    } catch (\Exception $e) {
+      $response = ['error' => 'Error al eliminar el registro!'];
+    }
 
-    return Tramo::all();
+    return redirect('/tramos')->with($response);
   }
 }

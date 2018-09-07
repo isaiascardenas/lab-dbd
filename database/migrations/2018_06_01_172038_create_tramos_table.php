@@ -18,6 +18,7 @@ class CreateTramosTable extends Migration
             $table->string('codigo')->unique();
             $table->dateTime('fecha_partida');
             $table->dateTime('fecha_llegada');
+            $table->integer('costo');
             $table->integer('avion_id');
             $table->integer('origen_id');
             $table->integer('destino_id');

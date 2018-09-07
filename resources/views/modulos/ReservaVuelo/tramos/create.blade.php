@@ -9,7 +9,7 @@
 	
 	@include('layouts.messages')
 
-	<form method="post" action="/tramos/" method="post">
+  <form method="post" action="{{ action('ReservaVuelo\TramosController@store') }}">
 		{{ csrf_field() }}
 		
 		<div class="form-group row">
@@ -36,48 +36,40 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-3" for="aerolinea_id">Aerol&iacute;nea</label>
+			<label class="col-3" for="avion_id">Avión</label>
 			<div class="col-9">
-				<select class="form-control" name="aerolinea_id" id="aerolinea_id">
-					<option>Seleccione Aerol&iacute;nea</option>
-					@foreach($aerolineas as $aerolinea)
-					<option value="{{ $aerolinea->id }}">{{ $aerolinea->nombre }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-				
-		<div class="form-group row">
-			<label class="col-3" for="avion_id">Avi&oacute;n</label>
-			<div class="col-9">
-				<select class="form-control selectpicker" name="avion_id" id="avion_id">
-					<option>Seleccione Avi&oacute;n</option>
+				<select class="form-control selectpicker" name="avion_id" id="avion_id" title="Seleccione Avión (Aerolínea)" data-live-search="true">
 					@foreach($aviones as $avion)
-					<option value="{{ $avion->id }}" data-aerolinea-id="{{ $avion->aerolinea->id }}">{{ $avion->modelo }}</option>
+					<option value="{{ $avion->id }}">
+            {{ $avion->descripcion .' ('. $avion->aerolinea->nombre .')' }}
+          </option>
 					@endforeach
 				</select>
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<label class="col-3" for="origen_id">Aeropuerto Origen</label>
+			<label class="col-3" for="origen_id">Aeropuerto de Origen</label>
 			<div class="col-9">
-				<select class="form-control selectpicker" name="origen_id" id="origen_id">
-					<option>Seleccione Aeropuerto Origen</option>
+				<select class="form-control selectpicker" name="origen_id" id="origen_id" title="Aeropuerto de Origen" data-live-search="true">
 					@foreach($aeropuertos as $aeropuerto)
-					<option value="{{ $aeropuerto->id }}">{{ $aeropuerto->nombre }}</option>
+					<option value="{{ $aeropuerto->id }}">
+            {{ $aeropuerto->nombre }}
+          </option>
 					@endforeach
 				</select>
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<label class="col-3" for="destino_id">Aeropuerto Destino</label>
+			<label class="col-3" for="destino_id">Aeropuerto de Destino</label>
 			<div class="col-9">
-				<select class="form-control selectpicker" name="destino_id" id="destino_id">
+				<select class="form-control selectpicker" name="destino_id" id="destino_id" title="Aeropuerto de Destino" data-live-search="true">
 					<option>Seleccione Aeropuerto Destino</option>
 					@foreach($aeropuertos as $aeropuerto)
-					<option value="{{ $aeropuerto->id }}">{{ $aeropuerto->nombre }}</option>
+					<option value="{{ $aeropuerto->id }}">
+            {{ $aeropuerto->nombre }}
+          </option>
 					@endforeach
 				</select>
 			</div>

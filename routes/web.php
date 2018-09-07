@@ -90,9 +90,10 @@ Route::resource('sucursales', 'ReservaAuto\SucursalesController', [
 ]);
 
 /**
- *  Reservas vuelos
+ *  Proceso de reserva de vuelos
  */
 Route::post('/vuelos/',             'ReservaVuelo\VuelosController@index');   // POST => filtros
+Route::get('/vuelos/',             'ReservaVuelo\VuelosController@index');   // POST => filtros
 Route::post('/vuelos/details/',     'ReservaVuelo\VuelosController@show');    // POST => [tramo_1, tramo_2]
 Route::post('/vuelos/reserva/',     'ReservaVuelo\VuelosController@reserva'); // POST => [tramo_1, tramo_2] tras confirmacion en /vuelos/details/
 
@@ -101,12 +102,14 @@ Route::resources([
   'aerolineas'      => 'ReservaVuelo\AerolineasController',
   'aeropuertos'     => 'ReservaVuelo\AeropuertosController',
   'asientos'        => 'ReservaVuelo\AsientosController',
-  'aviones'         => 'ReservaVuelo\AvionesController',
   'pasajeros'       => 'ReservaVuelo\PasajerosController',
-  'reserva_boletos' => 'ReservaVuelo\ReservaBoletosController',
-  'tipo_asientos'   => 'ReservaVuelo\TipoAsientosController',
+  'reserva-boletos' => 'ReservaVuelo\ReservaBoletosController',
+  'tipo-asientos'   => 'ReservaVuelo\TipoAsientosController',
   'tramos'          => 'ReservaVuelo\TramosController'
 ]);
+
+Route::resource('aviones', 'ReservaVuelo\AvionesController')->parameters(['aviones' => 'avion']);
+
 
 /* CRUD Cuentas de usuario*/
 Route::resources([

@@ -88,16 +88,10 @@ class ReservaAutosController extends Controller
             // ]);
         // }
 
-        // request()->session()->push('reservas' ,[
-            // 'tipo' => 'auto',
-            // 'reserva' => $reserva->load('auto'),
-        // ]);
-        // session(['reservas' => []]);
-
-        request()->session()->push('reservas', 4);
-        // session(['reservas' => null]);
-        // request()->session()->forget('reservas');
-        dd(request()->session()->get('reservas'));
+        request()->session()->push('reservas' ,[
+            'tipo' => 'auto',
+            'reserva' => $reserva->load('auto'),
+        ]);
 
         return redirect('/cart')->with($response);
     }

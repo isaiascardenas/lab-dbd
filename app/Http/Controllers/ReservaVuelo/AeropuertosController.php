@@ -5,8 +5,8 @@ namespace App\Http\Controllers\ReservaVuelo;
 use App\Ciudad;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaVuelo\Aeropuerto;
-
 
 class AeropuertosController extends Controller
 {
@@ -17,7 +17,9 @@ class AeropuertosController extends Controller
    */
   public function index()
   {
-    return Aeropuerto::all();
+    $aeropuertos = Aeropuerto::all();
+
+    return view('modulos.ReservaVuelo.aeropuertos.index', compact('aeropuertos'));
   }
 
   /**
@@ -27,7 +29,9 @@ class AeropuertosController extends Controller
    */
   public function create()
   {
-    //
+    $ciudades = Ciudad::all();
+
+    return view('modulos.ReservaVuelo.aeropuertos.create', compact('ciudades'));
   }
 
   /**
@@ -38,12 +42,20 @@ class AeropuertosController extends Controller
    */
   public function store(Request $request)
   {
-    return Aeropuerto::create($this->validate($request, [
+    $aeropuerto = Aeropuerto::create($this->validate($request, [
       'codigo'    => 'required',
       'nombre'    => 'required',
       'direccion' => 'required',
       'ciudad_id' => 'required|integer'
     ]));
+
+    if ($aeropuerto instanceof Model) {
+      $response = ['success' => 'Creado con éxito!'];
+    } else {
+      $response = ['error' => 'No se ha podido crear!'];
+    }
+
+    return redirect('/aeropuertos')->with($response);
   }
 
   /**
@@ -54,7 +66,7 @@ class AeropuertosController extends Controller
    */
   public function show(Aeropuerto $aeropuerto)
   {
-    return $aeropuerto;
+    return view('modulos.ReservaVuelo.aeropuertos.show', compact('aeropuerto'));
   }
 
   /**
@@ -65,7 +77,9 @@ class AeropuertosController extends Controller
    */
   public function edit(Aeropuerto $aeropuerto)
   {
-    // 
+    $ciudades = Ciudad::all();
+    
+    return view('modulos.ReservaVuelo.aeropuertos.edit', compact('aeropuerto', 'ciudades'));
   }
 
   /**
@@ -77,15 +91,20 @@ class AeropuertosController extends Controller
    */
   public function update(Request $request, Aeropuerto $aeropuerto)
   {
-
-    $aeropuerto->fill($this->validate($request, [
+    $outcome = $aeropuerto->fill($this->validate($request, [
       'codigo' => 'required',
       'nombre' => 'required',
       'direccion' => 'required',
       'ciudad_id' => 'required|integer'
     ]))->save();
 
-    return $aeropuerto;
+    if ($outcome) {
+      $response = ['success' => 'Actualizado con éxito!'];
+    } else {
+      $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+    }
+
+    return redirect('/aeropuertos/'.$aeropuerto->id.'/edit')->with($response);
   }
 
   /**
@@ -96,8 +115,14 @@ class AeropuertosController extends Controller
    */
   public function destroy(Aeropuerto $aeropuerto)
   {
-    $aeropuerto->delete();
+    $response = [];
+    try {
+      $aeropuerto->delete();
+      $response = ['success' => 'Eliminado con éxito!'];
+    } catch (\Exception $e) {
+      $response = ['error' => 'Error al eliminar el registro!'];
+    }
 
-    return Aeropuerto::all();
+    return redirect('/aeropuertos')->with($response);
   }
 }

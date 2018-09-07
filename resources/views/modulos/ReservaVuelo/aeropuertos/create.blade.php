@@ -9,7 +9,7 @@
 	
 	@include('layouts.messages')
 
-	<form method="post" action="{{ action('ReservaVuelo\AeropuertosController@store') }}" method="post">
+	<form method="post" action="{{ action('ReservaVuelo\AeropuertosController@store') }}">
 		{{ csrf_field() }}
 		
 		<div class="form-group row">
@@ -34,11 +34,11 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-3" for="localizacion_id">Localizaci&oacute;n</label>
+			<label class="col-3" for="ciudad_id">Ciudad</label>
 			<div class="col-9">
-				<select class="form-control" name="localizacion_id" id="localizacion_id">
-					@foreach($localizaciones as $localizacion)
-					<option value="{{ $localizacion->id }}">{{ $localizacion->ciudad .', '. $localizacion->pais }}</option>
+				<select class="form-control" name="ciudad_id" id="ciudad_id">
+					@foreach($ciudades as $ciudad)
+					<option value="{{ $ciudad->id }}">{{ $ciudad->nombre .', '. $ciudad->pais->nombre }}</option>
 					@endforeach
 				</select>
 			</div>

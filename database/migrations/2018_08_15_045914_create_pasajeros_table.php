@@ -17,10 +17,12 @@ class CreatePasajerosTable extends Migration
         $table->increments('id');
         $table->string('nombre');
         $table->string('rut');
-        $table->integer('reserva_boleto_id');
+        $table->integer('reserva_boleto_id')->nullable();
+
         $table->foreign('reserva_boleto_id')
                   ->references('id')
                   ->on('reserva_boletos');
+        
         $table->timestamps();
     });
   }

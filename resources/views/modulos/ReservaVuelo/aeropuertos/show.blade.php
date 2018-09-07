@@ -23,8 +23,8 @@
   </div>
 
   <div class="form-group row">
-    <label class="col-3" for="localizacion_id">Localizaci&oacute;n</label>
-    <div class="col-9">{{ $aeropuerto->localizacion->ciudad .', '. $aeropuerto->localizacion->pais }}</div>
+    <label class="col-3" for="localizacion_id">Nombre</label>
+    <div class="col-9">{{ $aeropuerto->ciudad->nombre .', '. $aeropuerto->ciudad->pais->nombre }}</div>
   </div>
 
   <div class="row">
@@ -41,7 +41,7 @@
     </div>
 
     <div class="col-auto">
-      <form action="{{ action('ReservaVuelo\AeropuertosController@destroy', $aeropuerto->id) }}" method="POST">
+      <form action="{{ action('ReservaVuelo\AeropuertosController@destroy', $aeropuerto->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro que deseas eliminar este registro?');">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit" class="btn btn-danger">
