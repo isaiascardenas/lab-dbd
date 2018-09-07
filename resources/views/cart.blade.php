@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (count($reservas) == 0)
+    @empty($reservas)
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Tu carrito esta vacío</h4>
             <p>
@@ -141,7 +141,7 @@
                 Seguir comprando
               </a>
               <form
-                  action="{{ action('HomeController@payAll') }}"
+                  action="{{ action('HomeController@pay') }}"
                   method="POST"
                   onsubmit="return confirm('¿Esta seguro que desea realizar el pago de los productos en el carrito?')">
 
