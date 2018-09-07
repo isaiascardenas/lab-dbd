@@ -42,7 +42,7 @@ class VuelosController extends Controller
       'tipo_pasaje' => 1
     ];
 
-  	$vuelos = Tramo::buscarVuelos($params);
+    $vuelos = Tramo::buscarVuelos($params);
 
     request()->session()->push('busqueda.vuelos', $params);
 

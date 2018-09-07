@@ -29,9 +29,6 @@ class HomeController extends Controller
         // "paquetes" => Paquetes::all()
         $paquetes = [];
 
-        // request()->session()->forget('busqueda');
-        // request()->session()->forget('reservas');
-
         return view('home', compact(
             'autos',
             'hoteles',

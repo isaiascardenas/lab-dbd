@@ -1,54 +1,76 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-	<h2>
-    <i class="fas fa-map-marker-alt"></i> Actividades
+  <h2>
+    <i class="fas fa-plane"></i> Selecciona tu actividad
   </h2>
-	
-	<hr>
 
-	@include('layouts.messages')
-	
-	<div class="form-group">
-		<a href="/actividades/create/" class="btn btn-primary">
-      <i class="fas fa-plus"></i> Nueva Actividad
-    </a>
-	</div>
+  <div id="list-accordion">
+    @foreach($actividades as $actividad)
+    <div class="card">
+      <a class="card-header" data-toggle="collapse" href="#actividad-{{ $loop->iteration }}">
+        <div class="row text-left">
+          <div class="col-6">
+            <div class="row">
+              <div class="col">
+                <span class="font-weight-bold">{{ $actividad->fecha_inicio }}</span>
+              </div>
 
-	<table class="table table-hover table-bordered table-sm datatable">
-		<thead>
-			<tr>
-				<th class="no-sort"></th>
-				<th>Descripcion</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach($actividades as $actividad)
-			<tr>
-				<td>
-          <a class="btn btn-sm btn-info" href="/actividades/{{ $actividad->id }}">
-            <i class="fas fa-eye"></i>
-          </a>
-        </td>
-				<td>{{ $actividad->descripcion }}</td>
-			</tr>
-			@endforeach
-		</tbody>
-	</table>
-@endsection
+              <div class="col-1">
+                <i class="fas fa-angle-right"></i>
+              </div>
 
-@section('script')
-  <script>
-    $(document).ready(function() {
-        $('.datatable').DataTable({
-          'language': {
-            'url': 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json'
-          },
-          'columnDefs': [
-            {'targets': 'no-sort', 'orderable': false}
-          ], 
-          'order': [[1, 'asc']]
-        });
-    } );
-  </script>
+              <div class="col">
+                <span class="text-muted">{{ $actividad->fecha_termino }}</span>
+              </div>
+            </div>
+          </div>
+
+          {{-- <div class="col-2 text-muted"> --}}
+              {{-- {{ $actividad->costo_aduto}} --}}
+          {{-- </div> --}}
+
+          <div class="col-2 text-muted">
+              {{ $actividad->ciudad->nombre }}
+          </div>
+
+          <div class="col-2 text-right font-weight-bold">
+              ${{ $actividad->costo_adulto }}
+          </div>
+        </div>
+      </a>
+
+      <div class="collapse" id="actividad-{{ $loop->iteration }}" data-parent="#list-accordion">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">
+              {{ $actividad->descripcion }}
+          </h6>
+          <p class="card-text">
+              <span class="col-2 text-right font-weight-bold">
+                  Precio Adulto: ${{ $actividad->costo_adulto }}
+              </span >
+              <br/>
+              <span class="col-2 text-right font-weight-bold">
+                  Max cantidad adulto: {{ $actividad->max_adultos }}
+              </span >
+              <br/>
+              <br/>
+              <span class="col-2 text-right font-weight-bold">
+                  Precio Niño: ${{ $actividad->costo_nino }}
+              </span >
+              <br/>
+              <span class="col-2 text-right font-weight-bold">
+                  Max cantidad niños: {{ $actividad->max_ninos }}
+              </span >
+          </p>
+          <div class="text-right">
+              <a class="btn btn-sm btn-info" href="reserva_actividades/create/{{ $actividad->id }}">
+                  Reservar
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
+  </div>
 @endsection
