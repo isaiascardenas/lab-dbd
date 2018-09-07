@@ -67,12 +67,12 @@
             <h5>Pasajero #{{ $i }}</h5>
             <div class="form-group">
               <label>Nombre</label>
-              <input type="text" class="form-control" name="pasajero_nombre[]" value="A{{ $i }}">
+              <input type="text" class="form-control" name="pasajero_nombre[]" value="">
             </div>
 
             <div class="form-group">
               <label>Rut</label>
-              <input type="text" class="form-control" name="pasajero_rut[]" value="{{ $i }}">
+              <input type="text" class="form-control" name="pasajero_rut[]" value="">
             </div>
           </div>
           @endfor
