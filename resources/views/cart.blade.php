@@ -11,8 +11,6 @@
             <p class="mb-0">Debes buscar productos de tu interés y agregarlos a tu carrito de compras para poder pagar.</p>
         </div>
     @else
-
-<<<<<<< HEAD
         <div class="card">
           <div class="card-header">
             Carrito de compras
@@ -34,33 +32,10 @@
                   <br/>
                   Fecha termino reserva: {{ $reserva['reserva']->fecha_termino }}
                   <br/>
-                  <span> Costo: {{ session('costo') }} </span>
+                  <span> Costo: {{ '' }} </span>
                 </p>
-=======
-        @foreach ($reservas as $reserva)
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    @if ($reserva['tipo'] == 'auto')
-                        <h5 class="card-title"> Tu Auto </h5>
-                        <p class="card-text">
-                        Patente: {{ $reserva['reserva']->auto->patente }}
-                        <br/>
-                        Descripción: {{ $reserva['reserva']->auto->descripcion }}
-                        <br/>
-                        Capacidad: {{ $reserva['reserva']->auto->capacidad }}
-                        <br/>
-                        Fecha reserva: {{ $reserva['reserva']->fecha_reserva }}
-                        <br/>
-                        Fecha inicio reserva: {{ $reserva['reserva']->fecha_inicio }}
-                        <br/>
-                        Fecha termino reserva: {{ $reserva['reserva']->fecha_termino }}
-                        <br/>
-                        <span> Costo: {{ session('costo') }} </span>
-                        </p>
-        @elseif ($reserva['tipo'] == 'hotel')
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title"> Tu Hotel </h5>
+
+              @elseif ($reserva['tipo'] == 'hotel')
                     <p class="card-text">
                     {{-- Hotel: {{ $reserva['reserva']->habitacion->hotel->nombre }} --}}
                     {{-- <br/> --}}
@@ -76,32 +51,10 @@
                     <br/>
                     <span> Costo: {{ session('costo') }} </span>
                     </p>
-                @elseif ($reserva->tipo == 'otro_tipo')
-                @endif
->>>>>>> 3ef704aae14230af8e808ca0f13ab52d8b6245dc
-                <form
-                    action="{{ action('HomeController@deleteFromCart') }}"
-                    method="POST"
-                    onsubmit="return confirm('Esta seguro de que desea eliminar el producto del carrito?')">
-
-                    {{ csrf_field() }}
-                    <input type="hidden" name="_method" value="POST">
-                    <input type="hidden" name="reserva_id" value="{{ $reserva['reserva']->id }}">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-cart-arrow-down"></i> Eliminar del carrito
-                    </button>
-                </form>
-<<<<<<< HEAD
               @elseif ($reserva['tipo'] == 'vuelo')
                 <p class="card-text">
                   Codigo Vuelo: {{ $reserva['reserva']->tramo->codigo }}
                   <br/>
-=======
-                </div>
-            </div>
-        @endforeach
->>>>>>> 3ef704aae14230af8e808ca0f13ab52d8b6245dc
-
                   Partida: {{ $reserva['reserva']->tramo->horarioPartida() }}
                   <br/>
 

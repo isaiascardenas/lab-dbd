@@ -30,10 +30,7 @@ class HomeController extends Controller
 
         request()->session()->forget('busqueda');
         request()->session()->forget('reservas');
-        request()->session()->forget('inicio_reserva');
-        request()->session()->forget('termino_reserva');
-        request()->session()->forget('costo');
-dd(request()->session());
+
         return view('home', compact(
             'autos',
             'hoteles',
