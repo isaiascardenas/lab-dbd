@@ -38,10 +38,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Trivago') }}
+                <a class="navbar-brand" href="{{ url('/') }}" >
+                    TetraVago
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -57,8 +57,8 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('login') }}" style="color: #eceff1 !important;">{{ __('Ingresar') }}</a></li>
+                            <li><a class="nav-link" style="color: #eceff1 !important;" href="{{ route('register') }}" color= "#FFFFFF">{{ __('Registrate') }}</a></li>
                         @else
                             <li>
                                 <a href="/cart" class="nav-link">
@@ -93,8 +93,11 @@
             @yield('content')
         </main>
 
-        <footer class="container mt-3">
-            &copy; 2018 {{ config('app.name', 'Trivago') }} Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
+        <footer  style="background-color: #ce93d8 !important;
+            position: fixed; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.7;}">
+            <center>    
+                &copy; 2018 Tetravago Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
+            </center>
         </footer>
     </div>
 
