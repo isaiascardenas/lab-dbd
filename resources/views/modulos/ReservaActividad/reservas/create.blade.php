@@ -1,139 +1,93 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-    <h2>
-        <i class="fas fa-map-marker-alt"></i> Nueva Actividad
-    </h2>
-    
-    <hr>
-    
-    @include('layouts.messages')
+	<div class="card">
+		<div class="card-header">
+      <div class="row">
+        <div class="col">
+          <b>Actividad</b>
+          <br>
+          {{ $vuelo->diaPartida() }}  
+        </div>
 
-    <form method="post" action="{{ action('ReservaActividad\ActividadesController@store') }}">
-        {{ csrf_field() }}
-        
-        <div class="form-group row">
-          <label class="col-3" for="nombre">Descripcion</label>
-          <div class="col-9">
-            <textarea class="form-control" name="descripcion" id="descripcion"></textarea>
+        <div class="col">
+          {{ $vuelo->origen()->origen->ciudad->nombre . ', ' . $vuelo->origen()->origen->ciudad->pais->nombre }}
+          <br>
+          ({{ $vuelo->origen()->origen->codigo }}) <b>{{ $vuelo->origen()->horaPartida() }}</b>
+        </div>
+
+        {{-- <i class="fas fa-angle-right"></i> --}}
+        <div class="col">
+          {{ $vuelo->destino()->destino->ciudad->nombre . ', ' . $vuelo->destino()->destino->ciudad->pais->nombre }}
+          <br>
+          ({{ $vuelo->destino()->destino->codigo }}) <b>{{ $vuelo->destino()->horaLlegada() }}</b>
+        </div>
+      </div>
+		</div>
+		<div class="card-body">
+			<h3>Itinerario</h3>
+
+			<table class="table table-striped">
+				<tbody>
+          @foreach ($vuelo->itinerario() as $tramo)
+            <tr>
+              <td>
+                <b>{{ $tramo->horaPartida() }}</b> {{ $tramo->origen->codigo }}
+              </td>
+              <td>
+                <i class="fas fa-angle-right"></i>
+              </td>
+              <td>
+                <b>{{ $tramo->horaLlegada() }}</b> {{ $tramo->destino->codigo }}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <b>{{ $tramo->codigo }}</b> - Operado por <b>{{ $tramo->avion->aerolinea->nombre }}</b>
+              </td>
+  					</tr>
+
+            @if (!$loop->last)
+            <tr>
+              <td colspan="2">
+                Espera de {{ $vuelo->tiempoEscala($loop->iteration) }} en {{ $tramo->destino->ciudad->nombre }}
+              </td>
+            </tr>
+            @endif
+          @endforeach
+        </tbody>
+			</table>
+
+      <h3>Agregar pasajero(s)</h3>
+
+      <div class="row">
+        @for($i = 1; $i <= intval($paramsVuelo['pasajeros_adultos']) + intval($paramsVuelo['pasajeros_ninos']); $i++)
+        <div class="col-6">
+          <h5>Pasajero #{{ $i }}</h5>
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" name="pasajero_nombre[]" value="A{{ $i }}">
+          </div>
+
+          <div class="form-group">
+            <label>Rut</label>
+            <input type="text" class="form-control" name="pasajero_rut[]" value="{{ $i }}">
           </div>
         </div>
+        @endfor
+      </div>
+      <div class="text-right">
+        <form method="post" action="{{ action('ReservaVuelo\VuelosController@reserva') }}" onsubmit="return confirm('¿Está seguro que desea agregar al carrito?')">
+          {{ csrf_field() }}
+          @foreach ($vuelo->itinerario() as $tramo)
+          <input type="hidden" name="tramos[]" value="{{ $tramo->id }}">
+          @endforeach
 
-
-        <div class="form-group row">
-            <label class="col-3" for="nombre">Ubicacion</label>
-            <div class="col-9">
-                <div class="form-group">
-                    <select id="ubicacion_id" name="ciudad_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
-                        @foreach ($ciudades as $ciudad)
-                            <option value="{{ $ciudad->id }}">
-                                {{ $ciudad->nombre . ", " . $ciudad->pais->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="form-group form-row align-items-end">
-            <div class="col">
-                <label>Integrantes</label>
-                <div class="row">
-                    <div class="col input-group">
-                        <input type="number" name="max_adultos" class="form-control text-right" value="1">
-                        <div class="input-group-append">
-                            <span class="input-group-text">Máx Adultos</span>
-                        </div>
-                    </div>
-                    <div class="col input-group">
-                        <input type="number" name="max_ninos" class="form-control text-right" value="0">
-                        <div class="input-group-append">
-                            <span class="input-group-text">Máx Ni&ntilde;os</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group form-row align-items-end">
-            <div class="col">
-                <label>Precios</label>
-                <div class="row">
-                    <div class="col input-group">
-                        <input type="number" name="costo_adulto" class="form-control text-right" value="1">
-                        <div class="input-group-append">
-                            <span class="input-group-text">Precio Adultos</span>
-                        </div>
-                    </div>
-                    <div class="col input-group">
-                        <input type="number" name="costo_nino" class="form-control text-right" value="0">
-                        <div class="input-group-append">
-                            <span class="input-group-text">Precio Ni&ntilde;os</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <div id="fechas_actividades" class="form-group form-row align-items-end">
-            <div class="col">
-                <label for="fecha_ida">Fecha Inicio</label>
-                <div class="input-group">
-                    <input type="text" id="fecha_comienzoca" name="fecha_inicio" class="form-control text-center" readonly="readonly">
-                    <span class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                    </span>
-                </div>
-            </div>
-
-            <div class="col-1 text-center">
-                <i class="fas fa-arrow-right fa-2x fecha_termino"></i>
-            </div>
-
-            <div class="col">
-                <label for="fecha_vuelta" class="fecha_termino">Fecha Termino</label>
-                <div class="input-group">
-                    <input type="text" id="fecha_llegadaca" name="fecha_termino" class="form-control text-center" readonly="readonly" >
-                    <span class="input-group-append">
-                        <spa2018-09-07 21:01:53n class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="text-right">
-            <a href="/actividades/" class="btn btn-info">
-                <i class="fas fa-ban"></i> Cancelar
-            </a>
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Guardar
-            </button>
-        </div>
-    </form>
-@endsection
-
-
-
-@section('script')
-    <script>
-        let fechaTermino = flatpickr('#fecha_llegadaca', {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-        });
-
-        let fechaInicio = flatpickr('#fecha_comienzoca', {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            minDate: "today",
-        });
-
-        fechaInicio.set("onChange", function(d) {
-            fechaTermino.set("minDate", d[0]);
-        });
-    </script>
+    			<button type="submit" class="btn btn-primary">
+    				<i class="fas fa-shopping-cart"></i> Agregar al carrito
+    			</button>
+        </form>
+      </div>
+		</div>
+	</div>
 @endsection

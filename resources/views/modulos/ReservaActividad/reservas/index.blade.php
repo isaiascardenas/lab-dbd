@@ -1,49 +1,80 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-    <h2>
-        <i class="fas fa-ticket-alt"></i> Escoge una actividad
-    </h2>
+  <h2>
+    <i class="fas fa-plane"></i> Selecciona tu actividad
+  </h2>
 
-    <hr>
+  <div id="list-accordion">
+    @foreach($actividades as $actividad)
+    <div class="card">
+      <a class="card-header" data-toggle="collapse" href="#actividad-{{ $loop->iteration }}">
+        <div class="row text-left">
+          <div class="col-6">
+            <div class="row">
+              <div class="col">
+                <span class="font-weight-bold">{{ $actividad->fecha_inicio }}</span>
+              </div>
 
-    @include('layouts.messages')
+              <div class="col-1">
+                <i class="fas fa-angle-right"></i>
+              </div>
 
-    <div class="form-group">
-        <a href="/reserva-boletos/create/" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nueva Reserva de actividad
-        </a>
+              <div class="col">
+                <span class="text-muted">{{ $actividad->fecha_termino }}</span>
+              </div>
+            </div>
+          </div>
+
+          {{-- <div class="col-2 text-muted"> --}}
+              {{-- {{ $actividad->costo_aduto}} --}}
+          {{-- </div> --}}
+
+          <div class="col-2 text-muted">
+              {{ $actividad->ciudad->nombre }}
+          </div>
+
+          <div class="col-2 text-right font-weight-bold">
+              ${{ $actividad->costo_adulto }}
+          </div>
+        </div>
+      </a>
+
+      <div class="collapse" id="actividad-{{ $loop->iteration }}" data-parent="#list-accordion">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">
+              {{ $actividad->descripcion }}
+          </h6>
+          <p class="card-text">
+              <span class="col-2 text-right font-weight-bold">
+                  Precio Adulto: ${{ $actividad->costo_adulto }}
+              </span >
+              <br/>
+              <span class="col-2 text-right font-weight-bold">
+                  Max cantidad adulto: {{ $actividad->max_adultos }}
+              </span >
+              <br/>
+              <br/>
+              <span class="col-2 text-right font-weight-bold">
+                  Precio Niño: ${{ $actividad->costo_nino }}
+              </span >
+              <br/>
+              <span class="col-2 text-right font-weight-bold">
+                  Max cantidad niños: {{ $actividad->max_ninos }}
+              </span >
+          </p>
+          <div class="text-right">
+            <form action="/actividad/details/" method="post">
+              {{ csrf_field() }}
+              {{-- <input type="hidden" name="tramos[]" value="{{ $tramo->id }}"> --}}
+              <button type="submit" class="btn btn-primary">
+                Continuar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <table class="table table-hover table-bordered table-sm datatable">
-        <thead>
-            <tr>
-                <th class="no-sort"></th>
-                <th>Fecha de Inicio</th>
-                <th>Fecha de Termino</th>
-                <th>Descuento</th>
-                <th>Costo</th>
-                <th>Tramo</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($reservaBoletos as $reservaBoleto)
-                <tr>
-                    <td>
-                        <a class="btn btn-sm btn-info" href="/reserva-boletos/{{ $reservaBoleto->id }}">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                    </td>
-                    <td>{{ $reservaBoleto->fecha_reserva }}</td>
-                    <td>{{ $reservaBoleto->descuento }}</td>
-                    <td>{{ $reservaBoleto->costo }}</td>
-                    <td>
-                        <a href="/tramos/{{ $reservaBoleto->tramo_id }}">
-                            {{ $reservaBoleto->tramo->codigo }}
-                        </a>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    @endforeach
+  </div>
 @endsection

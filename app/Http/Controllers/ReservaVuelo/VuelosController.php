@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Modulos\ReservaVuelo\Tramo;
 use App\Modulos\ReservaVuelo\Vuelo;
+use App\Modulos\ReservaVuelo\Pasajero;
 use App\Modulos\ReservaVuelo\TipoAsiento;
 use App\Modulos\ReservaVuelo\ReservaBoleto;
 
@@ -64,15 +65,16 @@ class VuelosController extends Controller
 
     $vuelo = new Vuelo($tramos);
 
-    $paramsVuelo = request()->session()->get('busqueda');
-    dd($paramsVuelo);
+    $paramsVuelo = request()->session()->get('busqueda.vuelos');
+    $paramsVuelo = $paramsVuelo[0];
 
     return view('modulos.ReservaVuelo.vuelos.show', compact('vuelo', 'paramsVuelo'));
   }
 
   public function reserva(Request $request)
   {
-    $paramsVuelo = request()->session()->get('busqueda')['vuelos'];
+    $paramsVuelo = request()->session()->get('busqueda.vuelos');
+    $paramsVuelo = $paramsVuelo[0];
 
     foreach ($request['tramos'] as $tramo_id) {
       $pasajeros = intval($paramsVuelo['pasajeros_ninos']) + intval($paramsVuelo['pasajeros_adultos']);
@@ -107,7 +109,7 @@ class VuelosController extends Controller
             ]);
       }
     }
-    request()->session()->forget('params_vuelo');
+    request()->session()->forget('busqueda.vuelos');
   	
     return redirect('/cart');
   }

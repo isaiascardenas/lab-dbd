@@ -38,7 +38,7 @@ Route::resource('reserva_actividades','ReservaActividad\ReservaActividadesContro
   'parameters' => ['reservaActividades'=>'reservaActividad']
 ]);
 
-Route::post('/reserva_actividad/create',             'ReservaActividad\ReservaActividadesController@create');
+// Route::post('/reserva_actividad/create', 'ReservaActividad\ReservaActividadesController@create');
 
 
 //Route::get(
