@@ -50,6 +50,9 @@ class HomeController extends Controller
             }
         });
 
+        session(['reservas' => []]);
+        $reservas = session('reservas');
+
         return view('cart', compact('reservas'));
     }
 
