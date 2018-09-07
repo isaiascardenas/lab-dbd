@@ -59,7 +59,7 @@ class ReservaHabitacionesController extends Controller
         $inicio = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.hoteles.inicio_reserva'));
         $termino = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.hoteles.termino_reserva'));
 
-        request()->session()->put('busqueda.autos.costo', $inicio->diffInHours($termino) * $habitacion->precio_por_noche);
+        request()->session()->put('busqueda.hoteles.costo', $inicio->diffInHours($termino) * $habitacion->precio_por_noche);
         
         $habitacion->load('hotel');
 
@@ -75,11 +75,11 @@ class ReservaHabitacionesController extends Controller
     public function store(Request $request)
     {
         $reserva = new ReservaHabitacion([
-            'fecha_inicio' => request()->session()->get('busqueda.autos.inicio_reserva'),
-            'fecha_termino' => request()->session()->get('busqueda.autos.termino_reserva'),
+            'fecha_inicio' => request()->session()->get('busqueda.hoteles.inicio_reserva'),
+            'fecha_termino' => request()->session()->get('busqueda.hoteles.termino_reserva'),
             'fecha_reserva' => Carbon::now()->toDateTimeString(),
             'descuento' => 1,
-            'costo' => request()->session()->get('busqueda.autos.costo'),
+            'costo' => request()->session()->get('busqueda.hoteles.costo'),
             'habitacion_id' => request('habitacion_id'),
             'orden_compra_id' => null,
         ]);
@@ -90,7 +90,7 @@ class ReservaHabitacionesController extends Controller
             $response = ['error' => 'Ups, hubo un problema... intenta de nuevo'];
         }
 
-        request()->session()->put('reservas', [
+        request()->session()->push('reservas', [
             'tipo' => 'hotel',
             'reserva' => [
               'detalle' => $reserva->load('habitacion')

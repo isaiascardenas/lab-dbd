@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ciudad;
+use Carbon\Carbon;
 use App\Modulos\ReservaAuto\Auto;
 use App\Modulos\ReservaAuto\Sucursal;
 use App\Modulos\ReservaVuelo\Aeropuerto;
@@ -48,7 +49,12 @@ class HomeController extends Controller
     {
         // Here make a order and link it with all reservations
         //
-      
+        $orden = OrdenCompra::create([
+          'costo_total' => 0,
+          'fecha_generado' => Carbon::now(),
+          'detalle' => '',
+          'user_id' => ''
+        ]);
         //
         //
         collect(request()->session()->get('reservas'))->each(function ($reserva) {
@@ -57,8 +63,13 @@ class HomeController extends Controller
             } else if ($reserva['tipo'] == 'hotel') {
               
             } else if ($reserva['tipo'] == 'vuelo') {
-                $reserva['reserva']['detalle']->save(); // pasaje
-                $reserva['reserva']['extra']->save();   // pasajero
+                $reserva_boleto = $reserva['reserva']['detalle'];
+                $reserva_boleto->save(); // pasaje
+                
+                $pasajero = $reserva['reserva']['extra'];
+                $pasajero->reserva_boleto_id = $reserva_boleto->id;
+                $pasajero->save();   // pasajero
+
             } else if ($reserva['tipo'] == 'actividad') {
               # code...
             }
@@ -72,7 +83,7 @@ class HomeController extends Controller
     public function deleteFromcart()
     {
         $reservas = request()->session()->get('reservas');
-        
+
         unset($reservas[request('reserva_id')]);
 
         $reservas = request()->session()->put('reservas', $reservas);

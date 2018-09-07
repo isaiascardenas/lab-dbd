@@ -18,76 +18,109 @@
           <ul class="list-group list-group-flush">
           @foreach ($reservas as $key => $reserva)
             <li class="list-group-item">
-              @if ($reserva['tipo'] == 'auto')
-                <p class="card-text">
-                  Patente: {{ $reserva['reserva']['detalle']->auto->patente }}
-                  <br/>
-                  Descripción: {{ $reserva['reserva']['detalle']->auto->descripcion }}
-                  <br/>
-                  Capacidad: {{ $reserva['reserva']['detalle']->auto->capacidad }}
-                  <br/>
-                  Fecha reserva: {{ $reserva['reserva']['detalle']->fecha_reserva }}
-                  <br/>
-                  Fecha inicio reserva: {{ $reserva['reserva']['detalle']->fecha_inicio }}
-                  <br/>
-                  Fecha termino reserva: {{ $reserva['reserva']['detalle']->fecha_termino }}
-                  <br/>
-                  <span> Costo: {{ $reserva['reserva']['detalle']->costo }} </span>
-                </p>
+              <div class="row">
+                @if ($reserva['tipo'] == 'auto')
+                  <div class="col-1">
+                    <span class="badge badge-secondary badge-pill">
+                      Auto
+                    </span>
+                  </div>
+                  <div class="col">
+                    <p class="card-text">
+                      Patente: {{ $reserva['reserva']['detalle']->auto->patente }}
+                      <br/>
+                      Descripción: {{ $reserva['reserva']['detalle']->auto->descripcion }}
+                      <br/>
+                      Capacidad: {{ $reserva['reserva']['detalle']->auto->capacidad }}
+                      <br/>
+                      Fecha reserva: {{ $reserva['reserva']['detalle']->fecha_reserva }}
+                      <br/>
+                      Fecha inicio reserva: {{ $reserva['reserva']['detalle']->fecha_inicio }}
+                      <br/>
+                      Fecha termino reserva: {{ $reserva['reserva']['detalle']->fecha_termino }}
+                      <br/>
+                      <span> Costo: {{ $reserva['reserva']['detalle']->precio(TRUE) }} </span>
+                    </p>
 
-              @elseif ($reserva['tipo'] == 'hotel')
-                  <p class="card-text">
-                    Hotel: {{ $reserva['reserva']['detalle']->habitacion->hotel->nombre }}
-                    {{-- <br/> --}}
-                    Estrellas: {{ $reserva['reserva']['detalle']->habitacion->hotel->estrellas }}
-                    {{-- <br/> --}}
-                    Descripción: {{ $reserva['reserva']['detalle']->habitacion->descripcion }}
-                    <br/>
-                    Fecha reserva: {{ $reserva['reserva']['detalle']->fecha_reserva }}
-                    <br/>
-                    Fecha inicio reserva: {{ $reserva['reserva']['detalle']->fecha_inicio }}
-                    <br/>
-                    Fecha termino reserva: {{ $reserva['reserva']['detalle']->fecha_termino }}
-                    <br/>
-                    <span> Costo: {{ $reserva['reserva']['detalle']->costo }} </span>
-                  </p>
-              
-              @elseif ($reserva['tipo'] == 'vuelo')
-                <p class="card-text">
-                  Codigo Vuelo: {{ $reserva['reserva']['detalle']->tramo->codigo }}
-                  <br/>
-                  Partida: {{ $reserva['reserva']['detalle']->tramo->horarioPartida() }}
-                  <br/>
+                  @elseif ($reserva['tipo'] == 'hotel')
+                    <div class="col-1">
+                      <span class="badge badge-warning badge-pill">
+                        Hotel
+                      </span>
+                    </div>
+                    <div class="col">
+                      <p class="card-text">
+                        Hotel: {{ $reserva['reserva']['detalle']->habitacion->hotel->nombre }}
+                        <br/>
+                        Estrellas: {{ $reserva['reserva']['detalle']->habitacion->hotel->estrellas }}
+                        <br/>
+                        Descripción: {{ $reserva['reserva']['detalle']->habitacion->descripcion }}
+                        <br/>
+                        Fecha reserva: {{ $reserva['reserva']['detalle']->fecha_reserva }}
+                        <br/>
+                        Fecha inicio reserva: {{ $reserva['reserva']['detalle']->fecha_inicio }}
+                        <br/>
+                        Fecha termino reserva: {{ $reserva['reserva']['detalle']->fecha_termino }}
+                        <br/>
+                        <span> Costo: {{ $reserva['reserva']['detalle']->precio(TRUE) }} </span>
+                      </p>
+                  
+                  @elseif ($reserva['tipo'] == 'vuelo')
+                    <div class="col-1">
+                      <span class="badge badge-dark badge-pill">
+                        Vuelo
+                      </span>
+                    </div>
+                    <div class="col">
+                      <p class="card-text">
+                        Codigo Vuelo: {{ $reserva['reserva']['detalle']->tramo->codigo }}
+                        <br/>
+                        Partida: {{ $reserva['reserva']['detalle']->tramo->horarioPartida() }}
+                        <br/>
 
-                  Partida: {{ $reserva['reserva']['detalle']->tramo->origen->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->origen->ciudad->pais->nombre }}
-                  <br/>
+                        Partida: {{ $reserva['reserva']['detalle']->tramo->origen->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->origen->ciudad->pais->nombre }}
+                        <br/>
 
-                  Llegada: {{ $reserva['reserva']['detalle']->tramo->horarioLlegada() }}
-                  <br/>
+                        Llegada: {{ $reserva['reserva']['detalle']->tramo->horarioLlegada() }}
+                        <br/>
 
-                  Destino: {{ $reserva['reserva']['detalle']->tramo->destino->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->destino->ciudad->pais->nombre }}
-                  <br/>
+                        Destino: {{ $reserva['reserva']['detalle']->tramo->destino->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->destino->ciudad->pais->nombre }}
+                        <br/>
 
-                  Costo: {{ $reserva['reserva']['detalle']->tramo->precio() }}
-                  <br/>
+                        Costo: {{ $reserva['reserva']['detalle']->tramo->precio(TRUE) }}
+                        <br/>
 
-                  Pasajero: {{ $reserva['reserva']['extra']->nombre }}
-                  <br/>
-                </p>              
-              @elseif ($reserva['tipo'] == 'otro_tipo')
-              @endif
-              <form
-                  action="{{ action('HomeController@deleteFromCart') }}"
-                  method="POST"
-                  onsubmit="return confirm('Esta seguro de que desea eliminar el producto del carrito?')">
+                        Pasajero: {{ $reserva['reserva']['extra']->nombre . ' / ' . $reserva['reserva']['extra']->rut}}
+                        <br/>
+                      </p>              
+                 
+                  @elseif ($reserva['tipo'] == 'actividad')
+                    <div class="col-1">
+                      <span class="badge badge-info badge-pill">
+                        Actividad
+                      </span>
+                    </div>
+                    <div class="col">
+                      <p class="card-text">
+                        
+                      </p>
+                  @endif
+                </div>
+                <div class="col-2">
+                  <form
+                      action="{{ action('HomeController@deleteFromCart') }}"
+                      method="POST"
+                      onsubmit="return confirm('Esta seguro de que desea eliminar el producto del carrito?')">
 
-                  {{ csrf_field() }}
-                  <input type="hidden" name="_method" value="POST">
-                  <input type="hidden" name="reserva_id" value="{{ $key }}">
-                  <button type="submit" class="btn btn-danger">
-                      <i class="fas fa-cart-arrow-down"></i> Eliminar del carrito
-                  </button>
-              </form>
+                      {{ csrf_field() }}
+                      <input type="hidden" name="_method" value="POST">
+                      <input type="hidden" name="reserva_id" value="{{ $key }}">
+                      <button type="submit" class="btn btn-danger">
+                          <i class="fas fa-cart-arrow-down"></i> Eliminar
+                      </button>
+                  </form>
+                </div>
+              </div>
             </li>
           @endforeach
           </ul>

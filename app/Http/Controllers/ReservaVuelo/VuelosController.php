@@ -83,13 +83,12 @@ class VuelosController extends Controller
       $tipoAsiento = TipoAsiento::find($paramsVuelo['tipo_pasaje']);
 
       for($i = 0; $i < $pasajeros; $i++) {
-        
         $reservaBoleto = new reservaBoleto();
 
         $pasajero = new Pasajero([
             'nombre' => $request['pasajero_nombre'][$i],
             'rut' => $request['pasajero_rut'][$i],
-            'reserva_boleto_id' => $reservaBoleto->id
+            'reserva_boleto_id' => null
         ]);
 
         $asientos = $tramo->asientosDisponibles();
