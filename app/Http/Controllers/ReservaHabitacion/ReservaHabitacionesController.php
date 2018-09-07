@@ -25,7 +25,6 @@ class ReservaHabitacionesController extends Controller
         $request_ninos = request('capacidad_ninos');
         $request_estrellas = request('estrellas');
 
-        
         $hoteles = Hotel::where('ciudad_id', $request_destino)
         ->where('estrellas', $request_estrellas)
         ->pluck('id');
@@ -39,7 +38,7 @@ class ReservaHabitacionesController extends Controller
         ->where('capacidad_adulto', '>=', $request_adultos)
         ->where('capacidad_nino', '>=', $request_ninos)
         ->whereNotIn('id',$habitacionesNoDisp);
-        
+
         return view('modulos.ReservaHabitacion.reservas.index', compact('habitacionDisp','request_fecha_inicio','request_fecha_termino'));
     }
 
@@ -67,8 +66,6 @@ class ReservaHabitacionesController extends Controller
     public function store(Request $request)
     {
         $reservaHabitacionData =$this->validate($request , [
-        
-
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
             'fecha_reserva' => 'required',
@@ -79,8 +76,6 @@ class ReservaHabitacionesController extends Controller
         ]);
 
         return ReservaHabitacion::create($reservaHabitacionData);
-
-        
     }
 
     /**

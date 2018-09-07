@@ -44,6 +44,8 @@ class HomeController extends Controller
 
     public function payAll()
     {
+        // Here make a order and link it with all reservations
+        //
         collect(session('reservas'))->each(function ($reserva) {
             if ($reserva['tipo'] == 'auto') {
                 $reserva['reserva']->save();
