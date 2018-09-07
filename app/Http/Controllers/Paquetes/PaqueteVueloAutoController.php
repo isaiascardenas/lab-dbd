@@ -38,10 +38,10 @@ class PaqueteVueloAutoController extends Controller
     public function store(Request $request)
     {
         $paqueteVueloAutoData = $this->validate($request, [
-        'descripcion' => 'required',
-        'descuento' => 'required',
-        'reserva_auto_id' => 'required',
-        'orden_compra_id' => 'required',
+            'descripcion' => 'required',
+            'descuento' => 'required',
+            'reserva_auto_id' => 'required',
+            'orden_compra_id' => 'required',
         ]);
 
         $paqueteVueloAuto = PaqueteVueloAuto::create($paqueteVueloAutoData);
