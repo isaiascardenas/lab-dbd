@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ReservaAuto;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Modulos\ReservaAuto\Auto;
 use App\Http\Controllers\Controller;
@@ -25,7 +26,9 @@ class ReservaAutosController extends Controller
             ->whereNotIn('id', $autosReservados)
             ->get();
 
-        // return $autos;
+        session(['inicio_reserva' => request('fecha_inicio') . ':00']);
+        session(['termino_reserva' => request('fecha_termino') . ':00']);
+
         return view('modulos.ReservaAuto.reservas.index', compact('autos'));
     }
 
@@ -47,15 +50,32 @@ class ReservaAutosController extends Controller
      */
     public function store(Request $request)
     {
-        return ReservaAuto::create($this->validate($request, [
-            'fecha_inicio' => 'required',
-            'fecha_termino' => 'required',
-            'fecha_reserva' => 'required',
-            'descuento' => 'required',
-            'costo' => 'required',
-            'auto_id' => 'required',
-            'orden_compra_id' => 'required',
-        ]));
+        $reserva = new ReservaAuto([
+            'fecha_inicio' => session('inicio_reserva'),
+            'fecha_termino' => session('termino_reserva'),
+            'fecha_reserva' => Carbon::now()->toDateTimeString(),
+            'descuento' => 1,
+            'costo' => session('costo'),
+            'auto_id' => request('auto_id'),
+            'orden_compra_id' => null,
+        ]);
+
+        if ($reserva) {
+            $response = ['success' => 'Añadido al carrito con éxito!'];
+        } else {
+            $response = ['error' => 'Ups, hubo un problema... intenta de nuevo'];
+        }
+
+        session([
+            'reservas' => [
+                [
+                    'tipo' => 'auto',
+                    'reserva' => $reserva->load('auto'),
+                ],
+            ]
+        ]);
+
+        return back()->with($response);
     }
 
     /**
@@ -67,6 +87,18 @@ class ReservaAutosController extends Controller
     public function show(ReservaAuto $reserva)
     {
         return $reserva;
+    }
+
+    public function reservar(Auto $auto)
+    {
+        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', session('inicio_reserva'));
+        $termino = Carbon::createFromFormat('Y-m-d H:m:s', session('termino_reserva'));
+
+        session([
+            'costo' => $inicio->diffInHours($termino) * $auto->precio_hora
+        ]);
+
+        return view('modulos.ReservaAuto.reservas.reservar', compact('auto'));
     }
 
     /**

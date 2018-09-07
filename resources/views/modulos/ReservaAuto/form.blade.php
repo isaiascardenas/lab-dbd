@@ -13,7 +13,7 @@
                         <select id="sucursal_id" name="sucursal_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
                             @foreach ($sucursales as $sucursal)
                                 <option value="{{ $sucursal->id }}">
-                                {{ $sucursal->compania->nombre }}, {{$sucursal->ciudad->nombre }}
+                                {{ $sucursal->compania->nombre }}, {{$sucursal->ciudad->nombre }} ({{ $sucursal->id }})
                                 </option>
                             @endforeach
                         </select>
