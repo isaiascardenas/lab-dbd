@@ -43,7 +43,7 @@ class VuelosController extends Controller
 
   	$vuelos = Tramo::buscarVuelos($params);
 
-    request()->session->push('busqueda', ['vuelos' => $params]);
+    request()->session()->push('busqueda.vuelos', $params);
 
     return view('modulos.ReservaVuelo.vuelos.index', compact('vuelos'));
   }
@@ -64,7 +64,8 @@ class VuelosController extends Controller
 
     $vuelo = new Vuelo($tramos);
 
-    $paramsVuelo = request()->session()->get('busqueda')['vuelos'];
+    $paramsVuelo = request()->session()->get('busqueda');
+    dd($paramsVuelo);
 
     return view('modulos.ReservaVuelo.vuelos.show', compact('vuelo', 'paramsVuelo'));
   }

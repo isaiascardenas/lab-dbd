@@ -36,9 +36,6 @@
         </div>
 
 
-
-
-
         <div class="form-group form-row align-items-end">
             <div class="col">
                 <label>Integrantes</label>

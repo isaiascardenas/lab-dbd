@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <h2>
@@ -8,8 +8,6 @@
     <hr>
 
     @include('layouts.messages')
-
-
 
   <table class="table table-hover table-bordered table-sm datatable">
     <thead>
@@ -28,7 +26,7 @@
       @foreach($habitacionDisp as $habitacion)
       <tr>
         <td> 
-          <a class="btn btn-sm btn-info" href="/reserva_habitacion/create">
+            <a class="btn btn-sm btn-info" href="/reserva_habitacion/reservar/{{ $habitacion->id }}">
             <i class="fas fa-save"></i>
           </a>
         </td>

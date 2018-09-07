@@ -103,13 +103,13 @@
 
 let fechaEntrada = flatpickr('#fecha_entrada', {
     enableTime: true,
-    dateFormat: "d-m-Y H:i",
+    dateFormat: "Y-m-d H:i",
     minDate: "today",
 });
 
 let fechaSalida = flatpickr('#fecha_salida', {
     enableTime: true,
-    dateFormat: "d-m-Y H:i",
+    dateFormat: "Y-m-d H:i",
 
 });
 

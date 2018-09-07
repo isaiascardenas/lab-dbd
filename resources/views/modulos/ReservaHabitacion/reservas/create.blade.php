@@ -1,64 +1,57 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-  <h2>
-    <i class="fas fa-map-marker-alt"></i> Reservar Habitacion
-  </h2>
-  
-  <hr>
-  
-  @include('layouts.messages')
+    <h2>
+        <i class="fas fa-map-marker-alt"></i> Reservar Habitación
+    </h2>
 
-  <form method="post" action="{{ action('ReservaHabitacion\ReservaHabitacionesController@store') }}">
-    {{ csrf_field() }}
-    
-    <div class="form-group row">
-      <label class="col" for="nombre">Desde</label>
-      <div class="col">
-        <input type="number" class="form-control" name="desde_date" id="desde_date">
-      </div>
+    <hr>
+
+    @include('layouts.messages')
+
+    <div class="card" style="align-items: center;">
+        <img class="card-img-top" src="https://loremflickr.com/320/240/hotel" style="width: 45%; margin-top: 10px;">
+        <div class="card-body" style="width: 100%;">
+            <h5 class="card-title">Confirma tu reserva</h5>
+            <div class="form-group row">
+                <label class="col-3"> Desde </label>
+                <div class="col-9">{{ session('inicio_reserva') }}</div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-3"> Hasta </label>
+                <div class="col-9">{{ session('termino_reserva') }}</div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-3"> Hotel </label>
+                <div class="col-9">{{ $habitacion->hotel->nombre }}</div>
+            </div>
+
+            <a href="/hoteles/" class="btn btn-info float-left">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+            <a href="/hoteles/" class="btn btn-info">
+                <i class="fas fa-ban"></i> Cancelar
+            </a>
+
+            <div class="col-md-3 offset-md-9">
+                <form
+                    action="{{ action('ReservaHabitacion\ReservaHabitacionesController@store') }}"
+                    method="POST"
+                    onsubmit="return confirm('¿Esta seguro que desea agregar al carrito?')">
+
+                    {{ csrf_field() }}
+
+                    <input type="hidden" name="habitacion_id" value="{{ $habitacion->id }}">
+                    <input type="hidden" name="_method" value="POST">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-cart-arrow-down"></i> Agregar al carrito
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group row">
-      <label class="col" for="nombre">Hasta</label>
-      <div class="col">
-        <input type="number" class="form-control" name="hasta_date" id="hasta_date">
-      </div>
     </div>
-
-    <div class="form-group row">
-      <label class="col" for="nombre">Costo Total</label>
-      <div class="col">
-        <input type="number" class="form-control" name="costo_total" id="costo_total">
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label class="col" for="nombre">Descuento</label>
-      <div class="col">
-        <input type="text" class="form-control" name="descuento" id="descuento">
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label class="col" for="nombre">Hotel</label>
-      <div class="col">
-        <input type="text" class="form-control" name="hotel" id="hotel">
-      </div>
-    </div>
-
-
-    <div class="text-right">
-
-      <a href="/hoteles/" class="btn btn-info float-left">
-          <i class="fas fa-arrow-left"></i> Volver
-        </a>
-      <a href="/hoteles/" class="btn btn-info">
-        <i class="fas fa-ban"></i> Cancelar
-      </a>
-      <button type="submit" class="btn btn-primary">
-        <i class="fas fa-save"></i> Reservar
-      </button>
-    </div>
-  </form>
 @endsection

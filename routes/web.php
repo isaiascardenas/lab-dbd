@@ -34,6 +34,19 @@ Route::resource('actividades', 'ReservaActividad\ActividadesController', [
   'parameters' => ['actividades' => 'actividad']
 ]);
 
+Route::resource('reserva_actividades','ReservaActividad\ReservaActividadesController', [
+  'parameters' => ['reservaActividades'=>'reservaActividad']
+]);
+
+Route::post('/reserva_actividad/create',             'ReservaActividad\ReservaActividadesController@create');
+
+
+//Route::get(
+  //  'reserva_actividades/reservar/{actividad}', 'ReservaActividad\ReservaActividadesController@reservar'
+//);
+
+
+
 /* CRUD Reservas Hoteles */
 
 Route::resource('hoteles','ReservaHabitacion\HotelesController', [
@@ -48,7 +61,7 @@ Route::resource('reserva_habitaciones','ReservaHabitacion\ReservaHabitacionesCon
   'parameters' => ['reservaHabitaciones'=>'reservaHabitacion']
 ]);
 
-Route::post('/reserva_habitacion/create',             'ReservaHabitacion\ReservaHabitacionesController@create');
+Route::get('/reserva_habitacion/reservar/{habitacion}', 'ReservaHabitacion\ReservaHabitacionesController@reservar');
 
 /**
  * Paquetes

@@ -37,6 +37,17 @@ class ReservaAutosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function reservar(Auto $auto)
+    {
+        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', session('inicio_reserva'));
+        $termino = Carbon::createFromFormat('Y-m-d H:m:s', session('termino_reserva'));
+
+        session([
+            'costo' => $inicio->diffInHours($termino) * $auto->precio_hora
+        ]);
+
+        return view('modulos.ReservaAuto.reservas.reservar', compact('auto'));
+    }
     public function create()
     {
         //
@@ -66,16 +77,23 @@ class ReservaAutosController extends Controller
             $response = ['error' => 'Ups, hubo un problema... intenta de nuevo'];
         }
 
-        session([
-            'reservas' => [
-                [
-                    'tipo' => 'auto',
-                    'reserva' => $reserva->load('auto'),
-                ],
-            ]
+        // if (count(session('reservas')) == 0) {
+            // session([
+                // 'reservas' => [
+                    // [
+                        // 'tipo' => 'auto',
+                        // 'reserva' => $reserva->load('auto'),
+                    // ]
+                // ]
+            // ]);
+        // }
+
+        request()->session()->push('reservas' ,[
+            'tipo' => 'auto',
+            'reserva' => $reserva->load('auto'),
         ]);
 
-        return back()->with($response);
+        return redirect('/cart')->with($response);
     }
 
     /**
@@ -87,18 +105,6 @@ class ReservaAutosController extends Controller
     public function show(ReservaAuto $reserva)
     {
         return $reserva;
-    }
-
-    public function reservar(Auto $auto)
-    {
-        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', session('inicio_reserva'));
-        $termino = Carbon::createFromFormat('Y-m-d H:m:s', session('termino_reserva'));
-
-        session([
-            'costo' => $inicio->diffInHours($termino) * $auto->precio_hora
-        ]);
-
-        return view('modulos.ReservaAuto.reservas.reservar', compact('auto'));
     }
 
     /**

@@ -18,7 +18,7 @@ class ActividadesController extends Controller
     public function index()
     {
         $actividades = Actividad::all();
-        return view('modulos.ReservaActividad.Reservas.index', compact('actividades'));
+        return view('modulos.ReservaActividad.reservas.index', compact('actividades'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ActividadesController extends Controller
     public function create()
     {
         $ciudades = Ciudad::all();
-        return view('modulos.ReservaActividad.Reservas.create', compact('ciudades'));
+        return view('modulos.ReservaActividad.reservas.create', compact('ciudades'));
     }
 
     /**
@@ -70,7 +70,7 @@ class ActividadesController extends Controller
     public function show(Actividad  $actividad)
 
     {
-        return view('modulos.ReservaActividad.Reservas.show', compact('actividad'));
+        return view('modulos.ReservaActividad.reservas.show', compact('actividad'));
     }
 
     /**
@@ -82,7 +82,7 @@ class ActividadesController extends Controller
     public function edit(Actividad  $actividad)
     {
         $ciudades = Ciudad::all();
-        return view('modulos.ReservaActividad.Reservas.edit', compact('actividad', 'ciudades'));
+        return view('modulos.ReservaActividad.reservas.edit', compact('actividad', 'ciudades'));
     }
 
     /**

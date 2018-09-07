@@ -2,7 +2,6 @@
 
 namespace App\Modulos\ReservaHabitacion;
 
-            
 use Illuminate\Database\Eloquent\Model;
 
 class ReservaHabitacion extends Model
@@ -20,11 +19,10 @@ class ReservaHabitacion extends Model
     ];
 
     public function habitacion(){
-    	return $this->belongsTo(Habitacion::class);
+        return $this->belongsTo(Habitacion::class);
     }
-    
+
     public function ordenCompra(){
-		return $this->belongsTo(OrdenCompra::class);
+        return $this->belongsTo(OrdenCompra::class);
     }
-    
 }
