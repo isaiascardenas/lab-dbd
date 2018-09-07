@@ -42,6 +42,7 @@ class ReservaAutosController extends Controller
      */
     public function reservar(Auto $auto)
     {
+        dd ($auto);
         $inicio = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.autos.inicio_reserva'));
         $termino = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.autos.termino_reserva'));
 

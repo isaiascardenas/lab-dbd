@@ -2,7 +2,7 @@
 
 @section('content')
   <h2>
-    <i class="fas fa-plane"></i> Selecciona tu actividad
+    <i class="fas fa-calendar-alt"></i> Selecciona tu actividad
   </h2>
 
   <div id="list-accordion">

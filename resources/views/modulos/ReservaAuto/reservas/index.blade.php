@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="card">
+        <div class="card-title">
     <h2>
-        <i class="fas fa-map-marker-alt"></i> Escoge tu auto
+        <i class="fas fa-car"></i> Escoge tu auto
     </h2>
+        </div>
 
     <hr>
 
@@ -23,9 +26,13 @@
             @foreach($autos as $auto)
                 <tr>
                     <td>
-                        <a class="btn btn-sm btn-info" href="reserva_autos/reservar/{{ $auto->id }}">
-                            Reservar
-                        </a>
+                        <form action="reserva_autos/reservar/{{ $auto->id }}" method="get">
+                            {{ csrf_field() }}
+                            <button class="btn btn-sm btn-info" type="submit">reservar</button>
+                            {{-- <a class="btn btn-sm btn-info" href="reserva_autos/reservar/{{ $auto->id }}"> --}}
+                                {{-- Reservar --}}
+                            {{-- </a> --}}
+                        </form>
                     </td>
                     <td>{{ $auto->patente }}</td>
                     <td>{{ $auto->descripcion }}</td>
@@ -35,6 +42,7 @@
             @endforeach
         </tbody>
     </table>
+    </div>
 @endsection
 
 @section('script')
