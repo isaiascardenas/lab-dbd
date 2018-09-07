@@ -28,8 +28,8 @@ class HomeController extends Controller
         // "paquetes" => Paquetes::all()
         $paquetes = [];
 
-        request()->session()->forget('busqueda');
-        request()->session()->forget('reservas');
+        // request()->session()->forget('busqueda');
+        // request()->session()->forget('reservas');
 
         return view('home', compact(
             'autos',
@@ -48,29 +48,36 @@ class HomeController extends Controller
     {
         // Here make a order and link it with all reservations
         //
-        collect(session('reservas'))->each(function ($reserva) {
+      
+        //
+        //
+        collect(request()->session()->get('reservas'))->each(function ($reserva) {
             if ($reserva['tipo'] == 'auto') {
-                $reserva['reserva']->save();
+                $reserva['reserva']['detalle']->save();
+            } else if ($reserva['tipo'] == 'hotel') {
+              
+            } else if ($reserva['tipo'] == 'vuelo') {
+                $reserva['reserva']['detalle']->save(); // pasaje
+                $reserva['reserva']['extra']->save();   // pasajero
+            } else if ($reserva['tipo'] == 'actividad') {
+              # code...
             }
         });
 
-        session(['reservas' => []]);
-        $reservas = session('reservas');
+        request()->sesison()->forget('reservas');
 
         return view('cart', compact('reservas'));
     }
 
     public function deleteFromcart()
     {
-        return request('reserva_id');
-        $reservas = collect(session('reservas'));
-        collect(session('reservas'))->each(function ($reserva) {
-            if ($reserva['tipo'] == 'auto') {
-                $reserva['reserva']->save();
-            }
-        });
+        $reservas = request()->session()->get('reservas');
+        
+        unset($reservas[request('reserva_id')]);
 
-        return view('cart', compact('reservas'));
+        $reservas = request()->session()->put('reservas', $reservas);
+
+        return redirect('/cart')->with('success', 'Reserva Eliminada!');
     }
 
     public function cart()

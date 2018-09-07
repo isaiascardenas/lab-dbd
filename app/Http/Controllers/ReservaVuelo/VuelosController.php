@@ -101,11 +101,12 @@ class VuelosController extends Controller
 
         $reservaBoleto->tramo_id = $tramo_id;
 
-        // $reservaBoleto->pasajero = $pasajero;
-
         request()->session()->push('reservas', [
               'tipo' => 'vuelo',
-              'reserva' => $reservaBoleto->load('tramo'),
+              'reserva' => [
+                'detalle' => $reservaBoleto->load('tramo'),
+                'extra' => $pasajero,
+              ]
             ]);
       }
     }
