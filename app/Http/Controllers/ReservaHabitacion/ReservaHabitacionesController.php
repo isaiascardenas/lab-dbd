@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ReservaHabitacion;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modulos\ReservaHabitacion\Hotel;
@@ -39,6 +40,9 @@ class ReservaHabitacionesController extends Controller
         ->where('capacidad_nino', '>=', $request_ninos)
         ->whereNotIn('id',$habitacionesNoDisp);
 
+        session(['inicio_reserva' => $request_fecha_inicio . ':00']);
+        session(['termino_reserva' => $request_fecha_termino . ':00']);
+
         return view('modulos.ReservaHabitacion.reservas.index', compact('habitacionDisp','request_fecha_inicio','request_fecha_termino'));
     }
 
@@ -47,14 +51,17 @@ class ReservaHabitacionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function reservar(Habitacion $habitacion)
     {
-/*
-        $request_fecha_inicio = request('fecha_entrada');
-        $request_fecha_termino = request('fecha_salida');
-        $request_estrellas = request('estrellas');
-*/
-        return view('modulos.ReservaHabitacion.reserva.create');
+        $inicio = Carbon::createFromFormat('Y-m-d H:m:s', session('inicio_reserva'));
+        $termino = Carbon::createFromFormat('Y-m-d H:m:s', session('termino_reserva'));
+
+        session([
+            'costo' => $inicio->diffInHours($termino) * $habitacion->precio_por_noche
+        ]);
+        $habitacion->load('hotel');
+
+        return view('modulos.ReservaHabitacion.reservas.create', compact('habitacion'));
     }
 
     /**
@@ -65,17 +72,39 @@ class ReservaHabitacionesController extends Controller
      */
     public function store(Request $request)
     {
-        $reservaHabitacionData =$this->validate($request , [
-            'fecha_inicio' => 'required',
-            'fecha_termino' => 'required',
-            'fecha_reserva' => 'required',
-            'costo' => 'required',
-            'descuento' => 'required',
-            'habitacion_id' => 'required',
-            'orden_compra_id' => 'required'
+        $reserva = new ReservaHabitacion ([
+            'fecha_inicio' => session('inicio_reserva'),
+            'fecha_termino' => session('termino_reserva'),
+            'fecha_reserva' => Carbon::now()->toDateTimeString(),
+            'descuento' => 1,
+            'costo' => session('costo'),
+            'habitacion_id' => request('habitacion_id'),
+            'orden_compra_id' => null,
         ]);
 
-        return ReservaHabitacion::create($reservaHabitacionData);
+        if ($reserva) {
+            $response = ['success' => 'Añadido al carrito con éxito!'];
+        } else {
+            $response = ['error' => 'Ups, hubo un problema... intenta de nuevo'];
+        }
+
+        if (count(session('reservas')) == 0) {
+            session([
+                'reservas' => [
+                    [
+                        'tipo' => 'hotel',
+                        'reserva' => $reserva->load('habitacion'),
+                    ]
+                ]
+            ]);
+        }
+        session('reservas')[] = [
+            'tipo' => 'hotel',
+            'reserva' => $reserva->load('habitacion'),
+        ];
+
+
+        return back()->with($response);
     }
 
     /**

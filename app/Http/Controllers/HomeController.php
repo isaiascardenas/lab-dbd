@@ -38,7 +38,6 @@ class HomeController extends Controller
             'actividades',
             'habitaciones',
             'aeropuertos'
-
         ));
     }
 

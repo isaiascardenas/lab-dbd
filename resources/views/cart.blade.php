@@ -13,9 +13,9 @@
     @else
 
         @foreach ($reservas as $reserva)
-            @if ($reserva['tipo'] == 'auto')
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    @if ($reserva['tipo'] == 'auto')
                         <h5 class="card-title"> Tu Auto </h5>
                         <p class="card-text">
                         Patente: {{ $reserva['reserva']->auto->patente }}
@@ -32,22 +32,41 @@
                         <br/>
                         <span> Costo: {{ session('costo') }} </span>
                         </p>
-                        <form
-                            action="{{ action('HomeController@deleteFromCart') }}"
-                            method="POST"
-                            onsubmit="return confirm('Esta seguro de que desea eliminar el producto del carrito?')">
+        @elseif ($reserva['tipo'] == 'hotel')
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title"> Tu Hotel </h5>
+                    <p class="card-text">
+                    {{-- Hotel: {{ $reserva['reserva']->habitacion->hotel->nombre }} --}}
+                    {{-- <br/> --}}
+                    {{-- Estrellas: {{ $reserva['reserva']->habitacion->hotel->estrellas }} --}}
+                    {{-- <br/> --}}
+                    Descripción: {{ $reserva['reserva']->habitacion->descripcion }}
+                    <br/>
+                    Fecha reserva: {{ $reserva['reserva']->fecha_reserva }}
+                    <br/>
+                    Fecha inicio reserva: {{ $reserva['reserva']->fecha_inicio }}
+                    <br/>
+                    Fecha termino reserva: {{ $reserva['reserva']->fecha_termino }}
+                    <br/>
+                    <span> Costo: {{ session('costo') }} </span>
+                    </p>
+                @elseif ($reserva->tipo == 'otro_tipo')
+                @endif
+                <form
+                    action="{{ action('HomeController@deleteFromCart') }}"
+                    method="POST"
+                    onsubmit="return confirm('Esta seguro de que desea eliminar el producto del carrito?')">
 
-                            {{ csrf_field() }}
-                            <input type="hidden" name="_method" value="POST">
-                            <input type="hidden" name="reserva_id" value="{{ $reserva['reserva']->id }}">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-cart-arrow-down"></i> Eliminar del carrito
-                            </button>
-                        </form>
-                    </div>
+                    {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="POST">
+                    <input type="hidden" name="reserva_id" value="{{ $reserva['reserva']->id }}">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-cart-arrow-down"></i> Eliminar del carrito
+                    </button>
+                </form>
                 </div>
-            @elseif ($reserva->tipo == 'otro_tipo')
-            @endif
+            </div>
         @endforeach
 
         <div class="col-md-3 offset-md-9">
