@@ -15,7 +15,8 @@ class PaqueteVueloAutoController extends Controller
      */
     public function index()
     {
-        return PaqueteVueloAuto::all();
+        $paqueteVueloAutos = PaqueteVueloAuto::all();
+        return view('modulos.Paquetes.vueloAuto.index', compact('paqueteVueloAutos'));
     }
 
     /**
@@ -25,7 +26,7 @@ class PaqueteVueloAutoController extends Controller
      */
     public function create()
     {
-        //
+        return view('modulos.Paquetes.vueloAuto.create');
     }
 
     /**
@@ -37,13 +38,21 @@ class PaqueteVueloAutoController extends Controller
     public function store(Request $request)
     {
         $paqueteVueloAutoData = $this->validate($request, [
-        'descripcion' => 'requiered',
-        'descuento' => 'requiered',
-        'reserva_auto_id' => 'requiered',
-        'orden_compra_id' => 'requiered',
+        'descripcion' => 'required',
+        'descuento' => 'required',
+        'reserva_auto_id' => 'required',
+        'orden_compra_id' => 'required',
         ]);
 
-        return PaqueteVueloAuto::create($paqueteVueloAutoData);
+        $paqueteVueloAuto = PaqueteVueloAuto::create($paqueteVueloAutoData);
+
+        if ($paqueteVueloAuto->exists()) {
+        $response = ['success' => 'Creado con éxito!'];
+        } else {
+          $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/paqueteVueloAutos')->with($response);
 
         
     }
@@ -54,9 +63,14 @@ class PaqueteVueloAutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(PaqueteVueloAuto $paqueteVueloAuto)
     {
-        return PaqueteVueloAuto::find($id);
+        if ($paqueteVueloAuto->exists()) {
+            return view('modulos.Paquetes.vueloAuto.show', compact('paqueteVueloAuto'));
+        } else {
+          $response = ['error' => 'No existe la id solicitada'];
+          return redirect('/paqueteVueloAutos')->with($response);
+        }
     }
 
     /**
@@ -65,9 +79,14 @@ class PaqueteVueloAutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(PaqueteVueloAuto $paqueteVueloAuto)
     {
-        //
+        if ($paqueteVueloAuto->exists()) {
+            return view('modulos.Paquetes.vueloAuto.edit', compact('paqueteVueloAuto'));
+        } else {
+          $response = ['error' => 'No es posible editar una id que no existe'];
+          return redirect('/paqueteVueloAutos')->with($response);
+        }
     }
 
     /**
@@ -77,16 +96,16 @@ class PaqueteVueloAutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request,PaqueteVueloAuto $paqueteVueloAuto)
     {
      
-        $paqueteVueloAutos = PaqueteVueloAuto::find($id);
+        
 
         $this->validate($request, [
-        'descripcion' => 'requiered',
-        'descuento' => 'requiered',
-        'reserva_auto_id' => 'requiered',
-        'orden_compra_id' => 'requiered',
+        'descripcion' => 'required',
+        'descuento' => 'required',
+        'reserva_auto_id' => 'required',
+        'orden_compra_id' => 'required',
         ]);
 
         $paqueteVueloAutos->descripcion = $request->get('descripcion');
@@ -94,9 +113,18 @@ class PaqueteVueloAutoController extends Controller
         $paqueteVueloAutos->reserva_auto_id = $request->get('reserva_auto_id');
         $paqueteVueloAutos->orden_compra_id = $request->get('orden_compra_id');
 
-        $paqueteVueloAutos->save();
+        $dataUpdate = $paqueteVueloAutos->save();
 
-        return $paqueteVueloAutos;
+        if ($dataUpdate) 
+        {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } 
+        else 
+        {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
+
+        return redirect('/paqueteVueloAutos/'.$paqueteVueloAuto->id.'/edit')->with($response);
     }
 
     /**
@@ -105,9 +133,16 @@ class PaqueteVueloAutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PaqueteVueloAuto $paqueteVueloAuto)
     {
-        PaqueteVueloAuto::destroy($id);
-        return PaqueteVueloAuto::all();
+        $response = [];
+        try {
+          $paqueteVueloAuto->delete();
+          $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+          $response = ['error' => 'Error al eliminar el registro!'];
+        }
+
+        return redirect('/paqueteVueloAutos')->with($response);
     }
 }

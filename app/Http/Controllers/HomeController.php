@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Ciudad;
 use App\Modulos\ReservaAuto\Auto;
 use App\Modulos\ReservaAuto\Sucursal;
 use App\Modulos\ReservaVuelo\Aeropuerto;
 use App\Modulos\ReservaHabitacion\Hotel;
-use App\Modulos\ReservaHabitacion\Habitacion;
+use App\Modulos\ReservaAuto\ReservaAuto;
 use App\Modulos\ReservaVuelo\TipoAsiento;
 use App\Modulos\ReservaActividad\Actividad;
+use App\Modulos\ReservaHabitacion\Habitacion;
 
 class HomeController extends Controller
 {
@@ -16,6 +18,7 @@ class HomeController extends Controller
     public function index()
     {
         $autos = Auto::all();
+        $ciudades = Ciudad::all();
         $actividades = Actividad::all();
         $tipoPasaje = TipoAsiento::all();
         $aeropuertos = Aeropuerto::all();
@@ -29,6 +32,7 @@ class HomeController extends Controller
             'autos',
             'hoteles',
             'paquetes',
+            'ciudades',
             'sucursales',
             'tipoPasaje',
             'actividades',
@@ -38,11 +42,40 @@ class HomeController extends Controller
         ));
     }
 
+    public function payAll()
+    {
+        // Here make a order and link it with all reservations
+        //
+        collect(session('reservas'))->each(function ($reserva) {
+            if ($reserva['tipo'] == 'auto') {
+                $reserva['reserva']->save();
+            }
+        });
+
+        session(['reservas' => []]);
+        $reservas = session('reservas');
+
+        return view('cart', compact('reservas'));
+    }
+
+    public function deleteFromcart()
+    {
+        return request('reserva_id');
+        $reservas = collect(session('reservas'));
+        collect(session('reservas'))->each(function ($reserva) {
+            if ($reserva['tipo'] == 'auto') {
+                $reserva['reserva']->save();
+            }
+        });
+
+        return view('cart', compact('reservas'));
+    }
+
     public function cart()
     {
-        $data = [];
+        $reservas = session('reservas');
 
-        return view('cart', compact("data"));
+        return view('cart', compact('reservas'));
     }
 }
 

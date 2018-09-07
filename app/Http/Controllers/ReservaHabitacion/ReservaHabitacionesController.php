@@ -4,6 +4,8 @@ namespace App\Http\Controllers\ReservaHabitacion;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modulos\ReservaHabitacion\Hotel;
+use App\Modulos\ReservaHabitacion\Habitacion;
 use App\Modulos\ReservaHabitacion\ReservaHabitacion;
 
 class ReservaHabitacionesController extends Controller
@@ -15,7 +17,29 @@ class ReservaHabitacionesController extends Controller
      */
     public function index()
     {
-        return ReservaHabitacion::all();
+
+        $request_destino = request('destino_id');
+        $request_fecha_inicio = request('fecha_entrada');
+        $request_fecha_termino = request('fecha_salida');
+        $request_adultos = request('capacidad_adultos');
+        $request_ninos = request('capacidad_ninos');
+        $request_estrellas = request('estrellas');
+
+        $hoteles = Hotel::where('ciudad_id', $request_destino)
+        ->where('estrellas', $request_estrellas)
+        ->pluck('id');
+
+        $habitacionesNoDisp = ReservaHabitacion::whereDate('fecha_inicio', '<', $request_fecha_termino)
+        ->whereDate('fecha_termino', '>', $request_fecha_inicio)
+        ->pluck('habitacion_id');
+
+
+        $habitacionDisp = Habitacion::all()->whereIn('hotel_id', $hoteles)
+        ->where('capacidad_adulto', '>=', $request_adultos)
+        ->where('capacidad_nino', '>=', $request_ninos)
+        ->whereNotIn('id',$habitacionesNoDisp);
+
+        return view('modulos.ReservaHabitacion.reservas.index', compact('habitacionDisp','request_fecha_inicio','request_fecha_termino'));
     }
 
     /**
@@ -25,7 +49,12 @@ class ReservaHabitacionesController extends Controller
      */
     public function create()
     {
-        //
+/*
+        $request_fecha_inicio = request('fecha_entrada');
+        $request_fecha_termino = request('fecha_salida');
+        $request_estrellas = request('estrellas');
+*/
+        return view('modulos.ReservaHabitacion.reserva.create');
     }
 
     /**
@@ -37,8 +66,6 @@ class ReservaHabitacionesController extends Controller
     public function store(Request $request)
     {
         $reservaHabitacionData =$this->validate($request , [
-        
-
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
             'fecha_reserva' => 'required',
@@ -49,8 +76,6 @@ class ReservaHabitacionesController extends Controller
         ]);
 
         return ReservaHabitacion::create($reservaHabitacionData);
-
-        
     }
 
     /**

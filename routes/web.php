@@ -18,6 +18,8 @@ Auth::routes();
  */
 Route::get('/', 'HomeController@index');
 Route::get('/cart', 'HomeController@cart');
+Route::post('/payall', 'HomeController@payAll');
+Route::post('/delete_from_cart', 'HomeController@deleteFromCart');
 
 /* CRUD Usuarios */
 Route::resource('users', 'UserController');
@@ -30,11 +32,9 @@ Route::resource('users', 'UserController');
 
 Route::resource('actividades', 'ReservaActividad\ActividadesController', [
   'parameters' => ['actividades' => 'actividad']
-  ]);
+]);
 
 /* CRUD Reservas Hoteles */
-
-
 
 Route::resource('hoteles','ReservaHabitacion\HotelesController', [
   'parameters' => ['hoteles'=>'hotel']
@@ -44,9 +44,11 @@ Route::resource('habitaciones','ReservaHabitacion\HabitacionesController', [
   'parameters' => ['habitaciones'=>'habitacion']
 ]);
 
-Route::resource('reservaHabitaciones','ReservaHabitacion\ReservaHabitacionesController', [
+Route::resource('reserva_habitaciones','ReservaHabitacion\ReservaHabitacionesController', [
   'parameters' => ['reservaHabitaciones'=>'reservaHabitacion']
 ]);
+
+Route::post('/reserva_habitacion/create',             'ReservaHabitacion\ReservaHabitacionesController@create');
 
 /**
  * Paquetes
@@ -55,6 +57,13 @@ Route::resources([
     'PaqueteVueloAuto' => 'Paquetes\PaqueteVueloAutoController',
     'PaqueteVueloHotel' => 'Paquetes\PaqueteVueloHotelController'
 ]);
+
+/**
+ * Reservas Autos
+ */
+Route::get(
+    'reserva_autos/reservar/{auto}', 'ReservaAuto\ReservaAutosController@reservar'
+);
 
 /* CRUD Reservas Autos */
 Route::resources([

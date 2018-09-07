@@ -24,7 +24,7 @@ class CreateReservaAutosTable extends Migration
             $table->foreign('auto_id')
                 ->references('id')
                 ->on('autos');
-            $table->integer('orden_compra_id');
+            $table->integer('orden_compra_id')->nullable();
             $table->timestamps();
         });
     }

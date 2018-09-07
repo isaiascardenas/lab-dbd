@@ -1,19 +1,13 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <h2>
-        <i class="fas fa-map-marker-alt"></i> Autos
+        <i class="fas fa-map-marker-alt"></i> Escoge tu auto
     </h2>
 
     <hr>
 
     @include('layouts.messages')
-
-    <div class="form-group">
-        <a href="/autos/create/" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nuevo Auto
-        </a>
-    </div>
 
     <table class="table table-hover table-bordered table-sm datatable">
         <thead>
@@ -29,8 +23,8 @@
             @foreach($autos as $auto)
                 <tr>
                     <td>
-                        <a class="btn btn-sm btn-info" href="/autos/{{ $auto->id }}">
-                            <i class="fas fa-eye"></i>
+                        <a class="btn btn-sm btn-info" href="reserva_autos/reservar/{{ $auto->id }}">
+                            Reservar
                         </a>
                     </td>
                     <td>{{ $auto->patente }}</td>
@@ -52,7 +46,7 @@
                 },
                 'columnDefs': [
                     {'targets': 'no-sort', 'orderable': false}
-                ], 
+                ],
                 'order': [[1, 'asc']]
             });
         } );
