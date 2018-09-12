@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Modulos\ReservaAuto\Auto;
 use App\Http\Controllers\Controller;
+use App\Modulos\ReservaAuto\Sucursal;
 use App\Modulos\ReservaAuto\ReservaAuto;
 
 class ReservaAutosController extends Controller
@@ -21,7 +22,9 @@ class ReservaAutosController extends Controller
             ->whereDate('fecha_termino', '>', request('fecha_inicio'))
             ->pluck('auto_id');
 
-        $autos = Auto::whereSucursalId(request('sucursal_id'))
+        $sucursales = Sucursal::where('ciudad_id', request('ciudad_id'))->pluck('id');
+
+        $autos = Auto::whereIn('sucursal_id', $sucursales)
             ->where('capacidad', '>=', request('adultos') + request('ninos'))
             ->whereNotIn('id', $autosReservados)
             ->get();
@@ -40,19 +43,14 @@ class ReservaAutosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reservar(Auto $auto)
+    public function create(Auto $auto)
     {
-        dd ($auto);
         $inicio = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.autos.inicio_reserva'));
         $termino = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.autos.termino_reserva'));
 
         request()->session()->put('busqueda.autos.costo', $inicio->diffInHours($termino) * $auto->precio_hora);
 
-        return view('modulos.ReservaAuto.reservas.reservar', compact('auto'));
-    }
-    public function create()
-    {
-        //
+        return view('modulos.ReservaAuto.reservas.create', compact('auto'));
     }
 
     /**
@@ -97,7 +95,7 @@ class ReservaAutosController extends Controller
      */
     public function show(ReservaAuto $reserva)
     {
-        return $reserva;
+        // return $reserva;
     }
 
     /**
@@ -120,17 +118,17 @@ class ReservaAutosController extends Controller
      */
     public function update(Request $request, ReservaAuto $reserva)
     {
-        $reserva->fill($this->validate($request, [
-            'fecha_inicio' => 'required',
-            'fecha_termino' => 'required',
-            'fecha_reserva' => 'required',
-            'descuento' => 'required',
-            'costo' => 'required',
-            'auto_id' => 'required',
-            'orden_compra_id' => 'required',
-        ]))->save();
+        // $reserva->fill($this->validate($request, [
+        //     'fecha_inicio' => 'required',
+        //     'fecha_termino' => 'required',
+        //     'fecha_reserva' => 'required',
+        //     'descuento' => 'required',
+        //     'costo' => 'required',
+        //     'auto_id' => 'required',
+        //     'orden_compra_id' => 'required',
+        // ]))->save();
 
-        return $reserva;
+        // return $reserva;
     }
 
     /**
@@ -141,7 +139,7 @@ class ReservaAutosController extends Controller
      */
     public function destroy(ReservaAuto $reserva)
     {
-        $reserva->delete();
-        ReservaAuto::all();
+        // $reserva->delete();
+        // ReservaAuto::all();
     }
 }

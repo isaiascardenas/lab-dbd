@@ -17,29 +17,28 @@ class ReservaActividadesController extends Controller
      */
     public function index()
     {
-        $actividades = Actividad::whereCiudadId(request('ciudad_id'))
-            ->when(request('fecha_inicio'), function($query) {
-                return $query->whereDate('fecha_inicio', '<=', request('fecha_inicio'))
-                             ->whereDate('fecha_termino', '>=', request('fecha_inicio'));
-            })
-            ->with('ciudad')
-            ->get();
+      $fecha = Carbon::createFromFormat('d-m-Y', request('fecha_actividad'))->subDay();
 
-        $actividades = $actividades->filter(function ($actividad) {
-            $total_ninos = $actividad->reservaActividades->pluck('capacidad_ninos')->sum();
-            $total_ninos = $actividad->reservaActividades->pluck('capacidad_adultos')->sum();
-            return $actividad->max_ninos >= $total_ninos + request('cantidad_ninos') &&
-                $actividad->max_ninos >= $total_ninos + request('cantidad_ninos');
-        });
+      $actividades = Actividad::where('ciudad_id', request('ciudad_id'))
+                        ->whereDate('fecha_inicio', '<=', $fecha->format('Y-m-d'))
+                        ->whereDate('fecha_termino', '>=', $fecha->format('Y-m-d'))
+                        ->get();
 
-        request()->session()->put('busqueda.actividad', [
-          'costo' => 0,
-          'cantidad_adultos' => request('cantidad_adultos'),
-          'cantidad_ninos' => request('cantidad_ninos')
-        ]);
+      $actividades = $actividades->filter(function ($actividad) {
+          $total_ninos = $actividad->reservaActividades->pluck('capacidad_ninos')->sum();
+          $total_ninos = $actividad->reservaActividades->pluck('capacidad_adultos')->sum();
+          
+          return $actividad->max_ninos >= $total_ninos + request('cantidad_ninos') &&
+              $actividad->max_ninos >= $total_ninos + request('cantidad_ninos');
+      });
 
+      request()->session()->put('busqueda.actividad', [
+        'costo' => 0,
+        'cantidad_adultos' => request('cantidad_adultos'),
+        'cantidad_ninos' => request('cantidad_ninos')
+      ]);
 
-        return view('modulos.ReservaActividad.reservas.index', compact('actividades'));
+      return view('modulos.ReservaActividad.reservas.index', compact('actividades'));
     }
 
     /**
@@ -72,8 +71,8 @@ class ReservaActividadesController extends Controller
     {
         $reserva = new ReservaActividad([
             'fecha_reserva' => Carbon::now()->toDateTimeString(),
-            'capacidad_ninos' => request()->session()->get('busqueda.actividad.capacidad_ninos'),
-            'capacidad_adultos' => request()->session()->get('busqueda.actividad.capacidad_adultos'),
+            'capacidad_ninos' => request()->session()->get('busqueda.actividad.cantidad_ninos'),
+            'capacidad_adultos' => request()->session()->get('busqueda.actividad.cantidad_adultos'),
             'costo' => request()->session()->get('busqueda.actividad.costo'),
             'descuento' => 1,
             'actividad_id' => request('actividad_id'),

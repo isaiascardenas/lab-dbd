@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Trivago') }}</title>
+    <title>{{ config('app.name', 'TetraVago') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -52,7 +52,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Trivago') }}
+                    {{ config('app.name', 'TetraVago') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -140,9 +140,8 @@
           </main>
         </div>
 
-        <footer  style="background-color: #ce93d8 !important;
-            position: fixed; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.9;}">
-        	&copy; 2018 {{ config('app.name', 'Trivago') }} Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
+        <footer class="container-fluid mt-3 position-sticky">
+        	&copy; 2018 {{ config('app.name', 'TetraVago') }} Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
         </footer>
     </div>
 

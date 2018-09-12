@@ -9,63 +9,40 @@
     @foreach($actividades as $actividad)
     <div class="card">
       <a class="card-header" data-toggle="collapse" href="#actividad-{{ $loop->iteration }}">
-        <div class="row text-left">
-          <div class="col-6">
-            <div class="row">
-              <div class="col">
-                <span class="font-weight-bold">{{ $actividad->fecha_inicio }}</span>
-              </div>
-
-              <div class="col-1">
-                <i class="fas fa-angle-right"></i>
-              </div>
-
-              <div class="col">
-                <span class="text-muted">{{ $actividad->fecha_termino }}</span>
-              </div>
-            </div>
-          </div>
-
-          {{-- <div class="col-2 text-muted"> --}}
-              {{-- {{ $actividad->costo_aduto}} --}}
-          {{-- </div> --}}
-
-          <div class="col-2 text-muted">
-              {{ $actividad->ciudad->nombre }}
-          </div>
-
-          <div class="col-2 text-right font-weight-bold">
-              ${{ $actividad->costo_adulto }}
-          </div>
+        {{ $actividad->titulo }}
+        <div class="text-right float-right">
+            {{ $actividad->precioAdulto(TRUE) }} / adulto
         </div>
       </a>
 
       <div class="collapse" id="actividad-{{ $loop->iteration }}" data-parent="#list-accordion">
         <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-muted">
-              {{ $actividad->descripcion }}
-          </h6>
+          <p>
+            <b>Descripción</b>
+            <br>
+            {{ $actividad->descripcion }}
+          </p>
           <p class="card-text">
-              <span class="col-2 text-right font-weight-bold">
-                  Precio Adulto: ${{ $actividad->costo_adulto }}
+              <span class="text-right font-weight-bold">
+                  Precio Adulto: {{ $actividad->precioAdulto(TRUE) }}
               </span >
               <br/>
-              <span class="col-2 text-right font-weight-bold">
+              <span class="text-right font-weight-bold">
                   Max cantidad adulto: {{ $actividad->max_adultos }}
               </span >
               <br/>
               <br/>
-              <span class="col-2 text-right font-weight-bold">
-                  Precio Niño: ${{ $actividad->costo_nino }}
+              <span class="text-right font-weight-bold">
+                  Precio Niño: {{ $actividad->precioNino(TRUE) }}
               </span >
               <br/>
-              <span class="col-2 text-right font-weight-bold">
+              <span class="text-right font-weight-bold">
                   Max cantidad niños: {{ $actividad->max_ninos }}
               </span >
           </p>
           <div class="text-right">
-              <a class="btn btn-sm btn-info" href="reserva_actividades/create/{{ $actividad->id }}">
-                  Reservar
+              <a class="btn btn-sm btn-info" href="/reserva-actividades/reservar/{{ $actividad->id }}">
+                  <i class="fas fa-cart-plus"></i> Agregar al carro
               </a>
           </div>
         </div>

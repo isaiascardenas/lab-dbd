@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Ciudad;
 use Carbon\Carbon;
 use App\OrdenCompra;
-use App\Modulos\ReservaAuto\Auto;
-use App\Modulos\ReservaAuto\Sucursal;
+// use App\Modulos\ReservaAuto\Auto;
+// use App\Modulos\ReservaAuto\Sucursal;
 use App\Modulos\ReservaVuelo\Aeropuerto;
 use App\Modulos\ReservaHabitacion\Hotel;
-use App\Modulos\ReservaAuto\ReservaAuto;
+// use App\Modulos\ReservaAuto\ReservaAuto;
 use App\Modulos\ReservaVuelo\TipoAsiento;
-use App\Modulos\ReservaActividad\Actividad;
 use App\Modulos\ReservaHabitacion\Habitacion;
 // use Illuminate\Support\Facades\Auth;
 
@@ -20,14 +19,11 @@ class HomeController extends Controller
 
     public function index()
     {
-        $autos = Auto::all();
         $ciudades = Ciudad::all();
-        $actividades = Actividad::all();
         $tipoPasaje = TipoAsiento::all();
         $aeropuertos = Aeropuerto::all();
         $hoteles = Hotel::all();
         $habitaciones = Habitacion::all();
-        $sucursales = Sucursal::with('ciudad', 'compania')->get();
         // "paquetes" => Paquetes::all()
         $paquetes = [];
 
@@ -48,12 +44,12 @@ class HomeController extends Controller
     {
         // Here make a order and link it with all reservations
         //
-        $orden = OrdenCompra::create([
-          'costo_total' => 0,
-          'fecha_generado' => Carbon::now(),
-          'detalle' => '',
-          'user_id' => request()->user()->id
-        ]);
+        // $orden = OrdenCompra::create([
+        //   'costo_total' => 0,
+        //   'fecha_generado' => Carbon::now(),
+        //   'detalle' => '',
+        //   'user_id' => request()->user()->id
+        // ]);
         //
         //
         collect(request()->session()->get('reservas'))->each(function ($reserva) {
@@ -87,15 +83,22 @@ class HomeController extends Controller
 
         $reservas = request()->session()->put('reservas', $reservas);
 
-        return redirect('/cart', compact('reservas'))->with('success', 'Reserva Eliminada!');
+        return redirect('/cart')->with('success', 'Reserva Eliminada!');
     }
 
     public function cart()
     {
-        // request()->session()->forget('reservas');
         $reservas = request()->session()->get('reservas');
-        // dd($reservas);
-        return view('cart', compact('reservas'));
+
+        $totalCarro = 0;
+
+        foreach ($reservas as $reserva) {
+          $totalCarro += $reserva['reserva']['detalle']->costo;
+        }
+
+        $totalCarro = '$ '.number_format($totalCarro, 0, ',', '.');
+        
+        return view('cart', compact('reservas', 'totalCarro'));
     }
 }
 

@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Trivago') }}</title>
+    <title>{{ config('app.name', 'TetraVago') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -42,9 +42,9 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar">
-            <div class="container" style = "width: 100%;">
-                <a class="navbar-brand" href="{{ url('/') }}" >
-                    TetraVago
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'TetraVago') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -58,17 +58,17 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li>
+                            <a href="/cart" class="nav-link">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
+                            </a>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             <li><a class="nav-link" href="{{ route('login') }}" style="color: #eceff1 !important;   background: rgba(255,255,255,0);">{{ __('Ingresar') }}</a></li>
                             <li><a class="nav-link" style="color: #eceff1 !important;   background: rgba(255,255,255,0);" href="{{ route('register') }}" color= "#FFFFFF">{{ __('Regístrate') }}</a></li>
                         @else
-                            <li>
-                                <a href="/cart" class="nav-link">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
-                                </a>
-                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fas fa-user-circle"></i> {{ Auth::user()->nombre }} <span class="caret"></span>
@@ -107,14 +107,19 @@
             @yield('content')
         </main>
 
-        <footer  style="background-color: #ce93d8 !important;
-            position: fixed; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.9;}">
-            <center>    
-                &copy; 2018 Tetravago Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
+        <footer class="text-center" style="background-color: #ce93d8 !important; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.7;}">
+                &copy; 2018 {{ config('app.name', 'TetraVago') }}
+                <br>
+                <address>Chile - DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
             </center>
         </footer>
     </div>
 
     @yield('script')
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+    </script>
 </body>
 </html>

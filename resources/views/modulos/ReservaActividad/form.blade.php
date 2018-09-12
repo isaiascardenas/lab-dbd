@@ -3,7 +3,7 @@
         <h2><i class="fas fa-calendar-alt"></i> Reserva tu actividad </h2>
     </div>
     <div class="card-body">
-        <form action="/reserva_actividades" method="get">
+        <form action="/reserva-actividades" method="post">
             {{ csrf_field() }}
 
             <div class="form-group form-row align-items-end">
@@ -11,10 +11,10 @@
                     <label for="ciudad_id">Ubicación</label>
                     <div class="form-group">
                         <select id="ciudad_id" name="ciudad_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
-                            @foreach ($actividades as $actividad)
-                                <option value="{{ $actividad->ciudad->id }}">
-                                {{ $actividad->ciudad->nombre . ", " . $actividad->ciudad->pais->nombre ."(".$actividad->ciudad->id .")"}}
-                                </option>
+                            @foreach ($ciudades as $ciudad)
+                              <option value="{{ $ciudad->id }}">
+                              {{ $ciudad->nombre . ", " . $ciudad->pais->nombre }}
+                              </option>
                             @endforeach
                         </select>
                     </div>
@@ -23,16 +23,15 @@
 
             <div id="fechas_actividades" class="form-group form-row align-items-end">
                 <div class="col">
-                    <label for="fecha_ida">Fecha</label>
+                    <label for="">Fecha</label>
                     <div class="input-group">
-                        <input type="text" id="inicio_actividad" name="fecha_inicio" class="form-control text-center" readonly="readonly">
+                        <input type="text" id="fecha_actividad" name="fecha_actividad" class="form-control text-center" readonly="readonly">
                         <span class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </span>
                     </div>
                 </div>
             </div>
-
 
             <div class="form-group form-row align-items-end">
                 <div class="col">
@@ -60,11 +59,9 @@
 </div>
 
 <script>
-
-        let fechaIniciof = flatpickr('#inicio_actividad', {
-            enableTime: false,
-            dateFormat: "Y-m-d H:i:ss",
-            minDate: "today",
-        });
-
+  let fechaIniciof = flatpickr('#fecha_actividad', {
+      enableTime: false,
+      dateFormat: "d-m-Y",
+      minDate: "today",
+  });
 </script>

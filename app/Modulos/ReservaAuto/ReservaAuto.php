@@ -2,6 +2,7 @@
 
 namespace App\Modulos\ReservaAuto;
 
+use Carbon\Carbon;
 use App\Modulos\ReservaAuto\Auto;
 use Illuminate\Database\Eloquent\Model;
 use App\Modulos\Paquetes\PaqueteVueloAuto;
@@ -35,5 +36,15 @@ class ReservaAuto extends Model
       return $formato
                 ? '$ '.number_format($this->costo, 0, ',', '.')
                 : $this->costo;
+    }
+
+    public function fechaInicio($format = 'H:i d-m-Y')
+    {
+      return Carbon::parse($this->fecha_inicio)->format($format);
+    }
+
+    public function fechaTermino($format = 'H:i d-m-Y')
+    {
+      return Carbon::parse($this->fecha_termino)->format($format);
     }
 }
