@@ -10,7 +10,7 @@
                 <a class="nav-link" id="hotel-tab" data-toggle="pill" href="#hotel" role="tab" aria-controls="hotel" aria-selected="false"><i class="fas fa-building"></i>Hoteles</a>
                 <a class="nav-link" id="auto-tab" data-toggle="pill" href="#auto" role="tab" aria-controls="auto" aria-selected="false"><i class="fas fa-car"></i>Automóviles</a>
                 <a class="nav-link" id="actividad-tab" data-toggle="pill" href="#actividad" role="tab" aria-controls="actividad" aria-selected="false"><i class="fas fa-calendar-alt"></i> Actividades</a>
-                <a class="nav-link" id="paquete-tab" data-toggle="pill" href="#paquete" role="tab" aria-controls="paquete" aria-selected="false"><i class="fas fa-cubes"></i> Paquetes</a>
+                <a class="nav-link" id="traslado-tab" data-toggle="pill" href="#traslado" role="tab" aria-controls="traslado" aria-selected="false"><i class="fas fa-cubes"></i> Traslados</a>
             </div>
         </div>
         <div class="col-9">
@@ -27,7 +27,7 @@
                 <div class="tab-pane fade" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
                     @include('modulos.ReservaActividad.form')
                 </div>
-                <div class="tab-pane fade" id="paquete" role="tabpanel" aria-labelledby="paquete-tab">
+                <div class="tab-pane fade" id="traslado" role="tabpanel" aria-labelledby="traslado-tab">
                     
                 </div>
             </div>
