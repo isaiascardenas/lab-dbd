@@ -1,13 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+
+    
     <div class="row">
         <div class="col-3">
             <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="vuelo-tab" data-toggle="pill" href="#vuelo" role="tab" aria-controls="vuelo" aria-selected="true"><i class="fas fa-plane"></i> Vuelos</a>
-                <a class="nav-link" id="hotel-tab" data-toggle="pill" href="#hotel" role="tab" aria-controls="hotel" aria-selected="false"><i class="fas fa-building"></i> Hoteles</a>
-                <a class="nav-link" id="auto-tab" data-toggle="pill" href="#auto" role="tab" aria-controls="auto" aria-selected="false"><i class="fas fa-car"></i> Automóviles</a>
+                <a class="nav-link active" id="vuelo-tab" data-toggle="pill" href="#vuelo" role="tab" aria-controls="vuelo" aria-selected="true"><i class="fas fa-plane"></i>Vuelos</a>
+                <a class="nav-link" id="hotel-tab" data-toggle="pill" href="#hotel" role="tab" aria-controls="hotel" aria-selected="false"><i class="fas fa-building"></i>Hoteles</a>
+                <a class="nav-link" id="auto-tab" data-toggle="pill" href="#auto" role="tab" aria-controls="auto" aria-selected="false"><i class="fas fa-car"></i>Automóviles</a>
                 <a class="nav-link" id="actividad-tab" data-toggle="pill" href="#actividad" role="tab" aria-controls="actividad" aria-selected="false"><i class="fas fa-calendar-alt"></i> Actividades</a>
+                <a class="nav-link" id="paquete-tab" data-toggle="pill" href="#paquete" role="tab" aria-controls="paquete" aria-selected="false"><i class="fas fa-cubes"></i> Paquetes</a>
             </div>
         </div>
         <div class="col-9">
@@ -24,11 +27,15 @@
                 <div class="tab-pane fade" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
                     @include('modulos.ReservaActividad.form')
                 </div>
+                <div class="tab-pane fade" id="paquete" role="tabpanel" aria-labelledby="paquete-tab">
+                    
+                </div>
             </div>
         </div>
     </div>
 
-    <h3><i class="fas fa-cubes"></i> Paquetes</h3>
+<!--
+    {{-- <h3><i class="fas fa-cubes"></i> Paquetes</h3> --}}
 
     <div id="carouselPaquetes" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -58,7 +65,9 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Siguiente</span>
         </a>
-    </div>
+    </div>-->
+
+
 @endsection
 
 @section('script')

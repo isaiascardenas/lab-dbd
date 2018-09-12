@@ -45,7 +45,7 @@ class UserController extends Controller
             'password' => 'confirmed',
             // role id (trigger)
         ]));
-        if ($user->exists()) {
+        if ($user->usersexists()) {
             $response = ['success' => 'Creado con éxito!'];
         } else {
             $response = ['error' => 'No se ha podido crear!'];
@@ -61,7 +61,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
-    {
+    {   
+        dd($user);  
         return view('user.show', compact('user'));
     }
 

@@ -38,6 +38,11 @@
     <!-- Datepicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+
+
+    
+
+
     <!-- Bootstrap Select -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
 	<script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
@@ -63,8 +68,8 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Regístrate') }}</a></li>
                         @else
                           <!-- 
                         	<li>
@@ -80,10 +85,19 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/users/{{ Auth::user()->id }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('Perfil-form').submit();">
+                                        {{ __('Perfil') }}
+                                    </a>
+                                    <form id="Perfil-form" action="/users/{{ Auth::user()->id }}" method="GET" style="display: none;">
+                                        @csrf
+                                    </form>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Desconectar') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
