@@ -15,7 +15,8 @@ class TrasladosController extends Controller
      */
     public function index()
     {
-        return Traslado::all();
+        $traslados = Traslado::all();
+        return view('modulos.ReservaTraslado.reservas.index', compact('traslados'));
     }
 
     /**
@@ -25,7 +26,8 @@ class TrasladosController extends Controller
      */
     public function create()
     {
-        //
+        $ciudades = Ciudad::all();
+        return view('modulos.ReservaActividad.reservas.create', compact('ciudades'));
     }
 
     /**
@@ -44,6 +46,26 @@ class TrasladosController extends Controller
             'aeropuerto_id' => 'required',
             'hotel_id' => 'required'
         ]));
+
+        $actividad = Actividad::create($this->validate($request, [
+            'fecha_inicio' => 'required',
+            'fecha_termino' => 'required',
+            'descripcion' => 'required', 
+            'max_ninos' => 'required',
+            'max_adultos' => 'required',
+            'costo_nino' => 'required',
+            'costo_adulto' => 'required',
+            'ciudad_id' => 'required'
+        ]));
+
+        if ($actividad->exists()) {
+          $response = ['success' => 'Creado con éxito!'];
+        } else {
+          $response = ['error' => 'No se ha podido crear!'];
+        }
+
+        return redirect('/actividades')->with($response);
+
     }
 
 
@@ -55,6 +77,7 @@ class TrasladosController extends Controller
      */
     public function show(Traslado $traslado)
     {
+        return view('modulos.ReservaActividad.reservas.show', compact('actividad'));
         return $traslado;
     }
 
@@ -66,7 +89,8 @@ class TrasladosController extends Controller
      */
     public function edit(Traslado $traslado)
     {
-        //
+        $ciudades = Ciudad::all();
+        return view('modulos.ReservaActividad.reservas.edit', compact('actividad', 'ciudades'));
     }
 
 
@@ -89,6 +113,25 @@ class TrasladosController extends Controller
         ]))->save();
 
         return $traslado;
+
+        $outcome = $actividad->fill($this->validate($request, [
+          'fecha_inicio' => 'required',
+          'fecha_termino' => 'required',
+          'descripcion' => 'required', 
+          'max_ninos' => 'required',
+          'max_adultos' => 'required',
+          'costo_nino' => 'required',
+          'costo_adulto' => 'required',
+          'ciudad_id' => 'required'
+        ]))->save();
+
+        if ($outcome) {
+          $response = ['success' => 'Actualizado con éxito!'];
+        } else {
+          $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
+
+        return redirect('/actividades/'.$actividad->id.'/edit')->with($response);
     }
 
     /**
