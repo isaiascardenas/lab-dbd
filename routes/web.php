@@ -20,28 +20,31 @@ Auth::routes();
  * 
  */
 Route::get('/', 'HomeController@index');
+
+/* Cart */
 Route::get('/cart', 'HomeController@cart');
+Route::delete('/cart', 'HomeController@deleteFromCart');
 
 /* Proceso de reserva de vuelos */
-Route::post('/vuelos/',             'ReservaVuelo\VuelosController@index');   // POST => filtros
-Route::get('/vuelos/',             'ReservaVuelo\VuelosController@index');   // POST => filtros
-Route::post('/vuelos/details/',     'ReservaVuelo\VuelosController@show');    // POST => [tramo_1, tramo_2]
-Route::post('/vuelos/reserva/',     'ReservaVuelo\VuelosController@reserva'); // POST => [tramo_1, tramo_2] tras confirmacion en /vuelos/details/
+Route::post('/vuelos/',         'ReservaVuelo\VuelosController@index');   // POST => filtros
+Route::post('/vuelos/details/', 'ReservaVuelo\VuelosController@show');    // POST => [tramo_1, tramo_2]
+Route::post('/vuelos/reservar/', 'ReservaVuelo\VuelosController@store'); // POST => [tramo_1, tramo_2] tras confirmacion en /vuelos/details/
 
 /* Proceso de reserva de autos */
-Route::resource('reserva_autos', 'ReservaAuto\ReservaAutosController');
+Route::post('/reserva-autos/', 'ReservaAuto\ReservaAutosController@index');
+Route::get('/reserva-autos/reservar/{auto}', 'ReservaAuto\ReservaAutosController@create');
+Route::post('/reserva-autos/reservar/{auto}', 'ReservaAuto\ReservaAutosController@store');
 
 /* Proceso de reserva de actividades */
-Route::get('/reserva_actividades/create/{actividad}', 'ReservaActividad\ReservaActividadesController@create');
-Route::resource('reserva_actividades','ReservaActividad\ReservaActividadesController', [
-  'parameters' => ['reservaActividades'=>'reservaActividad']
-]);
-/* Proceso de reserva de habitaciones */
-Route::get('/reserva_habitacion/reservar/{habitacion}', 'ReservaHabitacion\ReservaHabitacionesController@reservar');
+Route::post('/reserva-actividades/', 'ReservaActividad\ReservaActividadesController@index');
+Route::get('/reserva-actividades/reservar/{actividad}', 'ReservaActividad\ReservaActividadesController@create');
+Route::post('/reserva-actividades/reservar/{actividad}', 'ReservaActividad\ReservaActividadesController@store');
 
-Route::resource('reserva_habitaciones','ReservaHabitacion\ReservaHabitacionesController', [
-  'parameters' => ['reservaHabitaciones'=>'reservaHabitacion']
-]);
+/* Proceso de reserva de habitaciones */
+Route::post('/reserva-habitaciones','ReservaHabitacion\ReservaHabitacionesController@index');
+Route::get('/reserva-habitaciones/reservar/{habitacion}','ReservaHabitacion\ReservaHabitacionesController@create');
+Route::post('/reserva-habitaciones/reservar/{habitacion}','ReservaHabitacion\ReservaHabitacionesController@store');
+
 
 /**
  * 
@@ -50,13 +53,12 @@ Route::resource('reserva_habitaciones','ReservaHabitacion\ReservaHabitacionesCon
  */
 Route::group(['middleware' => 'auth'], function(){
   Route::post('/pay', 'HomeController@pay');
-  Route::post('/cart', 'HomeController@deleteFromCart');
 
   /* CRUD Cuentas de usuario*/
   Route::resources([
-    'cuentas'      => 'CuentasController',
-    'tipocuentas'  => 'TipoCuentasController',
-    'banco'        => 'BancosController',
+    'cuentas' => 'CuentasController',
+    'tipo-cuentas' => 'TipoCuentasController',
+    'bancos' => 'BancosController',
   ]);
 });
 
@@ -73,21 +75,16 @@ Route::group(['middleware' => 'admin'], function(){
   Route::resource('users', 'UserController');
 
   /* CRUD Reservas Autos */
-  Route::resources([
-      'autos' => 'ReservaAuto\AutosController',
-      'companias' => 'ReservaAuto\CompaniasController',
-  ]);
-
-  Route::get('reserva_autos/reservar/{auto}', 'ReservaAuto\ReservaAutosController@reservar');
+  Route::resource('companias', 'ReservaAuto\CompaniasController');
 
   Route::resource('sucursales', 'ReservaAuto\SucursalesController', [
       'parameters' => ['sucursales' => 'sucursal']
   ]);
 
   /* CRUD Reservas Actividades */
-  // Route::resource('actividades', 'ReservaActividad\ActividadesController', [
-  //   'parameters' => ['actividades' => 'actividad']
-  // ]);
+  Route::resource('actividades', 'ReservaActividad\ActividadesController', [
+    'parameters' => ['actividades' => 'actividad']
+  ]);
 
   /* CRUD Reservas Hoteles */
   Route::resource('hoteles','ReservaHabitacion\HotelesController', [
@@ -113,8 +110,8 @@ Route::group(['middleware' => 'admin'], function(){
 
   /* CRUD Paquetes */
   Route::resources([
-      'PaqueteVueloAuto' => 'Paquetes\PaqueteVueloAutoController',
-      'PaqueteVueloHotel' => 'Paquetes\PaqueteVueloHotelController'
+      'paquete-auto' => 'Paquetes\PaqueteVueloAutoController',
+      'paquete-hotel' => 'Paquetes\PaqueteVueloHotelController'
   ]);
 });
 

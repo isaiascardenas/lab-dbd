@@ -17,12 +17,14 @@ class CreateActividadesTable extends Migration
             $table->increments('id');
             $table->dateTime('fecha_inicio'); 
             $table->dateTime('fecha_termino');
-            $table->string('descripcion', 255);
+            $table->string('titulo', 50);
+            $table->string('descripcion', 300);
             $table->integer('max_ninos');
             $table->integer('max_adultos');
             $table->integer('costo_nino');
             $table->integer('costo_adulto');
             $table->integer('ciudad_id');
+            
             $table->foreign('ciudad_id')
                 ->references('id')
                 ->on('ciudades');

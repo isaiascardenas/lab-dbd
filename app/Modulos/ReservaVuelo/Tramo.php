@@ -143,6 +143,7 @@ class Tramo extends Model
    */
   public static function buscarVuelos($params)
   {
+
   	$fechaPartida = Carbon::createFromFormat('d-m-Y', $params['fecha_ida']);
 
     $tramos = static::where('origen_id', '=', $params['origen_id'])

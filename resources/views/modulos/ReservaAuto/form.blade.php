@@ -3,18 +3,18 @@
         <h2><i class="fas fa-car"></i> Reserva tu auto </h2>
     </div>
     <div class="card-body">
-        <form action="/reserva_autos" method="get">
+        <form action="/reserva-autos" method="post">
             {{ csrf_field() }}
 
             <div class="form-group form-row align-items-end">
                 <div class="col">
-                    <label for="sucursal_id"> Cuidad </label>
+                    <label for="ciudad_id">Cuidad</label>
                     <div class="form-group">
-                        <select id="sucursal_id" name="sucursal_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
-                            @foreach ($sucursales as $sucursal)
-                                <option value="{{ $sucursal->id }}">
-                                {{ $sucursal->compania->nombre }}, {{$sucursal->ciudad->nombre }} ({{ $sucursal->id }})
-                                </option>
+                        <select id="ciudad_id" name="ciudad_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
+                            @foreach ($ciudades as $ciudad)
+                              <option value="{{ $ciudad->id }}">
+                                {{ $ciudad->nombre }}, {{ $ciudad->pais->nombre }}
+                              </option>
                             @endforeach
                         </select>
                     </div>

@@ -12,7 +12,9 @@
                     <div class="form-group">
                         <select id="origen_id" name="origen_id" class="form-control selectpicker" title="Origen" data-live-search="true">
                             @foreach ($aeropuertos as $aeropuerto)
-                            <option value="{{ $aeropuerto->id }}">{{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->ciudad->nombre . ", " . $aeropuerto->nombre }}</option>
+                            <option value="{{ $aeropuerto->id }}">
+                              {{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->ciudad->nombre . ", " . $aeropuerto->nombre }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -27,7 +29,9 @@
                     <div class="form-group">
                         <select id="destino_id" name="destino_id" class="form-control selectpicker" title="Destino" data-live-search="true">
                             @foreach ($aeropuertos as $aeropuerto)
-                            <option value="{{ $aeropuerto->id }}">{{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->ciudad->nombre . ", " . $aeropuerto->nombre }}</option>
+                            <option value="{{ $aeropuerto->id }}">
+                              {{ "(" . $aeropuerto->codigo . ") " . $aeropuerto->ciudad->nombre . ", " . $aeropuerto->nombre }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -63,8 +67,8 @@
 
                 <div class="col">
                     <label for="fecha_vuelta" class="vuelo-vuelta">Fecha Vuelta</label>
-                    <div class="input-group">
-                        <input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control text-center datepicker vuelo-vuelta fecha-termino" readonly="readonly">
+                    <div class="input-group vuelo-vuelta">
+                        <input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control text-center datepicker fecha-termino" readonly="readonly">
                         <span class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </span>
@@ -85,7 +89,7 @@
                         <div class="col input-group">
                             <input type="number" name="pasajeros_ninos" class="form-control text-right" value="0">
                             <div class="input-group-append">
-                                <span class="input-group-text">Ni&ntilde;os</span>
+                                <span class="input-group-text">Niños</span>
                             </div>
                         </div>
                     </div>
@@ -94,9 +98,9 @@
                 <div class="col">
                     <label for="">Tipo Pasaje</label>
                     <select name="tipo_pasaje" class="form-control">
-                        @foreach ($tipoPasaje as $pasaje)
+                      @foreach ($tipoPasaje as $pasaje)
                         <option value="{{ $pasaje["id"] }}">{{ $pasaje["descripcion"] }}</option>
-                        @endforeach
+                      @endforeach
                     </select>
                 </div>
             </div>
@@ -121,7 +125,7 @@
     $fechaTermino.flatpickr(flatpickrFormat);
 
     $fechaInicio.on('change', function(){
-      $fechaInicio.flatpickr({
+      $fechaTermino.flatpickr({
         minDate: $fechaInicio.val()
       });
       if($fechaInicio.val() < $fechaTermino.val()){
@@ -130,7 +134,10 @@
     });
 
     $fechaTermino.on('change', function(){
-      if($fechaInicio.val() < $fechaTermino.val()){
+      $fechaInicio.flatpickr({
+        maxDate: $fechaTermino.val()
+      });
+      if($fechaInicio.val() > $fechaTermino.val()){
         $fechaInicio.val($fechaTermino.val());
       }
     });

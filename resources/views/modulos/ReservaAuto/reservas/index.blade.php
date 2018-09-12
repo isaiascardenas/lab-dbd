@@ -1,40 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2>
-        <i class="fas fa-map-marker-alt"></i> Escoge tu auto
-    </h2>
+    <div class="card">
+      <div class="card-title">
+        <h2>
+            <i class="fas fa-car"></i> Escoge tu auto
+        </h2>
+      </div>
 
-    <hr>
+      <hr>
+      
+      @include('layouts.messages')
 
-    @include('layouts.messages')
-
-    <table class="table table-hover table-bordered table-sm datatable">
-        <thead>
-            <tr>
-                <th class="no-sort"></th>
-                <th> Patente </th>
-                <th> Descripción </th>
-                <th> Precio hora </th>
-                <th> Capacidad </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($autos as $auto)
-                <tr>
-                    <td>
-                        <a class="btn btn-sm btn-info" href="reserva_autos/reservar/{{ $auto->id }}">
+      <table class="table table-hover table-bordered table-sm datatable">
+          <thead>
+              <tr>
+                  <th class="no-sort"></th>
+                  <th>Patente</th>
+                  <th>Descripción</th>
+                  <th>Precio hora</th>
+                  <th>Capacidad</th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach($autos as $auto)
+                  <tr>
+                      <td>
+                          <a href="reserva-autos/reservar/{{ $auto->id }}" class="btn btn-info btn-sm">
                             Reservar
-                        </a>
-                    </td>
-                    <td>{{ $auto->patente }}</td>
-                    <td>{{ $auto->descripcion }}</td>
-                    <td>{{ $auto->precio_hora }}</td>
-                    <td>{{ $auto->capacidad }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                          </a>
+                      </td>
+                      <td>{{ $auto->patente }}</td>
+                      <td>{{ $auto->descripcion }}</td>
+                      <td class="text-right">{{ $auto->precio(TRUE) }}</td>
+                      <td>{{ $auto->capacidad }}</td>
+                  </tr>
+              @endforeach
+          </tbody>
+      </table>
+    </div>
 @endsection
 
 @section('script')

@@ -21,20 +21,21 @@ class VuelosController extends Controller
    */
   public function index()
   {
-    $params = $this->validate(request(), [
-      'origen_id' => 'required|integer',
-      'destino_id' => 'required|integer',
-      'tipo_vuelo' => 'required|integer|between:0,1',
-      'fecha_ida' => 'required|date',
-      'fecha_vuelta' => 'required_if:tipo_vuelo,1|date',
-      'pasajeros_adultos' => 'required|integer',
-      'pasajeros_ninos' => 'required|integer',
-      'tipo_pasaje' => 'required|integer|between:1,3'
-    ]);
-
+    // $params = $this->validate(request(), [
+    //   'origen_id' => 'required|integer',
+    //   'destino_id' => 'required|integer',
+    //   'tipo_vuelo' => 'required|integer|between:0,1',
+    //   'fecha_ida' => 'required|date',
+    //   'fecha_vuelta' => 'required_if:tipo_vuelo,1|date',
+    //   'pasajeros_adultos' => 'required|integer',
+    //   'pasajeros_ninos' => 'required|integer',
+    //   'tipo_pasaje' => 'required|integer|between:1,3'
+    // ]);
+    $params = request();
     $vuelos = Tramo::buscarVuelos($params);
 
-    request()->session()->push('busqueda.vuelos', $params);
+    dd(request()->session()->get('busqueda'));
+    request()->session()->put('busqueda.vuelos', $params);
 
     return view('modulos.ReservaVuelo.vuelos.index', compact('vuelos'));
   }

@@ -38,7 +38,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'TetraVago') }}
@@ -55,17 +55,17 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li>
+                            <a href="/cart" class="nav-link">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
+                            </a>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
-                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('login') }}" style="color: #eceff1 !important;">{{ __('Ingresar') }}</a></li>
+                            <li><a class="nav-link" style="color: #eceff1 !important;" href="{{ route('register') }}" color= "#FFFFFF">{{ __('Registrate') }}</a></li>
                         @else
-                            <li>
-                                <a href="/cart" class="nav-link">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
-                                </a>
-                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fas fa-user-circle"></i> {{ Auth::user()->name }} <span class="caret"></span>
@@ -93,11 +93,19 @@
             @yield('content')
         </main>
 
-        <footer class="container mt-3">
-            &copy; 2018 {{ config('app.name', 'TetraVago') }} Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
+        <footer class="text-center" style="background-color: #ce93d8 !important; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.7;}">
+                &copy; 2018 {{ config('app.name', 'TetraVago') }}
+                <br>
+                <address>Chile - DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
+            </center>
         </footer>
     </div>
 
     @yield('script')
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+    </script>
 </body>
 </html>

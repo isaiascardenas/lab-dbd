@@ -26,4 +26,11 @@ class Habitacion extends Model
     {
         return $this->hasMany(ReservaHabitacion::class);
     }
+
+    public function precioPorNoche($formato = FALSE)
+    {
+      return $formato
+                ? '$ '.number_format($this->precio_por_noche, 0, ',', '.')
+                : $this->precio_por_noche;
+    }
 }

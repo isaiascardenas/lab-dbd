@@ -27,4 +27,11 @@ class Auto extends Model
     {
         return $this->hasMany(ReservaAuto::class);
     }
+
+    public function precio($formato = FALSE)
+    {
+      return $formato
+                ? '$ '.number_format($this->precio_hora, 0, ',', '.')
+                : $this->precio_hora;
+    }
 }

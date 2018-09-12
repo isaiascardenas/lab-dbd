@@ -12,6 +12,6 @@ class BancosSeeder extends Seeder
      */
     public function run()
     {
-        factory(Banco::class, 50)->create(); 
+        factory(Banco::class, 5)->create(); 
     }
 }

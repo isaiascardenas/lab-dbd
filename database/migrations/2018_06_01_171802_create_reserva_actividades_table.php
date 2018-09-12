@@ -19,6 +19,7 @@ class CreateReservaActividadesTable extends Migration
             $table->integer('capacidad_ninos');
             $table->integer('capacidad_adultos');
             $table->float('descuento');
+            $table->integer('costo');
             $table->integer('actividad_id');
             $table->foreign('actividad_id')
                 ->references('id')

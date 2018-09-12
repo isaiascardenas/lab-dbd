@@ -11,10 +11,10 @@ class TipoCuentasSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tipo_cuentas')->insert([
-			['descripcion' => 'Cuenta Corriente'],
-			['descripcion' => 'Cuenta Vista'],
-			['descripcion' => 'Credito'],	
-        ]);
+      DB::table('tipo_cuentas')->insert([
+  			['descripcion' => 'Cuenta Corriente'],
+  			['descripcion' => 'Cuenta Vista'],
+  			['descripcion' => 'Credito'],	
+      ]);
     }
 }
