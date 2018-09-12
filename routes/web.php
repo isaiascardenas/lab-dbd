@@ -22,8 +22,8 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 
 /* Cart */
-Route::get('/cart', 'HomeController@cart');
-Route::delete('/cart', 'HomeController@deleteFromCart');
+Route::get('/cart', 'CartController@index');
+Route::delete('/cart', 'CartController@delete');
 
 /* Proceso de reserva de vuelos */
 Route::post('/vuelos/',         'ReservaVuelo\VuelosController@index');   // POST => filtros
@@ -52,7 +52,7 @@ Route::post('/reserva-habitaciones/reservar/{habitacion}','ReservaHabitacion\Res
  * 
  */
 Route::group(['middleware' => 'auth'], function(){
-  Route::post('/pay', 'HomeController@pay');
+  Route::post('/pay', 'CartController@pay');
 
   /* CRUD Cuentas de usuario*/
   Route::resources([

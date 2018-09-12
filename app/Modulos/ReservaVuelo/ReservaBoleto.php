@@ -53,6 +53,12 @@ class ReservaBoleto extends Model
 
     public function pasajero()
     {
-        return $this->belongsTo(Pasajero::class);
+        return $this->hasOne(Pasajero::class);
+    }
+
+    /* Funcionalidades */
+    public function precio($formato = FALSE)
+    {
+      return $this->tramo->precio($formato);
     }
 }

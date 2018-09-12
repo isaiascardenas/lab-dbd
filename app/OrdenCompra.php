@@ -3,12 +3,13 @@
 namespace App;
 
 use App\User;
-use App\ReservaAuto\ReservaAuto;
+use App\Modulos\ReservaAuto\ReservaAuto;
 use App\Paquetes\PaqueteVueloAuto;
 use App\Paquetes\PaqueteVueloHotel;
-use App\ReservaTraslado\ReservaTraslado;
-use App\ReservaActividad\ReservaActividad;
+use App\Modulos\ReservaTraslado\ReservaTraslado;
+use App\Modulos\ReservaActividad\ReservaActividad;
 use App\Modulos\ReservaHabitacion\ReservaHabitacion;
+use App\Modulos\ReservaVuelo\ReservaBoleto;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,6 +49,11 @@ class OrdenCompra extends Model
   public function reservaHabitacion()
   {
     return $this->hasMany(ReservaHabitacion::class);
+  }
+
+  public function reservaBoleto()
+  {
+    return $this->hasMany(ReservaBoleto::class);
   }
 
   public function paqueteVueloHotel()

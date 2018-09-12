@@ -68,7 +68,7 @@
                 <div class="col">
                     <label for="fecha_vuelta" class="vuelo-vuelta">Fecha Vuelta</label>
                     <div class="input-group vuelo-vuelta">
-                        <input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control text-center datepicker fecha-termino" readonly="readonly">
+                        <input type="text" id="fecha_vuelta" name="fecha_vuelta" class="form-control text-center datepicker fecha-termino" readonly="readonly" value="">
                         <span class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </span>
@@ -117,29 +117,13 @@
     minDate: "today"
   };
 
-  $('.fechas-pareadas').each(function(){
-    $fechaInicio = $(this).find('.fecha-inicio');
-    $fechaTermino = $(this).find('.fecha-termino');
+  let fechaIda = flatpickr('#fecha_ida', flatpickrFormat);
 
-    $fechaInicio.flatpickr(flatpickrFormat);
-    $fechaTermino.flatpickr(flatpickrFormat);
+  let fechaVuelta = flatpickr('#fecha_vuelta', flatpickrFormat);
 
-    $fechaInicio.on('change', function(){
-      $fechaTermino.flatpickr({
-        minDate: $fechaInicio.val()
-      });
-      if($fechaInicio.val() < $fechaTermino.val()){
-        $fechaTermino.val($fechaInicio.val());
-      }
-    });
-
-    $fechaTermino.on('change', function(){
-      $fechaInicio.flatpickr({
-        maxDate: $fechaTermino.val()
-      });
-      if($fechaInicio.val() > $fechaTermino.val()){
-        $fechaInicio.val($fechaTermino.val());
-      }
-    });
+  fechaIda.set("onChange", 
+    function(d) {
+      fechaVuelta.set("minDate", d[0].fp_incr(0)
+    );
   });
 </script>

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('layouts.messages')
     <div class="row">
         <div class="col-3">
             <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">

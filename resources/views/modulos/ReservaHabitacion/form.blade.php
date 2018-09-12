@@ -1,7 +1,7 @@
 
 <div class="card bg-light">
 	<div class="card-header">
-		<h2><i class="fas fa-building"></i> Reserva tu Hotel</h2>
+		<h2><i class="fas fa-building"></i> Reserva tu hotel</h2>
 
 	</div>
 	<div class="card-body">
