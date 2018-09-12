@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+    @include('layouts.messages')
 
     <div class="row">
         <div class="col-3">
@@ -68,23 +68,23 @@
             </div>-->
 
 
-        @endsection
+@endsection
 
-        @section('script')
-            <script>
-                $('select.selectpicker').selectpicker({
-                    noneSelectedText: 'No se ha seleccionado nada',
-                    noneResultsText: 'Ningún resultado coincide con {0}',
-                    selectOnTab: true
-                });
+@section('script')
+<script>
+  $('select.selectpicker').selectpicker({
+      noneSelectedText: 'No se ha seleccionado nada',
+      noneResultsText: 'Ningún resultado coincide con {0}',
+      selectOnTab: true
+  });
 
-$("input[name=tipo_vuelo]").change(function(){
-    var $target = $(".vuelo-vuelta");
-    if(this.value == "0"){
+  $("input[name=tipo_vuelo]").change(function(){
+      var $target = $(".vuelo-vuelta");
+      if(this.value == "0"){
         $target.hide();
-    } else {
+      } else {
         $target.show();
-    }
-});
-            </script>
-        @endsection
+      }
+  });
+</script>
+@endsection

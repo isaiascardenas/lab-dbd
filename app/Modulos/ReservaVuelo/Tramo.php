@@ -49,12 +49,12 @@ class Tramo extends Model
 
   public function horarioPartida()
 	{
-		return Carbon::parse($this->fecha_partida)->format('d-m-Y H:i');
+		return Carbon::parse($this->fecha_partida)->format('H:i d-m-Y');
 	}
 
 	public function horarioLlegada()
 	{
-		return Carbon::parse($this->fecha_llegada)->format('d-m-Y H:i');
+		return Carbon::parse($this->fecha_llegada)->format('H:i d-m-Y');
 	}
 
 	public function horaPartida()
@@ -149,7 +149,7 @@ class Tramo extends Model
     $tramos = static::where('origen_id', '=', $params['origen_id'])
                       ->whereDate('fecha_partida', '=', $fechaPartida->format('Y-m-d'))
                       ->get();
-
+                      // dd($tramos);
     $vuelos = [];
     
     $pasajeros = intval($params['pasajeros_adultos']) + intval($params['pasajeros_ninos']);

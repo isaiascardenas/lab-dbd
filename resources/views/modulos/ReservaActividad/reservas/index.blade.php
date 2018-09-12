@@ -5,6 +5,7 @@
     <i class="fas fa-calendar-alt"></i> Selecciona tu actividad
   </h2>
 
+  @if (count($actividades) > 0)
   <div id="list-accordion">
     @foreach($actividades as $actividad)
     <div class="card">
@@ -42,7 +43,8 @@
           </p>
           <div class="text-right">
               <a class="btn btn-sm btn-info" href="/reserva-actividades/reservar/{{ $actividad->id }}">
-                  <i class="fas fa-cart-plus"></i> Agregar al carro
+                  <i class="fas fa-check"></i>
+                  Seleccionar
               </a>
           </div>
         </div>
@@ -50,4 +52,16 @@
     </div>
     @endforeach
   </div>
+  @else
+  <div class="alert alert-danger">
+    <b>Whoops</b>
+    <br>
+    No se han encontrado actividades para esos parámetros
+    <br>
+    <a href="/" class="btn btn-link">
+      <i class="fas fa-arrow-left"></i>
+      Volver
+    </a>
+  </div>
+  @endif
 @endsection

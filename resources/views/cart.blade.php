@@ -68,23 +68,21 @@
                     </div>
                     <div class="col">
                       <p class="card-text">
-                        Codigo Vuelo: {{ $reserva['reserva']['detalle']->tramo->codigo }}
+                        <b>Codigo Vuelo</b>: {{ $reserva['reserva']['detalle']->tramo->codigo }}
                         <br/>
-                        Partida: {{ $reserva['reserva']['detalle']->tramo->horarioPartida() }}
+                        
+                        Horario Partida: {{ $reserva['reserva']['detalle']->tramo->horarioPartida() }}
                         <br/>
 
                         Partida: {{ $reserva['reserva']['detalle']->tramo->origen->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->origen->ciudad->pais->nombre }}
                         <br/>
 
-                        Llegada: {{ $reserva['reserva']['detalle']->tramo->horarioLlegada() }}
+                        Horario Llegada: {{ $reserva['reserva']['detalle']->tramo->horarioLlegada() }}
                         <br/>
 
                         Destino: {{ $reserva['reserva']['detalle']->tramo->destino->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->destino->ciudad->pais->nombre }}
                         <br/>
-
-                        Costo: {{ $reserva['reserva']['detalle']->tramo->precio(TRUE) }}
-                        <br/>
-
+                                               
                         Pasajero: {{ $reserva['reserva']['extra']->nombre . ' / ' . $reserva['reserva']['extra']->rut}}
                         <br/>
                       </p>
@@ -118,7 +116,7 @@
                 </div>
                 <div class="col-1 text-right">
                   <form
-                      action="{{ action('HomeController@deleteFromCart') }}"
+                      action="{{ action('CartController@delete') }}"
                       method="POST"
                       onsubmit="return confirm('Esta seguro de que desea eliminar el producto del carro?')">
 
@@ -142,10 +140,11 @@
                 Seguir comprando
               </a>
               <form
-                  action="{{ action('HomeController@pay') }}"
+                  action="{{ action('CartController@pay') }}"
                   method="POST"
                   onsubmit="return confirm('¿Esta seguro que desea realizar el pago de los productos en el carro?')">
                   {{ csrf_field() }}
+                  @method('POST')
                   <button type="submit" class="btn btn-primary">
                       <i class="fas fa-credit-card"></i>
                       Pagar {{ $totalCarro }}

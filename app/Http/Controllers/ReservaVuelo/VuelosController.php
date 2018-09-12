@@ -21,20 +21,19 @@ class VuelosController extends Controller
    */
   public function index()
   {
-    // $params = $this->validate(request(), [
-    //   'origen_id' => 'required|integer',
-    //   'destino_id' => 'required|integer',
-    //   'tipo_vuelo' => 'required|integer|between:0,1',
-    //   'fecha_ida' => 'required|date',
-    //   'fecha_vuelta' => 'required_if:tipo_vuelo,1|date',
-    //   'pasajeros_adultos' => 'required|integer',
-    //   'pasajeros_ninos' => 'required|integer',
-    //   'tipo_pasaje' => 'required|integer|between:1,3'
-    // ]);
-    $params = request();
+    $params = $this->validate(request(), [
+      'origen_id' => 'required|integer',
+      'destino_id' => 'required|integer',
+      'tipo_vuelo' => 'required|integer|between:0,1',
+      'fecha_ida' => 'required|date',
+      'fecha_vuelta' => 'required_if:tipo_vuelo,1|nullable',
+      'pasajeros_adultos' => 'required|integer',
+      'pasajeros_ninos' => 'required|integer',
+      'tipo_pasaje' => 'required|integer|between:1,3'
+    ]);
+    
     $vuelos = Tramo::buscarVuelos($params);
 
-    dd(request()->session()->get('busqueda'));
     request()->session()->put('busqueda.vuelos', $params);
 
     return view('modulos.ReservaVuelo.vuelos.index', compact('vuelos'));
@@ -57,15 +56,13 @@ class VuelosController extends Controller
     $vuelo = new Vuelo($tramos);
 
     $paramsVuelo = request()->session()->get('busqueda.vuelos');
-    $paramsVuelo = $paramsVuelo[0];
 
     return view('modulos.ReservaVuelo.vuelos.show', compact('vuelo', 'paramsVuelo'));
   }
 
-  public function reserva(Request $request)
+  public function store(Request $request)
   {
     $paramsVuelo = request()->session()->get('busqueda.vuelos');
-    $paramsVuelo = $paramsVuelo[0];
 
     foreach ($request['tramos'] as $tramo_id) {
       $pasajeros = intval($paramsVuelo['pasajeros_ninos']) + intval($paramsVuelo['pasajeros_adultos']);

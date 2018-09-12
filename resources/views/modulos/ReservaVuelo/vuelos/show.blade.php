@@ -11,7 +11,7 @@
         </div>
 
         <div class="col">
-          {{ $vuelo->origen()->origen->ciudad->nombre . ', ' . $vuelo->origen()->origen->ciudad->pais->nombre }}
+          {{ $vuelo->origen()->origen->ciudad->nombre }}, {{ $vuelo->origen()->origen->ciudad->pais->nombre }}
           <br>
           ({{ $vuelo->origen()->origen->codigo }}) <b>{{ $vuelo->origen()->horaPartida() }}</b>
         </div>
@@ -59,7 +59,7 @@
 			</table>
 
       <h3>Agregar pasajero(s)</h3>
-      <form method="post" action="{{ action('ReservaVuelo\VuelosController@reserva') }}" onsubmit="return confirm('¿Está seguro que desea agregar al carrito?')">
+      <form method="post" action="{{ action('ReservaVuelo\VuelosController@store') }}" onsubmit="return confirm('¿Está seguro que desea agregar al carrito?')">
           {{ csrf_field() }}
         <div class="row">
           @for($i = 1; $i <= intval($paramsVuelo['pasajeros_adultos']) + intval($paramsVuelo['pasajeros_ninos']); $i++)
@@ -83,7 +83,7 @@
             @endforeach
 
       			<button type="submit" class="btn btn-primary">
-      				<i class="fas fa-shopping-cart"></i> Agregar al carrito
+      				<i class="fas fa-cart-plus"></i> Agregar al carrito
       			</button>
         </div>
       </form>
