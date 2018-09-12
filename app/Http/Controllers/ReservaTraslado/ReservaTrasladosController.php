@@ -15,7 +15,7 @@ class ReservaTrasladosController extends Controller
      */
     public function index()
     {
-      return ReservaTraslado::all();
+        return ReservaTraslado::all();
     }
 
     /**
@@ -37,14 +37,14 @@ class ReservaTrasladosController extends Controller
     public function store(Request $request)
     {
 
-      return ReservaTraslado::create($this->validate($request, [
-        'fecha_reserva' => 'required',
-        'descuento' => 'required',
-        'costo' => 'required',
-        'asiento_avion_id' => 'required',
-        'tramo_id' => 'required',
-        'orden_compra_id' => 'required'
-      ]));
+        return ReservaTraslado::create($this->validate($request, [
+            'fecha_reserva' => 'required',
+            'descuento' => 'required',
+            'costo' => 'required',
+            'asiento_avion_id' => 'required',
+            'tramo_id' => 'required',
+            'orden_compra_id' => 'required'
+        ]));
     }
 
     /**
@@ -79,16 +79,16 @@ class ReservaTrasladosController extends Controller
     public function update(Request $request, ReservaTraslado $reservaTraslado)
     {
 
-      $reservaTraslado->fill($this->validate($request, [
-       'fecha_reserva' => 'required',
-       'descuento' => 'required',
-       'costo' => 'required',
-       'asiento_avion_id' => 'required',
-       'tramo_id' => 'required',
-       'orden_compra_id' => 'required'
-      ]))->save();
+        $reservaTraslado->fill($this->validate($request, [
+            'fecha_reserva' => 'required',
+            'descuento' => 'required',
+            'costo' => 'required',
+            'asiento_avion_id' => 'required',
+            'tramo_id' => 'required',
+            'orden_compra_id' => 'required'
+        ]))->save();
 
-      return $reservaTraslado;
+        return $reservaTraslado;
     }
 
     /**
@@ -99,8 +99,8 @@ class ReservaTrasladosController extends Controller
      */
     public function destroy(ReservaTraslado $reservaTraslado)
     {
-      $reservaTraslado->delete();
+        $reservaTraslado->delete();
 
-      return ReservaTraslado::all();
+        return ReservaTraslado::all();
     }
 }

@@ -13,7 +13,6 @@
 
 Auth::routes();
 
-
 /**
  * 
  * GUEST
@@ -45,6 +44,10 @@ Route::post('/reserva-habitaciones','ReservaHabitacion\ReservaHabitacionesContro
 Route::get('/reserva-habitaciones/reservar/{habitacion}','ReservaHabitacion\ReservaHabitacionesController@create');
 Route::post('/reserva-habitaciones/reservar/{habitacion}','ReservaHabitacion\ReservaHabitacionesController@store');
 
+/* Proceso de reserva de traslados */
+Route::post('/reserva-traslados/', 'ReservaTraslado\ReservaTrasladosController@index');
+Route::get('/reserva-traslados/reservar/{traslado}', 'ReservaTraslado\ReservaTrasladosController@create');
+Route::post('/reserva-traslados/reservar/{traslado}', 'ReservaTraslado\ReservaTrasladosController@store');
 
 /**
  * 

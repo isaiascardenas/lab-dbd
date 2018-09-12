@@ -68,7 +68,6 @@ class ActividadesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Actividad  $actividad)
-
     {
         return view('modulos.ReservaActividad.reservas.show', compact('actividad'));
     }
@@ -123,13 +122,13 @@ class ActividadesController extends Controller
     public function destroy(Actividad $actividad)
     {
         $response = [];
-    try {
-      $actividad->delete();
-      $response = ['success' => 'Eliminado con éxito!'];
-    } catch (\Exception $e) {
-      $response = ['error' => 'Error al eliminar el registro!'];
-    }
+        try {
+            $actividad->delete();
+            $response = ['success' => 'Eliminado con éxito!'];
+        } catch (\Exception $e) {
+            $response = ['error' => 'Error al eliminar el registro!'];
+        }
 
-    return redirect('/actividades')->with($response);
+        return redirect('/actividades')->with($response);
     }
 }
