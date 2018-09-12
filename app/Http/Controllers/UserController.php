@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Model;
 
 class UserController extends Controller
 {
@@ -37,8 +39,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = User::create($this->validate($request, [
-            'rut' => 'required',
             'nombre' => 'required',
+            'rut' => 'required',
             'email' => 'required',
             'password' => 'confirmed',
             // role id (trigger)

@@ -4,6 +4,9 @@ namespace App\Modulos\ReservaHabitacion;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\Paquetes\PaqueteVueloHotel;
+
+use App\OrdenCompra;
 
 class ReservaHabitacion extends Model
 {
@@ -19,11 +22,18 @@ class ReservaHabitacion extends Model
         'orden_compra_id',
     ];
 
-    public function habitacion(){
+    public function habitacion()
+    {
         return $this->belongsTo(Habitacion::class);
     }
 
-    public function ordenCompra(){
+    public function paqueteVueloHotel()
+    {
+        return $this->hasOne(PaqueteVueloHotel::class, 'reserva_habitacion_id');
+    }
+
+    public function ordenCompra()
+    {
         return $this->belongsTo(OrdenCompra::class);
     }
 

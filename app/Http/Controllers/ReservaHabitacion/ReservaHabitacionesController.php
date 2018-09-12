@@ -56,7 +56,6 @@ class ReservaHabitacionesController extends Controller
         $termino = Carbon::createFromFormat('Y-m-d H:m:s', request()->session()->get('busqueda.hoteles.termino_reserva'));
 
         request()->session()->put('busqueda.hoteles.costo', $inicio->diffInHours($termino) * $habitacion->precio_por_noche);
-        
         $habitacion->load('hotel');
 
         return view('modulos.ReservaHabitacion.reservas.create', compact('habitacion'));

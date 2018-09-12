@@ -1,14 +1,15 @@
 <?php
 
-use App\PaqueteVueloHotel;
 use Faker\Generator as Faker;
+use App\Modulos\Paquetes\PaqueteVueloHotel;
 
 $factory->define(PaqueteVueloHotel::class, function (Faker $faker) {
-    
-    return [  
+    $reservas_id = DB::table('reserva_habitaciones')->select('id')->get();
+
+    return [
         'descripcion' => $faker->realText(),
-        'descuento' => rand(0,0.8),
-        'reserva_habitacion_id' => rand(1,50),
-        'orden_compra_id' => null
+        'descuento' => rand(7, 10)/10,
+        'reserva_habitacion_id' => $reservas_id->random()->id,
+        'orden_compra_id' => null,
     ];
 });
