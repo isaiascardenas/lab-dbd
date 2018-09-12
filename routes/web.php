@@ -13,7 +13,9 @@
 
 Auth::routes();
 
-
+Route::get('/test', function(){
+    return dd(Auth::user()->id);
+});
 /**
  * 
  * GUEST

@@ -21,6 +21,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
 
+   
+    
+
     <!-- DateTimePicker-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -39,7 +42,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar">
-            <div class="container">
+            <div class="container" style = "width: 100%;">
                 <a class="navbar-brand" href="{{ url('/') }}" >
                     TetraVago
                 </a>
@@ -57,8 +60,8 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a class="nav-link" href="{{ route('login') }}" style="color: #eceff1 !important;">{{ __('Ingresar') }}</a></li>
-                            <li><a class="nav-link" style="color: #eceff1 !important;" href="{{ route('register') }}" color= "#FFFFFF">{{ __('Registrate') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('login') }}" style="color: #eceff1 !important;   background: rgba(255,255,255,0);">{{ __('Ingresar') }}</a></li>
+                            <li><a class="nav-link" style="color: #eceff1 !important;   background: rgba(255,255,255,0);" href="{{ route('register') }}" color= "#FFFFFF">{{ __('Regístrate') }}</a></li>
                         @else
                             <li>
                                 <a href="/cart" class="nav-link">
@@ -68,19 +71,31 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fas fa-user-circle"></i> {{ Auth::user()->name }} <span class="caret"></span>
+                                    <i class="fas fa-user-circle"></i> {{ Auth::user()->nombre }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/users/{{ Auth::user()->id }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('Perfil-form').submit();">
+                                        {{ __('Perfil') }}
+                                    </a>
+                                    <form id="Perfil-form" action="/users/{{ Auth::user()->id }}" method="GET" style="display: none;">
+                                        @csrf
+                                    </form>
+
+
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Desconectar') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+
+                                    
                                 </div>
                             </li>
                         @endguest
@@ -88,13 +103,12 @@
                 </div>
             </div>
         </nav>
-
-        <main class="container py-4">
+        <main class="container py-4" style="width: 100%;">
             @yield('content')
         </main>
 
         <footer  style="background-color: #ce93d8 !important;
-            position: fixed; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.7;}">
+            position: fixed; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.9;}">
             <center>    
                 &copy; 2018 Tetravago Chile - <address>DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
             </center>
