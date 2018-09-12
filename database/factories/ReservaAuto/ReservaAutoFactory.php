@@ -1,10 +1,10 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Modulos\ReservaHabitacion\ReservaHabitacion;
+use App\Modulos\ReservaAuto\ReservaAuto;
 
-$factory->define(ReservaHabitacion::class, function (Faker $faker) {
-    $habitacion_id = DB::table('habitaciones')->select('id')->get();
+$factory->define(ReservaAuto::class, function (Faker $faker) {
+    $autos_id = DB::table('autos')->select('id')->get();
 
     return [
         'fecha_inicio' => $faker->dateTimeBetween($startDate = 'now', $endDate = '+2 weeks', $timezone = null),
@@ -12,7 +12,7 @@ $factory->define(ReservaHabitacion::class, function (Faker $faker) {
         'fecha_reserva' => $faker->dateTime($max = 'now'),
         'costo' => rand(50000,200000),
         'descuento' => 1,
-        'habitacion_id' => $habitacion_id->random()->id,
+        'auto_id' => $autos_id->random()->id,
         'orden_compra_id' => null
     ];
 });

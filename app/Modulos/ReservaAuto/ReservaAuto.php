@@ -4,6 +4,7 @@ namespace App\Modulos\ReservaAuto;
 
 use App\Modulos\ReservaAuto\Auto;
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\Paquetes\PaqueteVueloAuto;
 
 class ReservaAuto extends Model
 {
@@ -22,6 +23,11 @@ class ReservaAuto extends Model
     public function auto()
     {
         return $this->belongsTo(Auto::class);
+    }
+
+    public function paqueteVueloAuto()
+    {
+        return $this->hasOne(PaqueteVueloAuto::class, 'reserva_auto_id');
     }
 
     public function precio($formato = FALSE)

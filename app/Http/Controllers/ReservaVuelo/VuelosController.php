@@ -68,7 +68,7 @@ class VuelosController extends Controller
 
     foreach ($request['tramos'] as $tramo_id) {
       $pasajeros = intval($paramsVuelo['pasajeros_ninos']) + intval($paramsVuelo['pasajeros_adultos']);
-      
+
       $tramo = Tramo::find($tramo_id);
       $tipoAsiento = TipoAsiento::find($paramsVuelo['tipo_pasaje']);
 
@@ -83,7 +83,7 @@ class VuelosController extends Controller
 
         $asientos = $tramo->asientosDisponibles();
         $reservaBoleto->asiento_avion_id = array_pop($asientos);
-        
+
         $reservaBoleto->fecha_reserva = Carbon::now();
         $reservaBoleto->descuento = 0.0;
         $reservaBoleto->costo = $tramo->costo * $tipoAsiento->factor_costo;
@@ -100,7 +100,7 @@ class VuelosController extends Controller
       }
     }
     request()->session()->forget('busqueda.vuelos');
-  	
+
     return redirect('/cart');
   }
 }

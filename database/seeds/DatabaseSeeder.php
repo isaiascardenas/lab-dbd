@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     $this->call([
+
         /* General */
         UsersSeeder::class,
         PermisosSeeder::class,
@@ -47,6 +48,14 @@ class DatabaseSeeder extends Seeder
 
         /* Traslados */
         TrasladosSeeder::class,
+
+        /* Reservas */
+        ReservaHabitacionesSeeder::class,
+        ReservaAutosSeeder::class,
+        ReservaBoletosSeeder::class,
+
+        /* Paquetes */
+        PaquetesSeeder::class,
     ]);
   }
 }

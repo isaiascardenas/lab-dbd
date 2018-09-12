@@ -1,11 +1,10 @@
 <?php
 
-
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use App\Modulos\ReservaHabitacion\ReservaHabitacion;
+use App\Modulos\ReservaVuelo\ReservaBoleto;
 
-class ReservaHabitacionesSeeder extends Seeder
+class ReservaBoletosSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +13,6 @@ class ReservaHabitacionesSeeder extends Seeder
      */
     public function run()
     {
-      factory(ReservaHabitacion::class, 50)->create();
+      factory(ReservaBoleto::class, 40)->create();
     }
 }
