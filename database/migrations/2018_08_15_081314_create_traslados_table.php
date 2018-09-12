@@ -18,6 +18,7 @@ class CreateTrasladosTable extends Migration
             $table->integer('tipo');
             $table->datetime('fecha_inicio');
             $table->datetime('fecha_termino');
+            $table->integer('capacidad');
             $table->integer('aeropuerto_id');
             $table->foreign('aeropuerto_id')
                       ->references('id')

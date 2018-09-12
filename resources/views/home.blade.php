@@ -2,7 +2,7 @@
 
 @section('content')
 
-    
+
     <div class="row">
         <div class="col-3">
             <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
@@ -28,63 +28,63 @@
                     @include('modulos.ReservaActividad.form')
                 </div>
                 <div class="tab-pane fade" id="traslado" role="tabpanel" aria-labelledby="traslado-tab">
-                    
+                    @include('modulos.ReservaTraslado.form')
                 </div>
             </div>
         </div>
     </div>
 
-<!--
-    {{-- <h3><i class="fas fa-cubes"></i> Paquetes</h3> --}}
+    <!--
+        {{-- <h3><i class="fas fa-cubes"></i> Paquetes</h3> --}}
 
-    <div id="carouselPaquetes" class="carousel slide" data-ride="carousel">
+        <div id="carouselPaquetes" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselPaquetes" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselPaquetes" data-slide-to="1"></li>
-            <li data-target="#carouselPaquetes" data-slide-to="2"></li>
+        <li data-target="#carouselPaquetes" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselPaquetes" data-slide-to="1"></li>
+        <li data-target="#carouselPaquetes" data-slide-to="2"></li>
         </ol>
 
         {{-- <div class="carousel-inner"> --}}
-            {{-- @foreach ($data["paquetes"] as $paquete) --}}
+        {{-- @foreach ($data["paquetes"] as $paquete) --}}
             {{-- <div class="carousel-item {{ $paquete["class"] }}"> --}}
-                {{-- <a href="/paquete/{{ $paquete["id"] }}"> --}}
-                    {{-- <div class="carousel-caption d-none d-md-block"> --}}
-                        {{-- <h5>{{ $paquete["destino"] }}</h5> --}}
-                        {{-- <p>{{ $paquete["valor"] }}</p> --}}
-                    {{-- </div> --}}
-                {{-- </a> --}}
+            {{-- <a href="/paquete/{{ $paquete["id"] }}"> --}}
+            {{-- <div class="carousel-caption d-none d-md-block"> --}}
+            {{-- <h5>{{ $paquete["destino"] }}</h5> --}}
+            {{-- <p>{{ $paquete["valor"] }}</p> --}}
+            {{-- </div> --}}
+            {{-- </a> --}}
             {{-- </div> --}}
             {{-- @endforeach --}}
-        {{-- </div> --}}
+            {{-- </div> --}}
 
-        <a class="carousel-control-prev" href="#carouselPaquetes" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#carouselPaquetes" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Anterior</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselPaquetes" role="button" data-slide="next">
+            </a>
+            <a class="carousel-control-next" href="#carouselPaquetes" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Siguiente</span>
-        </a>
-    </div>-->
+            </a>
+            </div>-->
 
 
-@endsection
+        @endsection
 
-@section('script')
-    <script>
-        $('select.selectpicker').selectpicker({
-            noneSelectedText: 'No se ha seleccionado nada',
-            noneResultsText: 'Ningún resultado coincide con {0}',
-            selectOnTab: true
-        });
-        
-        $("input[name=tipo_vuelo]").change(function(){
-            var $target = $(".vuelo-vuelta");
-            if(this.value == "0"){
-                $target.hide();
-            } else {
-                $target.show();
-            }
-        });
-    </script>
-@endsection
+        @section('script')
+            <script>
+                $('select.selectpicker').selectpicker({
+                    noneSelectedText: 'No se ha seleccionado nada',
+                    noneResultsText: 'Ningún resultado coincide con {0}',
+                    selectOnTab: true
+                });
+
+$("input[name=tipo_vuelo]").change(function(){
+    var $target = $(".vuelo-vuelta");
+    if(this.value == "0"){
+        $target.hide();
+    } else {
+        $target.show();
+    }
+});
+            </script>
+        @endsection
