@@ -30,13 +30,13 @@
         </div>
 
         <div class="col-auto">
-            <a href="/sucursales/{{ $sucursal->id }}/edit" class="btn btn-primary">
+            <a href="/users/{{ $user->id }}/edit" class="btn btn-primary">
                 <i class="fas fa-edit"></i> Editar
             </a>
         </div>
 
         <div class="auto">
-            <form action="{{ action('ReservaAuto\SucursalesController@destroy', $sucursal->id) }}" method="POST" onsubmit="return confirm('¿Esta seguro que desea eliminar?')">
+            <form action="{{ action('UserController@destroy', $user->id) }}" method="POST" onsubmit="return confirm('¿Esta seguro que desea eliminar?')">
                 {{ csrf_field() }}
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" class="btn btn-danger">

@@ -117,6 +117,13 @@
                                             href="/profile/users/{{ Auth::user()->id }}">
                                             {{ __('Perfil') }}
                                         </a>
+                                        @if (Auth::user()->isAdmin())
+                                        <a
+                                            class="dropdown-item"
+                                            href="/users/">
+                                            {{ __('Dashboard') }}
+                                        </a>  
+                                        @endif
                                         <a
                                             class="dropdown-item"
                                             href="/profile/historial">

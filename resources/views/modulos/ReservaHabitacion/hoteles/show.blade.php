@@ -2,7 +2,7 @@
 
 @section('content')
   <h2>
-    <i class="fas fa-map-marker-alt"></i> Hotel #{{ $hotel->id }}
+    <i class="fas fa-building"></i> Hotel #{{ $hotel->id }}
   </h2>
   
   <hr>
