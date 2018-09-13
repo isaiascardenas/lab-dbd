@@ -21,4 +21,12 @@ class AeropuertosSeeder extends Seeder
         'direccion' => 'Calle Prueba',
         'ciudad_id' => 999]);
   }
+
+  Aeropuerto::create([
+    	'id'=>777,
+        'codigo' => 'AAA',
+        'nombre' => 'Aeropuerto_prueba',
+        'direccion' => 'Calle Prueba',
+        'ciudad_id' => 888]);
+  }
 }
