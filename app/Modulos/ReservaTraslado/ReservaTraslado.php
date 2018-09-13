@@ -25,6 +25,16 @@ class ReservaTraslado extends Model
                 : $this->costo;
     }
 
+    public function fechaInicio($format = 'H:i d-m-Y')
+    {
+      return Carbon::parse($this->fecha_inicio)->format($format);
+    }
+
+    public function fechaTermino($format = 'H:i d-m-Y')
+    {
+      return Carbon::parse($this->fecha_termino)->format($format);
+    }
+
     public function traslado()
     {
         return $this->belongsTo(Traslado::class);
