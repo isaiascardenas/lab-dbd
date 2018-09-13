@@ -96,6 +96,7 @@ Route::group(['middleware' => 'admin'], function() {
 
   /* CRUD Reservas Autos */
   Route::resource('companias', 'ReservaAuto\CompaniasController');
+  Route::resource('autos', 'ReservaAuto\AutosController');
 
   Route::resource('sucursales', 'ReservaAuto\SucursalesController', [
       'parameters' => ['sucursales' => 'sucursal']

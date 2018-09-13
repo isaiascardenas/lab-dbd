@@ -42,19 +42,3 @@
     </tbody>
   </table>
 @endsection
-
-@section('script')
-  <script>
-    $(document).ready(function() {
-        $('.datatable').DataTable({
-          'language': {
-            'url': 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json'
-          },
-          'columnDefs': [
-            {'targets': 'no-sort', 'orderable': false}
-          ], 
-          'order': [[1, 'asc']]
-        });
-    } );
-  </script>
-@endsection

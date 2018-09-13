@@ -41,17 +41,19 @@
 		</div>
 
 		<div class="form-group row">
-            <select id="hotel" name="hotel_id" class="form-control selectpicker" title="hotel" data-live-search="true">
-                @foreach ($hoteles as $hotel)
-                    <option value="{{ $hotel->id }}">
-                    {{ $hotel->nombre }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+      <label class="col" for="nombre">Hotel</label>
+      <div class="col">
+          <select id="hotel" name="hotel_id" class="form-control selectpicker" title="hotel" data-live-search="true">
+              @foreach ($hoteles as $hotel)
+                  <option value="{{ $hotel->id }}">
+                  {{ $hotel->nombre }}
+                  </option>
+              @endforeach
+          </select>
+      </div>
+    </div>
 
 		<div class="text-right">
-
 			<a href="/hoteles/" class="btn btn-info float-left">
           <i class="fas fa-arrow-left"></i> Volver
         </a>

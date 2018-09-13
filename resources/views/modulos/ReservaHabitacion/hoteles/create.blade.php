@@ -2,7 +2,7 @@
 
 @section('content')
 	<h2>
-    <i class="fas fa-map-marker-alt"></i> Nuevo hotel
+    <i class="fas fa-building"></i> Nuevo Hotel
   </h2>
 	
 	<hr>
@@ -20,28 +20,31 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col" for="nombre">estrellas</label>
+			<label class="col" for="nombre">Estrellas</label>
 			<div class="col">
 				<input type="number" class="form-control" name="estrellas" id="estrellas" max ="5" min = "1">
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<label class="col" for="nombre">descripcion</label>
+			<label class="col" for="nombre">Descripcion</label>
 			<div class="col">
 				<input type="text" class="form-control" name="descripcion" id="descripcion">
 			</div>
 		</div>
 
 		<div class="form-group row">
-            <select id="ciudad" name="ciudad_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
-                @foreach ($ciudades as $ciudad)
-                    <option value="{{ $ciudad->id }}">
-                    {{ $ciudad->nombre }}, {{$ciudad->pais->nombre }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+      <label class="col" for="nombre">Ciudad</label>
+      <div class="col">
+        <select id="ciudad" name="ciudad_id" class="form-control selectpicker" title="Ciudad" data-live-search="true">
+            @foreach ($ciudades as $ciudad)
+                <option value="{{ $ciudad->id }}">
+                {{ $ciudad->nombre }}, {{$ciudad->pais->nombre }}
+                </option>
+            @endforeach
+        </select>
+      </div>
+    </div>
 
 		<div class="text-right">
 

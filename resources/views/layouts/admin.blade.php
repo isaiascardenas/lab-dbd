@@ -46,6 +46,11 @@
     <!-- Bootstrap Select -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
 	<script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+  <style>
+    body {
+      background-image: none!important;
+    }
+  </style>
 </head>
 <body>
     <div id="app">
@@ -71,28 +76,17 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Regístrate') }}</a></li>
                         @else
-                          <!-- 
-                        	<li>
-                        		<a href="/cart" class="nav-link">
-                        			<i class="fas fa-shopping-cart"></i>
-                        			<span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
-                        		</a>
-                        	</li>
-                          -->
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fas fa-user-circle"></i> {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/users/{{ Auth::user()->id }}"
+                                    <a class="dropdown-item" href="/profile/users/{{ Auth::user()->id }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('Perfil-form').submit();">
                                         {{ __('Perfil') }}
                                     </a>
-                                    <form id="Perfil-form" action="/users/{{ Auth::user()->id }}" method="GET" style="display: none;">
-                                        @csrf
-                                    </form>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -116,15 +110,20 @@
         		<div class="list-group list-group-flush">
         			<!-- APP -->
         			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-globe"></i> App</a>
-        			<a class="list-group-item list-group-item-action" href="/usuarios/">Usuarios</a>
+        			<a class="list-group-item list-group-item-action" href="/users/">Usuarios</a>
         			<!-- RESERVA ACTIVIDADES -->
-        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-tasks"></i> Actividades</a>
+        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="/actividades/"><i class="fas fa-tasks"></i> Actividades</a>
         			<!-- RESERVA AUTOS -->
-        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-car"></i> Autos</a>
+        			<a class="font-weight-bold list-group-item list-group-item-action disabled bg-secondary text-white" href="#"><i class="fas fa-car"></i> Autos</a>
+              <a class="list-group-item list-group-item-action" href="/autos/">Autos</a>
+              <a class="list-group-item list-group-item-action" href="/companias/">Compañias</a>
+              <a class="list-group-item list-group-item-action" href="/sucursales/">Sucursales</a>
         			<!-- RESERVA HOTELES -->
-        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-building"></i> Hoteles</a>
+        			<a class="font-weight-bold list-group-item list-group-item-action disabled bg-secondary text-white" href="#"><i class="fas fa-building"></i> Hoteles</a>
+              <a class="list-group-item list-group-item-action" href="/hoteles/">Hoteles</a>
+              <a class="list-group-item list-group-item-action" href="/habitaciones/">Habitaciones</a>
               <!-- RESERVA VUELOS -->
-        			<a class="font-weight-bold list-group-item list-group-item-action disabled" href="#"><i class="fas fa-plane"></i> Vuelos</a>
+        			<a class="font-weight-bold list-group-item list-group-item-action disabled bg-secondary text-white" href="#"><i class="fas fa-plane"></i> Vuelos</a>
         			<a class="list-group-item list-group-item-action" href="/aerolineas/">Aerol&iacute;neas</a>
         			<a class="list-group-item list-group-item-action" href="/aeropuertos/">Aeropuertos<a>
               <!--<a class="list-group-item list-group-item-action" href="/asientos/">Asientos</a>-->
