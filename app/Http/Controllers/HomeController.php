@@ -20,8 +20,8 @@ class HomeController extends Controller
     {
         $ciudades = Ciudad::all();
         $tipoPasaje = TipoAsiento::all();
-        $aeropuertos = Aeropuerto::all();
-        $hoteles = Hotel::all();
+        $aeropuertos = Aeropuerto::with('ciudad')->get();
+        $hoteles = Hotel::with('ciudad')->get();
         // $habitaciones = Habitacion::all();
         $paquetesVH = PaqueteVueloHotel::all();
         $paquetesVA = PaqueteVueloAuto::all();

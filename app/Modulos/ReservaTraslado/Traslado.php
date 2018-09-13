@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaHabitacion\Hotel;
 use App\Modulos\ReservaVuelo\Aeropuerto;
+use App\Modulos\ReservaTraslado\ReservaTraslado;
 
 
 class Traslado extends Model
@@ -41,6 +42,13 @@ class Traslado extends Model
         return Carbon::parse($this->fecha_termino)->format('H:i');
     }
 
+    public function precio($formato = FALSE)
+    {
+      return $formato
+                ? '$ '.number_format($this->costo, 0, ',', '.')
+                : $this->costo;
+    }
+
     public function stringTipoTraslado()
     {
         if ($this->tipo == 0) {
@@ -51,7 +59,7 @@ class Traslado extends Model
         }
     }
 
-    public function reservas()
+    public function reservaTraslados()
     {
         return $this->hasMany(ReservaTraslado::class);
     }
