@@ -16,13 +16,15 @@
         <!-- Fonts -->
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+        <script
+            defer
+            src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+            integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe"
+            crossorigin="anonymous">
+        </script>
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
-
-
-
 
         <!-- DateTimePicker-->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -46,7 +48,14 @@
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'TetraVago') }}
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
@@ -61,39 +70,64 @@
                             <li>
                                 <a href="/cart" class="nav-link">
                                     <i class="fas fa-shopping-cart"></i>
-                                    <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;"></span>
+                                    <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;">
+                                    </span>
                                 </a>
                             </li>
+
                             <!-- Authentication Links -->
                             @guest
-                                <li><a class="nav-link" href="{{ route('login') }}" style="color: #eceff1 !important;   background: rgba(255,255,255,0);">{{ __('Ingresar') }}</a></li>
-                                <li><a class="nav-link" style="color: #eceff1 !important;   background: rgba(255,255,255,0);" href="{{ route('register') }}" color= "#FFFFFF">{{ __('Regístrate') }}</a></li>
+                                <li>
+                                    <a
+                                        class="nav-link"
+                                        href="{{ route('login') }}"
+                                        style="color: #eceff1 !important; background: rgba(255,255,255,0);">
+                                        {{ __('Ingresar') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        class="nav-link"
+                                        style="color: #eceff1 !important; background: rgba(255,255,255,0);"
+                                        href="{{ route('register') }}"
+                                        color= "#FFFFFF">
+                                        {{ __('Regístrate') }}
+                                    </a>
+                                </li>
                             @else
                                 <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <i class="fas fa-user-circle"></i> {{ Auth::user()->nombre }} <span class="caret"></span>
+                                    <a
+                                        id="navbarDropdown"
+                                        class="nav-link dropdown-toggle"
+                                        href="#" role="button"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false" v-pre>
+                                        <i class="fas fa-user-circle"></i>
+                                        {{ Auth::user()->nombre }}
+                                        <span class="caret"></span>
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/users/{{ Auth::user()->id }}"
-                                                                 onclick="event.preventDefault();
-                                                                 document.getElementById('Perfil-form').submit();">
-                                                                 {{ __('Perfil') }}
+                                        <a
+                                            class="dropdown-item"
+                                            href="profile/users/{{ Auth::user()->id }}">
+                                            {{ __('Perfil') }}
                                         </a>
-                                        <form id="Perfil-form" action="/users/{{ Auth::user()->id }}" method="GET" style="display: none;">
-                                            @csrf
-                                        </form>
-
-
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                                                 onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
+                                        <a
+                                            class="dropdown-item"
+                                            href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
                                             {{ __('Desconectar') }}
                                         </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        <form
+                                            id="logout-form"
+                                            action="{{ route('logout') }}"
+                                            method="POST"
+                                            style="display: none;">
                                             @csrf
                                         </form>
-
 
                                     </div>
                                 </li>
@@ -102,9 +136,12 @@
                     </div>
                 </div>
             </nav>
+
+
             <main class="container py-4" style="width: 100%;">
                 @yield('content')
             </main>
+
 
             <footer class="text-center" style="background-color: #ce93d8 !important; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.7;}">
                 &copy; 2018 {{ config('app.name', 'TetraVago') }}

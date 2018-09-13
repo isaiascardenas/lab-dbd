@@ -54,8 +54,14 @@ Route::post('/reserva-traslados/reservar/{traslado}', 'ReservaTraslado\ReservaTr
  * USER ONLY
  * 
  */
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function() {
+
   Route::post('/pay', 'CartController@pay');
+
+  /* Perfil de usuario */
+  Route::get('profile/users/{user}', 'UserProfileController@show');
+  Route::get('profile/users/{user}/edit', 'UserProfileController@edit');
+  Route::post('profile/users/{user}', 'UserProfileController@update');
 
   /* CRUD Cuentas de usuario*/
   Route::resources([
@@ -63,6 +69,7 @@ Route::group(['middleware' => 'auth'], function(){
     'tipo-cuentas' => 'TipoCuentasController',
     'bancos' => 'BancosController',
   ]);
+
 });
 
 
@@ -72,7 +79,7 @@ Route::group(['middleware' => 'auth'], function(){
  * 
  */
 
-Route::group(['middleware' => 'admin'], function(){
+Route::group(['middleware' => 'admin'], function() {
 
   /* CRUD Usuarios */
   Route::resource('users', 'UserController');
@@ -116,5 +123,6 @@ Route::group(['middleware' => 'admin'], function(){
       'paquete-auto' => 'Paquetes\PaqueteVueloAutoController',
       'paquete-hotel' => 'Paquetes\PaqueteVueloHotelController'
   ]);
+
 });
 

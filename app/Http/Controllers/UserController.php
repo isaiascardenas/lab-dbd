@@ -61,8 +61,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
-    {   
-        dd($user);  
+    {
         return view('user.show', compact('user'));
     }
 
@@ -84,7 +83,6 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, User $user)
     public function update(Request $request, User $user)
     {
         $outcome = $user->fill($this->validate($request, [
