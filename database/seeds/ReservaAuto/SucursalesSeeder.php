@@ -13,5 +13,9 @@ class SucursalesSeeder extends Seeder
     public function run()
     {
         factory(Sucursal::class, 100)->create();
+        Sucursal::create([
+        	'id'=>777,
+        	'compania_id'=>4,
+        	'ciudad_id'=>999]);
     }
 }
