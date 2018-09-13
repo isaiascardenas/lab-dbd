@@ -2,8 +2,8 @@
 
 namespace App\Modulos\ReservaTraslado;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaTraslado\Traslado;
+use Illuminate\Database\Eloquent\Model;
 
 class ReservaTraslado extends Model
 {

@@ -13,5 +13,9 @@ class CiudadesSeeder extends Seeder
     public function run()
     {
         factory(Ciudad::class, 10)->create();
+        Ciudad::create([
+        	'id' => 999,
+        	'nombre' => 'Santiago',
+        	'pais_id' => 999]);
     }
 }

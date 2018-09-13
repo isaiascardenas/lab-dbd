@@ -93,7 +93,7 @@ class CartController extends Controller
         }
 
         /***** REDIRIGIR A HISTORIAL DE COMPRA *****/
-        return redirect('/profile/history')->with($response);
+        return redirect('/profile/historial')->with($response);
     }
 
     public function delete()

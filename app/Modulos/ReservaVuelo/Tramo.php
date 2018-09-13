@@ -76,33 +76,6 @@ class Tramo extends Model
   }
 
   /* Funcionalidades */
-  public function printPlane()
-  {
-  	$plane = '';
-
-  	$plane .= '<table class="table table-bordered">';
-  	$plane .= '	<tbody>';
-  	
-  	$asientos = $this->asientos;
-  	$a = 0;
-  	for ($i=0; $i < 5; $i++) {
-  		$plane .= '<tr>';
-  		for ($j=0; $j < 4; $j++) { 
-  			$asiento = $asientos[$a++];
-  		
-    		$bg = $asiento->disponible($this->id) ? '' : 'bg-info';
-
-    		$plane .= '<td class="'.$bg.'">'.$asiento->codigo_asiento.'</td>';
-    	}
-    	$plane .= '</tr>';
-  	}
-  	
-  	$plane .= '	</tbody>';
-  	$plane .= '</table>';
-
-  	return $plane;
-  }
-
   public function precio($formato = FALSE)
   {
     return $formato

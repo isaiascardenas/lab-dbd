@@ -23,8 +23,7 @@ class ReservaTrasladosController extends Controller
         $hotel_id = request('hotel_id_0') ? request('hotel_id_0') : request('hotel_id_1');
         $aeropuerto_id = request('aeropuerto_id_0') ? request('aeropuerto_id_0') : request('aeropuerto_id_1');
 
-        $traslados = Traslado::
-            where('capacidad', '>=', request('capacidad'))
+        $traslados = Traslado::where('capacidad', '>=', request('capacidad'))
                 ->whereNotIn('id', $trasladosReservados)
                 ->whereTipo(request('tipo_traslado'))
                 ->whereAeropuertoId($aeropuerto_id)
@@ -50,7 +49,6 @@ class ReservaTrasladosController extends Controller
     public function create(Traslado $traslado)
     {
         $capacidad_p = $traslado->precio_persona;
-
 
         request()->session()->put('busqueda.traslado.costo_persona' , $traslado->precio_persona);
         request()->session()->put('busqueda.traslado.costo' , $traslado->precio_persona * $capacidad_p);
@@ -86,7 +84,6 @@ class ReservaTrasladosController extends Controller
             $response = ['error' => 'Hubo un problema... intenta de nuevo'];
         }
 
-        //por preguntar
         request()->session()->push('reservas', [
             'tipo' => 'traslado',
             'reserva' => [
@@ -95,7 +92,6 @@ class ReservaTrasladosController extends Controller
         ]);
 
         return redirect('/cart')->with($response);
-
     }
 
     /**
