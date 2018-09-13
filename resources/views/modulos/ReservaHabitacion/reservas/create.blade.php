@@ -84,7 +84,7 @@
         <a href="/" class="btn btn-link float-left">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
-        <!--
+        
         <form
             action="{{ action('ReservaHabitacion\ReservaHabitacionesController@store', $habitacion->id) }}"
             method="POST"
@@ -98,7 +98,7 @@
                 <i class="fas fa-cart-arrow-down"></i> Agregar al carro
             </button>
         </form>
-      -->
+      
     </div>
   </div>
 @endsection
