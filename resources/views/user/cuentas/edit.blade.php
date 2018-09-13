@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-3"> Saldo </label>
-                    <div class="col-9 font-weight-bold">$ {{ $cuenta->saldo }}</div>
+                    <div class="col-9 font-weight-bold">{{ $cuenta->saldo(TRUE) }}</div>
                 </div>
             </form>
 

@@ -18,8 +18,17 @@ class CartController extends Controller
 
 
       if (count($reservas)) {
+        request()->session()->put('countReservas', count($reservas));
+
         foreach ($reservas as $reserva) {
           $totalCarro += $reserva['reserva']['detalle']->precio();
+        }
+      }
+
+      foreach ($cuentas as $cuenta) {
+        if ($cuenta->saldo < $totalCarro) {
+          $cuenta->bg = 'text-muted';
+          $cuenta->disabled = 'disabled';
         }
       }
 
@@ -33,7 +42,7 @@ class CartController extends Controller
         \DB::beginTransaction();
 
         try {
-            $cuenta = Cuenta::find(request('cuenta_id'));
+            $cuenta = Cuenta::findOrFail(request('cuenta_id'));
 
             $orden = new OrdenCompra([
                 'costo_total' => 0,
@@ -59,23 +68,32 @@ class CartController extends Controller
 
                 $orden->costo_total += $reserva['reserva']['detalle']->costo;
             }
-
+            
             if ($orden->costo_total > $cuenta->saldo) {
-                $response = ['error' => 'No tienes saldo suficiente en la cuenta seleccionada'];
-                \DB::rollback();
-            } else {
-                $orden->save();
-                request()->session()->forget('reservas');
-                $response = ['success' => 'Tu compra se ha realizado correctamente!'];
-                \DB::commit();
+                // $response = ['error' => 'No tienes saldo suficiente en la cuenta seleccionada'];
+                throw new Exception('No tienes saldo suficiente en la cuenta seleccionada');
             }
+
+            $orden->save();
+
+            // actualizar saldo de la cuenta
+            $cuenta->saldo -= $orden->costo_total;
+            $cuenta->save();
+
+            // limpiar "carro de compras"
+            request()->session()->forget('reservas');
+            request()->session()->forget('countReservas');
+            $response = ['success' => 'Tu compra se ha realizado correctamente!'];
+            
+            \DB::commit();
         } catch (\Exception $e) {
             $response = ['error' => 'Ha ocurrido un error al realizar el pago'];
             \DB::rollback();
+            return redirect('/cart')->with($response);
         }
 
         /***** REDIRIGIR A HISTORIAL DE COMPRA *****/
-        return redirect('/cart')->with($response);
+        return redirect('/profile/history')->with($response);
     }
 
     public function delete()

@@ -64,7 +64,7 @@
                 <i class="fas fa-calendar-alt"></i> Actividades
               </a>
               <a class="nav-link" id="traslado-tab" data-toggle="pill" href="#traslado" role="tab" aria-controls="traslado" aria-selected="false">
-                <i class="fas fa-cubes"></i> Traslados
+                <i class="fas fa-bus"></i> Traslados
               </a>
               <a class="nav-link" href="/paquetes">
                 <i class="fas fa-cubes"></i> Paquetes

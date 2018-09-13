@@ -183,45 +183,80 @@
               </div>
             </li>
           @endforeach
-          </ul>
+            <li class="list-group-item">
+              <h5>
+                <i class="fas fa-credit-card"></i>
+                Escoge tu cuenta
+              </h5>
+              <form
+                  action="{{ action('CartController@pay') }}"
+                  method="POST"
+                  id="pagar-carro-form"
+                  onsubmit="return confirm('¿Esta seguro que desea realizar el pago de los productos en el carro?')">
 
-          <form
-              action="{{ action('CartController@pay') }}"
-              method="POST"
-              id="pagar-carro-form"
-              style="margin-top: 20px; margin-bottom: 10px;"
-              onsubmit="return confirm('¿Esta seguro que desea realizar el pago de los productos en el carro?')">
+                  {{ csrf_field() }}
+                  @method('POST')
+                  <table class="table table-hover table-sm">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Tipo de Cuenta</th>
+                        <th>Número Cuenta</th>
+                        <th>Banco</th>
+                        <th>Saldo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($cuentas as $cuenta)
+                        <tr class="{{ $cuenta->bg }}">
+                          <td>
+                            <input type="radio" name="cuenta_id" value="{{ $cuenta->id }}" {{ $cuenta->disabled }} required>
+                          </td>
+                          <td>
+                            {{ $cuenta->tipoCuenta->descripcion }}
+                          </td>
+                          <td>
+                            {{ $cuenta->numero_cuenta }}
+                          </td>
+                          <td>
+                            {{ $cuenta->banco->nombre }}
+                          </td>
+                          <td class="text-right">
+                            {{ $cuenta->saldo(TRUE) }}
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                      {{-- <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <label class="input-group-text" for="cuenta-select">Cuenta Bancaria</label>
+                          </div>
+                          
+                          <select id="cuenta-select" name="cuenta_id" class="form-control" title="Cuenta">
+                              @foreach ($cuentas as $cuenta)
+                                  <option value="{{ $cuenta->id }}">
 
-              {{ csrf_field() }}
-              @method('POST')
-              <div class="form-group">
-                  <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                          <label class="input-group-text" for="cuenta-select">Cuenta Bancaria</label>
+                                  {{ $cuenta->tipoCuenta->descripcion }}
+                                  &nbsp;&nbsp;&nbsp;
+                                  {{ $cuenta->numero_cuenta }},
+                                  &nbsp;&nbsp;&nbsp;
+                                  {{ $cuenta->banco->nombre }},
+                                  &nbsp;&nbsp;&nbsp;
+                                  &nbsp;&nbsp;&nbsp;
+                                  &nbsp;&nbsp;&nbsp;
+                                  Saldo:
+                                  &nbsp;&nbsp;&nbsp;
+                                  $ {{ $cuenta->saldo }}
+
+                                  </option>
+                              @endforeach
+                          </select>
                       </div>
-
-                      <select id="cuenta-select" name="cuenta_id" class="form-control" title="Cuenta">
-                          @foreach ($cuentas as $cuenta)
-                              <option value="{{ $cuenta->id }}">
-
-                              {{ $cuenta->tipoCuenta->descripcion }}
-                              &nbsp;&nbsp;&nbsp;
-                              {{ $cuenta->numero_cuenta }},
-                              &nbsp;&nbsp;&nbsp;
-                              {{ $cuenta->banco->nombre }},
-                              &nbsp;&nbsp;&nbsp;
-                              &nbsp;&nbsp;&nbsp;
-                              &nbsp;&nbsp;&nbsp;
-                              Saldo:
-                              &nbsp;&nbsp;&nbsp;
-                              $ {{ $cuenta->saldo }}
-
-                              </option>
-                          @endforeach
-                      </select>
-                  </div>
-              </div>
-          </form>
+                  </div> --}}
+              </form>
+            </li>
+          </ul>
 
           <div class="card-footer">
             <div class="text-right">

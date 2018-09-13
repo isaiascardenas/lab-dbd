@@ -50,7 +50,7 @@
                                         <span class="font-weight-bold">Saldo</span>
                                         <br>
                                         <span class="font-weight-bold">
-                                            $ {{ $cuenta->saldo }}
+                                            {{ $cuenta->saldo(TRUE) }}
                                         </span>
                                     </div>
 
@@ -63,51 +63,26 @@
 
                             <div class="collapse" id="cuenta-{{ $loop->iteration }}" data-parent="#list-accordion">
                                 <div class="card-body">
-                                    <div class="row">
+                                    <a class="btn btn-info btn-sm" href="/cuentas/{{ $cuenta->id }}/edit/" clas>
+                                      <i class="fas fa-money-bill-alt"></i>
+                                      Abonar
+                                    </a>
 
-                                        <div class="col-md-1 offset-8">
-                                            <form action="/cuentas/{{ $cuenta->id }}/edit/" method="get">
-                                                <button type="submit" class="btn btn-info btn-sm">
-                                                    <i class="fas fa-money-bill-alt"></i>
-                                                    Abonar
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <form
-                                                method="post"
-                                                action="{{ action('CuentasController@destroy', $cuenta->id) }}"
-                                                onsubmit="return confirm('Si elimina esta cuenta perderá el saldo ¿Esta seguro?')">
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                    Eliminar
-                                                </button>
-                                            </form>
-                                        </div>
-
-                                    </div>
+                                    <form
+                                        method="post"
+                                        action="{{ action('CuentasController@destroy', $cuenta->id) }}"
+                                        onsubmit="return confirm('Si elimina esta cuenta perderá el saldo ¿Esta seguro?')">
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                            Eliminar
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
 
                         </div>
                     @endforeach
-                </div>
-                <div class="row" style="margin-top: 15px;">
-
-                    <div class="col-auto mr-auto">
-                        <a href="/" class="btn btn-info float-left">
-                            <i class="fas fa-arrow-left"></i> Volver
-                        </a>
-                    </div>
-                    <div class="col-auto">
-                        <a
-                            class="btn btn-primary"
-                            href="/cuentas/create">
-                            <i class="fas fa-plus"></i> Agregar cuenta
-                        </a>
-                    </div>
-
                 </div>
             @else
                 <div class="alert alert-danger">
@@ -121,7 +96,17 @@
                     </a>
                 </div>
             @endif
+        </div>
+        <div class="card-footer">
+            <a href="/" class="btn btn-info float-left">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
 
+            <div class="float-right">
+                <a class="btn btn-primary" href="/cuentas/create">
+                    <i class="fas fa-plus"></i> Agregar cuenta
+                </a>
+            </div>
         </div>
     </div>
 @endsection

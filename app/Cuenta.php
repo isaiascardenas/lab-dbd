@@ -33,4 +33,11 @@ class Cuenta extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function saldo($formato = FALSE)
+    {
+      return $formato
+                ? '$ '.number_format($this->saldo, 0, ',', '.')
+                : $this->saldo;
+    }
 }

@@ -70,8 +70,11 @@
                             <li>
                                 <a href="/cart" class="nav-link">
                                     <i class="fas fa-shopping-cart"></i>
-                                    <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;">
-                                    </span>
+                                    @if (session('countReservas'))
+                                      <span class="badge badge-pill badge-primary" style="position:relative;top:-10px;left:-10px;">
+                                        {{ session('countReservas')  }}
+                                      </span>
+                                    @endif
                                 </a>
                             </li>
 
