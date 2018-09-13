@@ -2,7 +2,7 @@
 
 @section('content')
   <h2>
-      <i class="fas fa-map-marker-alt"></i> Reservar Habitación
+      <i class="fas fa-map-marker-alt"></i> Reservar Traslado
   </h2>
 
   <hr>
@@ -12,7 +12,7 @@
   <div class="card">
     <div class="card-header">
       <h5 class="card-title">
-        Hotel {{ $habitacion->hotel->nombre }}
+        {{ $traslado->stringTipoTraslado() }}
       </h5>
     </div>
 
@@ -20,29 +20,24 @@
       <div class="row">
         <div class="col-6">
           <p class="card-text">
-            @for ($i = 0; $i < $habitacion->hotel->estrellas; $i++)
-              <i class="fas fa-star"></i>
-            @endfor
-            @for ($i = $habitacion->hotel->estrellas; $i < 5; $i++)
-              <i class="far fa-star"></i>
-            @endfor
+            
           </p>
           <p class="card-text">
-            <b>Locación</b>
+            <b>Hotel</b>
             <br>
-            {{ $habitacion->hotel->ciudad->nombre .', ' . $habitacion->hotel->ciudad->pais->nombre }}
+            {{ $traslado->hotel->nombre}}
           </p>
           <p class="card-text">
-            <b>Capacidad Niño</b>
-            {{ $habitacion->capacidad_nino }}
+            <b>Aeropuerto</b>
+            {{ $traslado->Aeropuerto->nombre }} , {{ $traslado->Aeropuerto->codigo }}
           </p>
           <p class="card-text">
-            <b>Capacidad Adulto</b>
-            {{ $habitacion->capacidad_adulto }}
+            <b>Capacidad total</b>
+            {{ $traslado->capacidad }}
           </p>
           <p class="card-text">
-            <b>Precio por noche</b>
-            {{ $habitacion->precioPorNoche(TRUE) }}
+            <b>Precio por persona</b>
+            {{ $traslado->precio_persona}}
           </p>
         </div>
         <div class="col-6">
@@ -74,31 +69,25 @@
           </div>
         </div>
       </div>
-      <p class="card-text">
-        <b>Descripción</b>
-        <br>
-        {{ $habitacion->descripcion }}
-      </p>
     </div>
     <div class="card-footer text-right">
         <a href="/" class="btn btn-link float-left">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
-        <!--
+
         <form
-            action="{{ action('ReservaHabitacion\ReservaHabitacionesController@store', $habitacion->id) }}"
+            action="{{ action('ReservaTraslado\ReservaTrasladosController@store', $traslado->id) }}"
             method="POST"
             onsubmit="return confirm('¿Esta seguro que desea agregar al carro?')">
 
             {{ csrf_field() }}
 
-            <input type="hidden" name="habitacion_id" value="{{ $habitacion->id }}">
+            <input type="hidden" name="traslado_id" value="{{ $traslado->id }}">
             <input type="hidden" name="_method" value="POST">
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-cart-arrow-down"></i> Agregar al carro
             </button>
         </form>
-      -->
     </div>
   </div>
 @endsection

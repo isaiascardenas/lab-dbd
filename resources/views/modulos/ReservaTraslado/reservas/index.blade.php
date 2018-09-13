@@ -59,7 +59,7 @@
             </p>
             
             <div class="text-right">
-              <form action="/vuelos/details/" method="post">
+              <form action="/reserva-traslados/reservar/{{ $traslado->id }}" method="get">
                 {{ csrf_field() }}
         
                 <button type="submit" class="btn btn-info btn-sm">
