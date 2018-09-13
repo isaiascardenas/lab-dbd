@@ -2,9 +2,10 @@
 
 namespace App\Modulos\ReservaTraslado;
 
-use App\ReservaVuelo\Aeropuerto;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaHabitacion\Hotel;
+use App\Modulos\ReservaVuelo\Aeropuerto;
 
 
 class Traslado extends Model
@@ -16,6 +17,7 @@ class Traslado extends Model
         'fecha_inicio',
         'fecha_termino',
         'capacidad',
+        'precio_persona',
         'aeropuerto_id',
         'hotel_id'
     ];
@@ -28,6 +30,25 @@ class Traslado extends Model
     public function hotel()
     {
         return $this->belongsTo(Hotel::class);
+    }
+    public function horaPartida()
+    {
+        return Carbon::parse($this->fecha_inicio)->format('H:i');
+    }
+
+    public function horaLlegada()
+    {
+        return Carbon::parse($this->fecha_termino)->format('H:i');
+    }
+
+    public function stringTipoTraslado()
+    {
+        if ($this->tipo == 0) {
+            return "Aeropuerto -> Hotel";
+        }
+        else{
+            return "Hotel -> Aeropuerto";
+        }
     }
 
     public function reservas()

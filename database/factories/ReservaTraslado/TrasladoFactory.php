@@ -16,6 +16,7 @@ $factory->define(Traslado::class, function (Faker $faker) {
         'fecha_inicio' => $fechaPartida,
         'fecha_termino' => $fechaLlegada,
         'capacidad' => rand(4, 8),
+        'precio_persona' => rand(2000,10000),
         'aeropuerto_id' => $aeropuertos_id->random()->id,
         'hotel_id' => $hoteles_id->random()->id,
     ];

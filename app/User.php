@@ -32,7 +32,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    
+
     public function cuentas()
     {
         return $this->hasMany(Cuenta::class);

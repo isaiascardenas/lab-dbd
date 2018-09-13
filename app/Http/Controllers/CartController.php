@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Cuenta;
 use Carbon\Carbon;
 use App\OrdenCompra;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-  public function index()
-  {
-      $reservas = request()->session()->get('reservas');
+    public function index()
+    {
+        $reservas = request()->session()->get('reservas');
+        $cuentas = request()->user()->cuentas->load('banco', 'tipoCuenta');
 
-      $totalCarro = 0;
+        $totalCarro = 0;
+
 
       if (count($reservas)) {
         foreach ($reservas as $reserva) {
@@ -21,67 +24,68 @@ class CartController extends Controller
       }
 
       $totalCarro = '$ '.number_format($totalCarro, 0, ',', '.');
-      
-      return view('cart', compact('reservas', 'totalCarro'));
-  }
 
-  public function pay()
-  {
-      //
-      // Crear orden de compra.
-      //
-      \DB::transaction(function(){
+      return view('cart', compact('reservas', 'totalCarro', 'cuentas'));
+    }
 
-        /***** VALIDAR SALDO DE USUARIO ANTES DE HACER CUALQUIER WEA *****/
+    public function pay()
+    {
+        \DB::beginTransaction();
 
-        $orden = new OrdenCompra([
-          'costo_total' => 0,
-          'fecha_generado' => Carbon::now(),
-          'detalle' => '',
-          'user_id' => request()->user()->id
-        ]);
+        try {
+            $cuenta = Cuenta::find(request('cuenta_id'));
 
-        $orden->save();
+            $orden = new OrdenCompra([
+                'costo_total' => 0,
+                'fecha_generado' => Carbon::now(),
+                'detalle' => '',
+                'user_id' => request()->user()->id
+            ]);
 
-        //
-        // Guardar las reservas en la BD
-        //
-        $reservas = request()->session()->get('reservas');
+            $orden->save();
 
-        foreach($reservas as $reserva) {
-            $reservacion = $reserva['reserva']['detalle'];
+            $reservas = request()->session()->get('reservas');
 
-            $reservacion->orden_compra_id = $orden->id;
-            
-            $reservacion->save();
+            foreach($reservas as $reserva) {
+                $reservacion = $reserva['reserva']['detalle'];
+                $reservacion->orden_compra_id = $orden->id;
+                $reservacion->save();
 
-            if ($reserva['tipo'] == 'vuelo') {              
-                $pasajero = $reserva['reserva']['extra'];
-                $pasajero->reserva_boleto_id = $reservacion->id;
-                $pasajero->save();   // pasajero
+                if ($reserva['tipo'] == 'vuelo') {
+                    $pasajero = $reserva['reserva']['extra'];
+                    $pasajero->reserva_boleto_id = $reservacion->id;
+                    $pasajero->save();
+                }
+
+                $orden->costo_total += $reserva['reserva']['detalle']->costo;
             }
 
-            $orden->costo_total += $reservacion->precio();
+            if ($orden->costo_total > $cuenta->saldo) {
+                $response = ['error' => 'No tienes saldo suficiente en la cuenta seleccionada'];
+                \DB::rollback();
+            } else {
+                $orden->save();
+                request()->session()->forget('reservas');
+                $response = ['success' => 'Tu compra se ha realizado correctamente!'];
+                \DB::commit();
+            }
+        } catch (\Exception $e) {
+            $response = ['error' => 'Ha ocurrido un error al realizar el pago'];
+            \DB::rollback();
         }
 
-        $orden->save();
+        /***** REDIRIGIR A HISTORIAL DE COMPRA *****/
+        return redirect('/cart')->with($response);
+    }
 
-        request()->session()->forget('reservas');
-      });
+    public function delete()
+    {
+        $reservas = request()->session()->get('reservas');
 
-      /***** REDIRIGIR A HISTORIAL DE COMPRA *****/
-      
-      return redirect('/cart')->with('success', 'Orden de compra generada');
-  }
+        unset($reservas[request('reserva_id')]);
 
-  public function delete()
-  {
-      $reservas = request()->session()->get('reservas');
+        $reservas = request()->session()->put('reservas', $reservas);
 
-      unset($reservas[request('reserva_id')]);
-
-      $reservas = request()->session()->put('reservas', $reservas);
-
-      return redirect('/cart')->with('success', 'Reserva Eliminada!');
-  }
+        return redirect('/cart')->with('success', 'Reserva Eliminada!');
+    }
 }

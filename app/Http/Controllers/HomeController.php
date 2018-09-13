@@ -7,9 +7,11 @@ use Carbon\Carbon;
 use App\Modulos\ReservaVuelo\Aeropuerto;
 use App\Modulos\ReservaHabitacion\Hotel;
 use App\Modulos\ReservaVuelo\TipoAsiento;
+use App\Modulos\ReservaTraslado\Traslado;
 use App\Modulos\ReservaHabitacion\Habitacion;
 use App\Modulos\Paquetes\PaqueteVueloHotel;
 use App\Modulos\Paquetes\PaqueteVueloAuto;
+
 
 class HomeController extends Controller
 {
@@ -20,9 +22,10 @@ class HomeController extends Controller
         $tipoPasaje = TipoAsiento::all();
         $aeropuertos = Aeropuerto::all();
         $hoteles = Hotel::all();
-        $habitaciones = Habitacion::all();
+        // $habitaciones = Habitacion::all();
         $paquetesVH = PaqueteVueloHotel::all();
         $paquetesVA = PaqueteVueloAuto::all();
+        // $traslados = Traslado::all();
 
         return view('home', compact(
             'autos',
@@ -30,6 +33,7 @@ class HomeController extends Controller
             'paquetesVA',
             'paquetesVH',
             'ciudades',
+            'traslados',
             'sucursales',
             'tipoPasaje',
             'actividades',
