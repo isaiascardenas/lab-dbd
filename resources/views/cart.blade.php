@@ -17,6 +17,9 @@
             <p class="mb-0">Debes buscar productos de tu interés y agregarlos a tu carro de compras para poder pagar.</p>
         </div>
     @else
+
+        @include('layouts.messages')
+
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">
@@ -70,7 +73,7 @@
                       <p class="card-text">
                         <b>Codigo Vuelo</b>: {{ $reserva['reserva']['detalle']->tramo->codigo }}
                         <br/>
-                        
+
                         Horario Partida: {{ $reserva['reserva']['detalle']->tramo->horarioPartida() }}
                         <br/>
 
@@ -82,7 +85,7 @@
 
                         Destino: {{ $reserva['reserva']['detalle']->tramo->destino->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->destino->ciudad->pais->nombre }}
                         <br/>
-                                               
+
                         Pasajero: {{ $reserva['reserva']['extra']->nombre . ' / ' . $reserva['reserva']['extra']->rut}}
                         <br/>
                       </p>
@@ -133,23 +136,51 @@
             </li>
           @endforeach
           </ul>
+
+          <form
+              action="{{ action('CartController@pay') }}"
+              method="POST"
+              id="pagar-carro-form"
+              style="margin-top: 20px; margin-bottom: 10px;"
+              onsubmit="return confirm('¿Esta seguro que desea realizar el pago de los productos en el carro?')">
+
+              {{ csrf_field() }}
+              @method('POST')
+              <div class="form-group">
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <label class="input-group-text" for="cuenta-select">Cuenta Bancaria</label>
+                      </div>
+
+                      <select id="cuenta-select" name="cuenta_id" class="form-control" title="Cuenta">
+                          @foreach ($cuentas as $cuenta)
+                              <option value="{{ $cuenta->id }}">
+
+                              {{ $cuenta->tipoCuenta->descripcion }}
+                              &nbsp;&nbsp;&nbsp;
+                              {{ $cuenta->numero_cuenta }},
+                              &nbsp;&nbsp;&nbsp;
+                              {{ $cuenta->banco->nombre }}
+                              &nbsp;&nbsp;&nbsp;
+                              $ {{ $cuenta->saldo }}
+
+                              </option>
+                          @endforeach
+                      </select>
+                  </div>
+              </div>
+          </form>
+
           <div class="card-footer">
             <div class="text-right">
               <a href="{{ url('/') }}" class="btn btn-link float-left">
                 <i class="fas fa-arrow-left"></i>
                 Seguir comprando
               </a>
-              <form
-                  action="{{ action('CartController@pay') }}"
-                  method="POST"
-                  onsubmit="return confirm('¿Esta seguro que desea realizar el pago de los productos en el carro?')">
-                  {{ csrf_field() }}
-                  @method('POST')
-                  <button type="submit" class="btn btn-primary">
-                      <i class="fas fa-credit-card"></i>
-                      Pagar {{ $totalCarro }}
-                  </button>
-              </form>
+              <button type="submit" form="pagar-carro-form" class="btn btn-primary">
+                  <i class="fas fa-credit-card"></i>
+                  Pagar {{ $totalCarro }}
+              </button>
             </div>
           </div>
         </div>
