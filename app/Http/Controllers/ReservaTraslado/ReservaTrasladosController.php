@@ -24,7 +24,7 @@ class ReservaTrasladosController extends Controller
         $aeropuerto_id;
         $fecha_limite = Carbon::parse($fecha_inicio)->addDays(1);
         $traslados;
-        request()->session()->put('busqueda.traslado.costo_persona' , $capacidad );
+        request()->session()->put('busqueda.traslado.cantidad_persona' , $capacidad );
 
         if ($tipo_traslado == 0) {
             
@@ -75,8 +75,8 @@ class ReservaTrasladosController extends Controller
      */
     public function create(Traslado $traslado)
     {
-        $capacidad_p = request()->session()->get('busqueda.traslado.costo_persona');
-        request()->session()->put('busqueda.traslado.costo' , $traslado->precio_persona * $capacidad_p);
+        $capacidad_p = request()->session()->get('busqueda.traslado.cantidad_persona');
+        $precio = request()->session()->put('busqueda.traslado.costo' , $traslado->precio_persona * $capacidad_p);
         request()->session()->put('busqueda.traslado.id', $traslado->id );
 
         return view('modulos.ReservaTraslado.reservas.create', compact('traslado'));
@@ -93,20 +93,20 @@ class ReservaTrasladosController extends Controller
     {
 
         $reserva = new ReservaTraslado([
-            'cantidad_pasajeros' => request()->session()->get('busqueda.traslado.costo_persona'),
+            'cantidad_pasajeros' => request()->session()->get('busqueda.traslado.cantidad_persona'),
             'fecha_reserva'=> Carbon::now(),
             'descuento'=> 1,
             'costo' => request()->session()->get('busqueda.traslado.costo'),
-            'traslado_id' => request('id'),
+            'traslado_id' => request('traslado.id'),
             'orden_compra_id' => null,
         ]);
-
+dd($reserva);
         if ($reserva) {
             $response = ['success' => 'Añadido al carrito con éxito!'];
         } else {
             $response = ['error' => 'Ups, hubo un problema... intenta de nuevo'];
         }
-        /*
+        
 
         //por preguntar
         request()->session()->push('reservas', [
@@ -115,7 +115,7 @@ class ReservaTrasladosController extends Controller
               'detalle' => $reserva->load('traslado')
             ]
         ]);
-        */
+        
 
         return redirect('/cart')->with($response);
 

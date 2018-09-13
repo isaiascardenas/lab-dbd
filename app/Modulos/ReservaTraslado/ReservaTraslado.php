@@ -2,6 +2,7 @@
 
 namespace App\Modulos\ReservaTraslado;
 
+use App\Modulos\ReservaTraslado\Traslado;
 use Illuminate\Database\Eloquent\Model;
 
 class ReservaTraslado extends Model
@@ -17,7 +18,7 @@ class ReservaTraslado extends Model
         'orden_compra_id'
     ];
 
-    public function traslados()
+    public function traslado()
     {
         $this->belongsTo(Traslado::class);
     }
