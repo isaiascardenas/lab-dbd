@@ -62,7 +62,21 @@
                       <br/>
                       Termino reserva: {{ $reserva['reserva']['detalle']->fechaTermino() }}
                     </p>
-
+                @elseif ($reserva['tipo'] == 'traslado')
+                  <div class="col-2">
+                    <span class="badge badge-primary badge-pill">
+                      Traslado
+                    </span>
+                  </div>
+                  <div class="col">
+                    <p class="card-text">
+                      <b>Hotel</b> {{ $reserva['reserva']['detalle']->hotel->nombre }}
+                      <b>Aeropuerto</b> {{ $reserva['reserva']['detalle']->aeropuerto->nombre }}
+                      <br/>
+                      Fecha Inicio: {{ $reserva['reserva']['detalle']->fechaInicio() }}
+                      <br/>
+                      Fecha Termino: {{ $reserva['reserva']['detalle']->fechaTermino() }}
+                    </p>
                 @elseif ($reserva['tipo'] == 'vuelo')
                   <div class="col-2">
                     <span class="badge badge-dark badge-pill">

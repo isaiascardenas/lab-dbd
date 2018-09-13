@@ -50,7 +50,7 @@
   <br>
   <div class="row">
       <div class="col-3">
-          <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+          <div class="nav bg-light flex-column nav-pills" role="tablist" aria-orientation="vertical">
               <a class="nav-link active" id="vuelo-tab" data-toggle="pill" href="#vuelo" role="tab" aria-controls="vuelo" aria-selected="true">
                 <i class="fas fa-plane"></i> Vuelos
               </a>
