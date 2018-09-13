@@ -119,7 +119,7 @@
                 </div>
                 <div class="col-1 text-right">
                   <form
-                      action="{{ action('CartController@delete') }}"
+                      action="{{ action('CartController@remove') }}"
                       method="POST"
                       onsubmit="return confirm('Esta seguro de que desea eliminar el producto del carro?')">
 

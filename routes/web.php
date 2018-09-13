@@ -23,7 +23,7 @@ Route::get('/', 'HomeController@index');
 /* Cart */
 Route::get('/cart', 'CartController@index');
 Route::get('/cart/confirm', 'CartController@index');
-Route::delete('/cart', 'CartController@delete');
+Route::delete('/cart', 'CartController@remove');
 
 /* Proceso de reserva de vuelos */
 Route::post('/vuelos/',         'ReservaVuelo\VuelosController@index');   // POST => filtros
