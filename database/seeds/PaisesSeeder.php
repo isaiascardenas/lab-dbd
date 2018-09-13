@@ -13,5 +13,8 @@ class PaisesSeeder extends Seeder
     public function run()
     {
         factory(Pais::class, 5)->create();
+        Pais::create([
+        	'id' => 999,
+        	'nombre' => 'Chile']);
     }
 }

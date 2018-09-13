@@ -14,5 +14,11 @@ class HotelesSeeder extends Seeder
     public function run()
     {
          factory(Hotel::class, 100)->create();
+         Hotel::create([
+         	'id'=>2000,
+         	'estrellas'=>4,
+         	'nombre'=>'Hotel_de_prueba',
+         	'descripcion'=>'este es un hotel de prueba',
+         	'ciudad_id'=>999]);
     }
 }
