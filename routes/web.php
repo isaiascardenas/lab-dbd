@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function() {
     'tipo-cuentas' => 'TipoCuentasController',
     'bancos' => 'BancosController',
   ]);
+  Route::post('cuentas/abonar/{cuenta}', 'CuentasController@abonar');
 
 });
 

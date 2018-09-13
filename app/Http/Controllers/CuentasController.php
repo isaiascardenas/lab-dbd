@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Banco;
 use App\Cuenta;
+use App\TipoCuenta;
 use Illuminate\Http\Request;
 
 class CuentasController extends Controller
@@ -14,7 +16,11 @@ class CuentasController extends Controller
      */
     public function index()
     {
-        return Cuenta::all();
+        $cuentas = Cuenta::whereUserId(request()->user()->id)
+            ->with('banco', 'tipoCuenta')
+            ->get();
+
+        return view('user.cuentas.index', compact('cuentas'));
     }
 
     /**
@@ -24,7 +30,10 @@ class CuentasController extends Controller
      */
     public function create()
     {
-        //
+        $bancos = Banco::all();
+        $tipoCuentas = TipoCuenta::all();
+        return compact('bancos', 'tipoCuentas');
+        return view('user.cuentas.create', compact('bancos', 'tipoCuentas'));
     }
 
     /**
@@ -61,9 +70,25 @@ class CuentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Cuenta $cuenta)
     {
-        //
+        $cuenta->load('banco', 'tipoCuenta');
+        return view('user.cuentas.edit', compact('cuenta'));
+    }
+
+    public function abonar (Request $request, Cuenta $cuenta)
+    {
+        $cuenta->saldo = $cuenta->saldo + $request->abono;
+
+        $outcome = $cuenta->save();
+
+        if ($outcome) {
+            $response = ['success' => 'Se ha realizado el abono exitosamente!'];
+        } else {
+            $response = ['error' => 'Ha ocurrido un error al realizar el abono'];
+        }
+
+        return redirect('/cuentas/'.$cuenta->id.'/edit')->with($response);
     }
 
     /**
@@ -95,6 +120,6 @@ class CuentasController extends Controller
     public function destroy(Cuenta $cuenta)
     {
         $cuenta->delete();
-        return Cuenta::all();
+        return redirect('cuentas');
     }
 }

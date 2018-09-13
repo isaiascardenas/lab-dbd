@@ -111,8 +111,13 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a
                                             class="dropdown-item"
-                                            href="profile/users/{{ Auth::user()->id }}">
+                                            href="/profile/users/{{ Auth::user()->id }}">
                                             {{ __('Perfil') }}
+                                        </a>
+                                        <a
+                                            class="dropdown-item"
+                                            href="/cuentas">
+                                            {{ __('Cuentas y saldos') }}
                                         </a>
                                         <a
                                             class="dropdown-item"
