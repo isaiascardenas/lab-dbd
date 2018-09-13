@@ -32,7 +32,6 @@ class CuentasController extends Controller
     {
         $bancos = Banco::all();
         $tipoCuentas = TipoCuenta::all();
-        return compact('bancos', 'tipoCuentas');
         return view('user.cuentas.create', compact('bancos', 'tipoCuentas'));
     }
 
@@ -44,13 +43,25 @@ class CuentasController extends Controller
      */
     public function store(Request $request)
     {
-        return Cuenta::create($this->validate($request, [
+
+        $cuenta = $this->validate($request, [
             'numero_cuenta' => 'required',
-            'saldo' => 'required',
             'tipo_cuenta_id' => 'required',
             'banco_id' => 'required',
-            'user_id' => 'required',
-        ]));
+        ]);
+
+        $cuenta['saldo'] = 0;
+        $cuenta['user_id'] = request()->user()->id;
+
+        $outcome = Cuenta::create($cuenta);
+
+        if ($outcome) {
+            $response = ['success' => 'Actualizado con éxito!'];
+        } else {
+            $response = ['error' => 'Ha ocurrido un error en la Base de Datos al actualizar!'];
+        }
+
+        return redirect('/cuentas')->with($response);
     }
 
     /**

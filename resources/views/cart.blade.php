@@ -160,7 +160,11 @@
                               &nbsp;&nbsp;&nbsp;
                               {{ $cuenta->numero_cuenta }},
                               &nbsp;&nbsp;&nbsp;
-                              {{ $cuenta->banco->nombre }}
+                              {{ $cuenta->banco->nombre }},
+                              &nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;
+                              Saldo:
                               &nbsp;&nbsp;&nbsp;
                               $ {{ $cuenta->saldo }}
 
