@@ -119,6 +119,11 @@
                                         </a>
                                         <a
                                             class="dropdown-item"
+                                            href="/profile/historial">
+                                            {{ __('Ver historial') }}
+                                        </a>
+                                        <a
+                                            class="dropdown-item"
                                             href="/cuentas">
                                             {{ __('Cuentas y saldos') }}
                                         </a>
@@ -127,7 +132,7 @@
                                             href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
-                                            {{ __('Desconectar') }}
+                                            {{ __('Cerrar Sesión') }}
                                         </a>
                                         <form
                                             id="logout-form"
