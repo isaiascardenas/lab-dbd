@@ -2,9 +2,10 @@
 
 namespace App\Modulos\ReservaTraslado;
 
-use App\ReservaVuelo\Aeropuerto;
+
 use Illuminate\Database\Eloquent\Model;
 use App\Modulos\ReservaHabitacion\Hotel;
+use App\Modulos\ReservaVuelo\Aeropuerto;
 
 
 class Traslado extends Model
@@ -16,6 +17,7 @@ class Traslado extends Model
         'fecha_inicio',
         'fecha_termino',
         'capacidad',
+        'precio_persona',
         'aeropuerto_id',
         'hotel_id'
     ];
