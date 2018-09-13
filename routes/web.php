@@ -23,7 +23,7 @@ Route::get('/', 'HomeController@index');
 /* Cart */
 Route::get('/cart', 'CartController@index');
 Route::get('/cart/confirm', 'CartController@index');
-Route::delete('/cart', 'CartController@remove');
+Route::delete('/cart', 'CartController@delete');
 
 /* Paquetes */
 Route::get('/paquetes/', 'Paquetes\PaquetesController@index');
@@ -69,6 +69,8 @@ Route::group(['middleware' => 'auth'], function() {
   Route::get('profile/users/{user}', 'UserProfileController@show');
   Route::get('profile/users/{user}/edit', 'UserProfileController@edit');
   Route::post('profile/users/{user}', 'UserProfileController@update');
+
+  Route::get('profile/historial', 'HistorialController@index');
 
   /* CRUD Cuentas de usuario*/
   Route::resources([
