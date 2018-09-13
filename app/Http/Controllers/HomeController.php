@@ -8,6 +8,8 @@ use App\Modulos\ReservaVuelo\Aeropuerto;
 use App\Modulos\ReservaHabitacion\Hotel;
 use App\Modulos\ReservaVuelo\TipoAsiento;
 use App\Modulos\ReservaHabitacion\Habitacion;
+use App\Modulos\Paquetes\PaqueteVueloHotel;
+use App\Modulos\Paquetes\PaqueteVueloAuto;
 
 class HomeController extends Controller
 {
@@ -19,13 +21,14 @@ class HomeController extends Controller
         $aeropuertos = Aeropuerto::all();
         $hoteles = Hotel::all();
         $habitaciones = Habitacion::all();
-        // "paquetes" => Paquetes::all()
-        $paquetes = [];
+        $paquetesVH = PaqueteVueloHotel::all();
+        $paquetesVA = PaqueteVueloAuto::all();
 
         return view('home', compact(
             'autos',
             'hoteles',
-            'paquetes',
+            'paquetesVA',
+            'paquetesVH',
             'ciudades',
             'sucursales',
             'tipoPasaje',

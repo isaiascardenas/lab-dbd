@@ -22,6 +22,7 @@ class ReservaHabitacion extends Model
         'orden_compra_id',
     ];
 
+    /* Relaciones */
     public function habitacion()
     {
         return $this->belongsTo(Habitacion::class);
@@ -37,6 +38,7 @@ class ReservaHabitacion extends Model
         return $this->belongsTo(OrdenCompra::class);
     }
 
+    /* Funcionalidades */
     public function precio($formato = FALSE)
     {
       return $formato
@@ -52,5 +54,13 @@ class ReservaHabitacion extends Model
     public function fechaTermino($format = 'H:i d-m-Y')
     {
       return Carbon::parse($this->fecha_termino)->format($format);
+    }
+
+    public function duracion()
+    {
+      $this->fecha_inicio = Carbon::parse($this->fecha_inicio);
+      $this->fecha_termino = Carbon::parse($this->fecha_termino);
+
+      return $this->fecha_inicio->diffInDays($this->fecha_termino);
     }
 }

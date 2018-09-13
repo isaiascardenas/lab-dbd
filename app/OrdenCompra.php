@@ -4,8 +4,8 @@ namespace App;
 
 use App\User;
 use App\Modulos\ReservaAuto\ReservaAuto;
-use App\Paquetes\PaqueteVueloAuto;
-use App\Paquetes\PaqueteVueloHotel;
+use App\Modulos\Paquetes\PaqueteVueloAuto;
+use App\Modulos\Paquetes\PaqueteVueloHotel;
 use App\Modulos\ReservaTraslado\ReservaTraslado;
 use App\Modulos\ReservaActividad\ReservaActividad;
 use App\Modulos\ReservaHabitacion\ReservaHabitacion;

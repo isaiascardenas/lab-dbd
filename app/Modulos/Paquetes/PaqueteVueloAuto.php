@@ -19,6 +19,7 @@ class PaqueteVueloAuto extends Model
         'orden_compra_id',
     ];
 
+    /* Relaciones */
     public function reservaAuto()
     {
         return $this->belongsTo(ReservaAuto::class);
@@ -35,5 +36,26 @@ class PaqueteVueloAuto extends Model
     public function ordenCompra()
     {
         return $this->belongsTo(OrdenCompra::class);
+    }
+
+    /* Funcionalidades */
+    public function precio($formato = FALSE)
+    {
+      $costoTotal = 0;
+
+      foreach ($this->reservaBoletos as $reserva) {
+        $costoTotal += $reserva->costo * $reserva->descuento;
+      }
+
+      $costoTotal += $this->reservaAuto->costo * $this->reservaAuto->descuento;
+
+      return $formato
+                ? '$ '.number_format($costoTotal, 0, ',', '.')
+                : $costoTotal;
+    }
+
+    public function descuentoAplicado()
+    {
+      return (1 - $this->descuento) * 100 . ' %';
     }
 }

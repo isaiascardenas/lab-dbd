@@ -47,14 +47,12 @@ class PaqueteVueloAutoController extends Controller
         $paqueteVueloAuto = PaqueteVueloAuto::create($paqueteVueloAutoData);
 
         if ($paqueteVueloAuto->exists()) {
-        $response = ['success' => 'Creado con éxito!'];
+          $response = ['success' => 'Creado con éxito!'];
         } else {
           $response = ['error' => 'No se ha podido crear!'];
         }
 
         return redirect('/paqueteVueloAutos')->with($response);
-
-        
     }
 
     /**
@@ -68,8 +66,8 @@ class PaqueteVueloAutoController extends Controller
         if ($paqueteVueloAuto->exists()) {
             return view('modulos.Paquetes.vueloAuto.show', compact('paqueteVueloAuto'));
         } else {
-          $response = ['error' => 'No existe la id solicitada'];
-          return redirect('/paqueteVueloAutos')->with($response);
+            $response = ['error' => 'No existe la id solicitada'];
+            return redirect('/paqueteVueloAutos')->with($response);
         }
     }
 
@@ -84,8 +82,8 @@ class PaqueteVueloAutoController extends Controller
         if ($paqueteVueloAuto->exists()) {
             return view('modulos.Paquetes.vueloAuto.edit', compact('paqueteVueloAuto'));
         } else {
-          $response = ['error' => 'No es posible editar una id que no existe'];
-          return redirect('/paqueteVueloAutos')->with($response);
+            $response = ['error' => 'No es posible editar una id que no existe'];
+            return redirect('/paqueteVueloAutos')->with($response);
         }
     }
 
@@ -98,14 +96,11 @@ class PaqueteVueloAutoController extends Controller
      */
     public function update(Request $request,PaqueteVueloAuto $paqueteVueloAuto)
     {
-     
-        
-
         $this->validate($request, [
-        'descripcion' => 'required',
-        'descuento' => 'required',
-        'reserva_auto_id' => 'required',
-        'orden_compra_id' => 'required',
+          'descripcion' => 'required',
+          'descuento' => 'required',
+          'reserva_auto_id' => 'required',
+          'orden_compra_id' => 'required',
         ]);
 
         $paqueteVueloAutos->descripcion = $request->get('descripcion');

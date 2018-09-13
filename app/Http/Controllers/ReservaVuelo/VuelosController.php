@@ -21,16 +21,22 @@ class VuelosController extends Controller
    */
   public function index()
   {
-    $params = $this->validate(request(), [
-      'origen_id' => 'required|integer',
-      'destino_id' => 'required|integer',
-      'tipo_vuelo' => 'required|integer|between:0,1',
-      'fecha_ida' => 'required|date',
-      'fecha_vuelta' => 'required_if:tipo_vuelo,1|nullable',
-      'pasajeros_adultos' => 'required|integer',
-      'pasajeros_ninos' => 'required|integer',
-      'tipo_pasaje' => 'required|integer|between:1,3'
-    ]);
+    // dd(request()->session());
+    if ( ! session('vuelo_vuelta')) {
+      $params = $this->validate(request(), [
+        'origen_id' => 'required|integer',
+        'destino_id' => 'required|integer',
+        'tipo_vuelo' => 'required|integer|between:0,1',
+        'fecha_ida' => 'required|date',
+        'fecha_vuelta' => 'required_if:tipo_vuelo,1|nullable',
+        'pasajeros_adultos' => 'required|integer',
+        'pasajeros_ninos' => 'required|integer',
+        'tipo_pasaje' => 'required|integer|between:1,3'
+      ]);
+    } else {
+      $params = request()->session()->get('busqueda.vuelos');
+      request()->session()->forget('vuelo_vuelta');
+    }
     
     $vuelos = Tramo::buscarVuelos($params);
 
@@ -97,6 +103,23 @@ class VuelosController extends Controller
             ]);
       }
     }
+
+    // ida y vuelta?
+    if ($paramsVuelo['tipo_vuelo'] == 1) {
+      // cambiar a solo ida (solo 1 vuelo restante)
+      $paramsVuelo['tipo_vuelo'] = 0;
+      // invertir origen<->destino
+      $origen_id = $paramsVuelo['origen_id'];
+      $paramsVuelo['origen_id'] = $paramsVuelo['destino_id'];
+      $paramsVuelo['destino_id'] = $origen_id;
+
+      $paramsVuelo['fecha_ida'] = $paramsVuelo['fecha_vuelta'];
+
+      request()->session()->put('busqueda.vuelos', $paramsVuelo);
+
+      return redirect()->action('ReservaVuelo\VuelosController@index')->with('vuelo_vuelta', true);
+    }
+
     request()->session()->forget('busqueda.vuelos');
 
     return redirect('/cart');

@@ -29,7 +29,7 @@
             <li class="list-group-item">
               <div class="row">
                 @if ($reserva['tipo'] == 'auto')
-                  <div class="col-1">
+                  <div class="col-2">
                     <span class="badge badge-secondary badge-pill">
                       Auto
                     </span>
@@ -46,7 +46,7 @@
                     </p>
 
                 @elseif ($reserva['tipo'] == 'hotel')
-                  <div class="col-1">
+                  <div class="col-2">
                     <span class="badge badge-warning badge-pill">
                       Hotel
                     </span>
@@ -60,54 +60,103 @@
                       Termino reserva: {{ $reserva['reserva']['detalle']->fechaTermino() }}
                     </p>
 
-                  @elseif ($reserva['tipo'] == 'vuelo')
-                    <div class="col-1">
-                      <span class="badge badge-dark badge-pill">
-                        Vuelo
+                @elseif ($reserva['tipo'] == 'vuelo')
+                  <div class="col-2">
+                    <span class="badge badge-dark badge-pill">
+                      Vuelo
+                    </span>
+                  </div>
+                  <div class="col">
+                    <p class="card-text">
+                      <b>Codigo Vuelo</b>: {{ $reserva['reserva']['detalle']->tramo->codigo }}
+                      <br/>
+                      
+                      Horario Partida: {{ $reserva['reserva']['detalle']->tramo->horarioPartida() }}
+                      <br/>
+
+                      Partida: {{ $reserva['reserva']['detalle']->tramo->origen->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->origen->ciudad->pais->nombre }}
+                      <br/>
+
+                      Horario Llegada: {{ $reserva['reserva']['detalle']->tramo->horarioLlegada() }}
+                      <br/>
+
+                      Destino: {{ $reserva['reserva']['detalle']->tramo->destino->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->destino->ciudad->pais->nombre }}
+                      <br/>
+                                             
+                      Pasajero: {{ $reserva['reserva']['extra']->nombre . ' / ' . $reserva['reserva']['extra']->rut}}
+                      <br/>
+                    </p>
+
+                @elseif ($reserva['tipo'] == 'actividad')
+                  <div class="col-2">
+                      <span class="badge badge-info badge-pill">
+                          Actividad
                       </span>
-                    </div>
-                    <div class="col">
-                      <p class="card-text">
-                        <b>Codigo Vuelo</b>: {{ $reserva['reserva']['detalle']->tramo->codigo }}
-                        <br/>
-                        
-                        Horario Partida: {{ $reserva['reserva']['detalle']->tramo->horarioPartida() }}
-                        <br/>
-
-                        Partida: {{ $reserva['reserva']['detalle']->tramo->origen->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->origen->ciudad->pais->nombre }}
-                        <br/>
-
-                        Horario Llegada: {{ $reserva['reserva']['detalle']->tramo->horarioLlegada() }}
-                        <br/>
-
-                        Destino: {{ $reserva['reserva']['detalle']->tramo->destino->ciudad->nombre . ', ' . $reserva['reserva']['detalle']->tramo->destino->ciudad->pais->nombre }}
-                        <br/>
-                                               
-                        Pasajero: {{ $reserva['reserva']['extra']->nombre . ' / ' . $reserva['reserva']['extra']->rut}}
-                        <br/>
-                      </p>
-
-                  @elseif ($reserva['tipo'] == 'actividad')
-                    <div class="col-1">
-                        <span class="badge badge-info badge-pill">
-                            Actividad
-                        </span>
-                    </div>
-                    <div class="col">
-                      <p class="card-text">
-                        {{ $reserva['reserva']['detalle']->actividad->titulo }}
+                  </div>
+                  <div class="col">
+                    <p class="card-text">
+                      {{ $reserva['reserva']['detalle']->actividad->titulo }}
+                      <br>
+                      Ciudad: {{ $reserva['reserva']['detalle']->actividad->ciudad->nombre }}
+                      <br>
+                      Inicio: {{ $reserva['reserva']['detalle']->actividad->fechaInicio() }}
+                      <br>
+                      Termino: {{ $reserva['reserva']['detalle']->actividad->fechaTermino() }}
+                      <br>
+                      Cant. Niños: {{ $reserva['reserva']['detalle']->capacidad_ninos }}
+                      <br>
+                      Cant. Adultos: {{ $reserva['reserva']['detalle']->capacidad_adultos }}
+                    </p>
+                
+                @elseif ($reserva['tipo'] == 'paqueteVH')
+                  <div class="col-2">
+                      <span class="badge badge-light badge-pill">
+                          Paquete Vuelo + Hotel
+                      </span>
+                  </div>
+                  <div class="col">
+                    <p class="card-text">
+                      <b>Vuelo</b>
+                      <br>
+                      @foreach($reserva['reserva']['detalle']->reservaBoletos as $reservacion)
+                        {{ $reservacion->tramo->HorarioPartida() }},
+                        {{ $reservacion->tramo->origen->ciudad->nombre }}
+                        <i class="fas fa-chevron-right"></i>
+                        {{ $reservacion->tramo->horarioLlegada() }},
+                        {{ $reservacion->tramo->destino->ciudad->nombre }}
                         <br>
-                        Ciudad: {{ $reserva['reserva']['detalle']->actividad->ciudad->nombre }}
+                      @endforeach
+                    </p>
+                    <p class="card-text">
+                      <b>Reserva Habitación</b>
+                      <br>
+                      <b>Hotel</b> {{ $reserva['reserva']['detalle']->reservaHabitacion->habitacion->hotel->nombre }}
+                    </p>
+                @elseif ($reserva['tipo'] == 'paqueteVA')
+                  <div class="col-2">
+                      <span class="badge badge-dark badge-pill">
+                          Paquete Vuelo + Auto
+                      </span>
+                  </div>
+                  <div class="col">
+                    <p class="card-text">
+                      <b>Vuelo(s)</b>
+                      <br>
+                      @foreach($reserva['reserva']['detalle']->reservaBoletos as $reservacion)
+                        {{ $reservacion->tramo->HorarioPartida() }},
+                        {{ $reservacion->tramo->origen->ciudad->nombre }}
+                        <i class="fas fa-chevron-right"></i>
+                        {{ $reservacion->tramo->horarioLlegada() }},
+                        {{ $reservacion->tramo->destino->ciudad->nombre }}
                         <br>
-                        Inicio: {{ $reserva['reserva']['detalle']->actividad->fechaInicio() }}
-                        <br>
-                        Termino: {{ $reserva['reserva']['detalle']->actividad->fechaTermino() }}
-                        <br>
-                        Cant. Niños: {{ $reserva['reserva']['detalle']->capacidad_ninos }}
-                        <br>
-                        Cant. Adultos: {{ $reserva['reserva']['detalle']->capacidad_adultos }}
-                      </p>
-                    @endif
+                      @endforeach
+                    </p>
+                    <p class="card-text">
+                      <b>Reserva Automóvil</b>
+                      <br>
+                      <b>Compañia</b> {{ $reserva['reserva']['detalle']->reservaAuto->auto->sucursal->compania->nombre }}
+                    </p>
+                @endif
                 </div>
                 <div class="col-2">
                   <p class="lead text-right">

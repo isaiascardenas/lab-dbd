@@ -24,8 +24,14 @@ Route::get('/', 'HomeController@index');
 Route::get('/cart', 'CartController@index');
 Route::delete('/cart', 'CartController@delete');
 
+/* Paquetes */
+Route::get('/paquetes/', 'Paquetes\PaquetesController@index');
+Route::get('/paquetes/{tipo}/{paquete}', 'Paquetes\PaquetesController@show');
+Route::post('/paquetes/{tipo}/{paquete}', 'Paquetes\PaquetesController@store');
+
 /* Proceso de reserva de vuelos */
-Route::post('/vuelos/',         'ReservaVuelo\VuelosController@index');   // POST => filtros
+Route::post('/vuelos/',         'ReservaVuelo\VuelosController@index');   // POST => filtros con POST
+Route::get('/vuelos/',         'ReservaVuelo\VuelosController@index');   // GET => filtros con session()
 Route::post('/vuelos/details/', 'ReservaVuelo\VuelosController@show');    // POST => [tramo_1, tramo_2]
 Route::post('/vuelos/reservar/', 'ReservaVuelo\VuelosController@store'); // POST => [tramo_1, tramo_2] tras confirmacion en /vuelos/details/
 

@@ -16,7 +16,7 @@ class CartController extends Controller
 
       if (count($reservas)) {
         foreach ($reservas as $reserva) {
-          $totalCarro += $reserva['reserva']['detalle']->costo;
+          $totalCarro += $reserva['reserva']['detalle']->precio();
         }
       }
 
@@ -54,15 +54,17 @@ class CartController extends Controller
             $reservacion->orden_compra_id = $orden->id;
             
             $reservacion->save();
-            
+
             if ($reserva['tipo'] == 'vuelo') {              
                 $pasajero = $reserva['reserva']['extra'];
                 $pasajero->reserva_boleto_id = $reservacion->id;
                 $pasajero->save();   // pasajero
             }
 
-            $orden->costo_total += $reserva['reserva']['detalle']->costo;
+            $orden->costo_total += $reservacion->precio();
         }
+
+        $orden->save();
 
         request()->session()->forget('reservas');
       });
@@ -72,7 +74,7 @@ class CartController extends Controller
       return redirect('/cart')->with('success', 'Orden de compra generada');
   }
 
-  public function remove()
+  public function delete()
   {
       $reservas = request()->session()->get('reservas');
 

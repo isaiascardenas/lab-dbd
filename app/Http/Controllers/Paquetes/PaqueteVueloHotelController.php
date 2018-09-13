@@ -37,15 +37,13 @@ class PaqueteVueloHotelController extends Controller
     public function store(Request $request)
     {
         $paqueteVueloHotelData = $this->validate($request, [
-        'descripcion' => 'requiered',
-        'descuento' => 'requiered',
-        'reserva_habitacion_id' => 'requiered',
-        'orden_compra_id' => 'requiered',
+          'descripcion' => 'required',
+          'descuento' => 'required',
+          'reserva_habitacion_id' => 'required',
+          'orden_compra_id' => 'required',
         ]);
 
         return PaqueteVueloHotel::create($paqueteVueloHotelData);
-
-        
     }
 
     /**
@@ -81,11 +79,12 @@ class PaqueteVueloHotelController extends Controller
     {
      
         $paqueteVueloHotel = PaqueteVueloHotel::find($id);
+        
         $this->validate($request, [
-        'descripcion' => 'requiered',
-        'descuento' => 'requiered',
-        'reserva_habitacion_id' => 'requiered',
-        'orden_compra_id' => 'requiered',
+          'descripcion' => 'required',
+          'descuento' => 'required',
+          'reserva_habitacion_id' => 'required',
+          'orden_compra_id' => 'required',
         ]);
 
         $paqueteVueloHotel->descripcion = $request->get('descripcion');
