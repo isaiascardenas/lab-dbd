@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use App\Modulos\ReservaVuelo\Tramo;
 
