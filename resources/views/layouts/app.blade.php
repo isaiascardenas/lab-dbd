@@ -40,6 +40,25 @@
         <!-- Bootstrap Select -->
         <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
         <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+        <style>
+          html, body {
+            height: 100%;
+          }
+          body {
+            display: flex;
+            flex-direction: column;
+          }
+
+          #app {
+            flex: 1 0 auto;
+          }
+          footer {
+            flex-shrink: 0;
+            background-color: rgba(106, 27, 154, 0.8);
+            padding: 10px 0px;
+            color: #eceff1 !important;
+          }
+        </style>
     </head>
     <body>
         <div id="app">
@@ -161,15 +180,13 @@
             <main class="container py-4" style="width: 100%;">
                 @yield('content')
             </main>
-
-
-            <footer class="text-center" style="background-color: #ce93d8 !important; bottom: 0;left: 0; right: 0; height: 50px; opacity: 0.7;}">
-                &copy; 2018 {{ config('app.name', 'TetraVago') }}
-                <br>
-                <address>Chile - DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
-                </center>
-            </footer>
         </div>
+        <footer class="text-center">
+            &copy; 2018 {{ config('app.name', 'TetraVago') }}
+            <br>
+            <address>Chile - DIINF, UdeS, Santiago de Chile - 127 000 000 001</address>
+            </center>
+        </footer>
 
         @yield('script')
         <script>
