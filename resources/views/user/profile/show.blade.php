@@ -35,7 +35,7 @@
 
             <div class="row">
                 <div class="col-auto mr-auto">
-                    <a href="/users/" class="btn btn-info float-left">
+                    <a href="/" class="btn btn-info float-left">
                         <i class="fas fa-arrow-left"></i> Volver
                     </a>
                 </div>

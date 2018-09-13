@@ -12,6 +12,7 @@ class TipoCuenta extends Model
     protected $fillable = [
         'descripcion',
     ];
+
     public function cuentas()
     {
         return $this->hasMany(Cuenta::class);
