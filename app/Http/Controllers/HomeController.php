@@ -7,7 +7,9 @@ use Carbon\Carbon;
 use App\Modulos\ReservaVuelo\Aeropuerto;
 use App\Modulos\ReservaHabitacion\Hotel;
 use App\Modulos\ReservaVuelo\TipoAsiento;
+use App\Modulos\ReservaTraslado\Traslado;
 use App\Modulos\ReservaHabitacion\Habitacion;
+
 
 class HomeController extends Controller
 {
@@ -19,6 +21,7 @@ class HomeController extends Controller
         $aeropuertos = Aeropuerto::all();
         $hoteles = Hotel::all();
         $habitaciones = Habitacion::all();
+        $traslados = Traslado::all();
         // "paquetes" => Paquetes::all()
         $paquetes = [];
 
@@ -27,6 +30,7 @@ class HomeController extends Controller
             'hoteles',
             'paquetes',
             'ciudades',
+            'traslados',
             'sucursales',
             'tipoPasaje',
             'actividades',
