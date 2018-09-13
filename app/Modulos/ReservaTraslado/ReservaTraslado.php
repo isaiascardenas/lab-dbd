@@ -3,6 +3,7 @@
 namespace App\Modulos\ReservaTraslado;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Modulos\ReservaTraslado\Traslado;
 
 class ReservaTraslado extends Model
 {
@@ -17,13 +18,20 @@ class ReservaTraslado extends Model
         'orden_compra_id'
     ];
 
-    public function traslados()
+    public function precio($formato = FALSE)
     {
-        $this->belongsTo(Traslado::class);
+      return $formato
+                ? '$ '.number_format($this->costo, 0, ',', '.')
+                : $this->costo;
+    }
+
+    public function traslado()
+    {
+        return $this->belongsTo(Traslado::class);
     }
 
     public function ordenCompra()
     {
-        $this->belongsTo(OrdenCompra::class);
+        return $this->belongsTo(OrdenCompra::class);
     }
 }

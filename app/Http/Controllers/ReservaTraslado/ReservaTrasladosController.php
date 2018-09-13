@@ -17,55 +17,29 @@ class ReservaTrasladosController extends Controller
      */
     public function index()
     {
-        $tipo_traslado = request('tipo_traslado');
-        $fecha_inicio = request('fecha_traslado');
-        $capacidad = request('capacidad');
-        $hotel_id;
-        $aeropuerto_id;
-        $fecha_limite = Carbon::parse($fecha_inicio)->addDays(1);
-        $traslados;
-        request()->session()->put('busqueda.traslado.costo_persona' , $capacidad );
+        $fecha = Carbon::createFromFormat('d-m-Y', request('fecha_traslado'));
 
-        if ($tipo_traslado == 0) {
-            
-            $hotel_id = request('destino_id_0');
-            $aeropuerto_id = request('origen_id_0');
-            $fecha_filter = Traslado::whereDate('fecha_inicio', '>=',$fecha_inicio)
-                                    ->whereDate('fecha_termino', '<',$fecha_limite)
-                                    ->pluck('id');
+        $trasladosReservados = ReservaTraslado::all()->pluck('traslado_id');
+        $hotel_id = request('hotel_id_0') ? request('hotel_id_0') : request('hotel_id_1');
+        $aeropuerto_id = request('aeropuerto_id_0') ? request('aeropuerto_id_0') : request('aeropuerto_id_1');
 
-            $traslados = Traslado::all()->where('tipo',0)
-                                        /*->where('capacidad','>=',$capacidad)
-                                        ->where('aeropuerto_id',$aeropuerto_id)
-                                        ->where('hotel_id',$hotel_id)
-                                        ->whereIn('id',$fecha_filter)
+        $traslados = Traslado::
+            where('capacidad', '>=', request('capacidad'))
+                ->whereNotIn('id', $trasladosReservados)
+                ->whereTipo(request('tipo_traslado'))
+                ->whereAeropuertoId($aeropuerto_id)
+                ->whereHotelId($hotel_id)
+                ->whereDate('fecha_inicio', '>=', $fecha)
+                ->whereDate('fecha_termino', '<=', $fecha)
+                ->get();
 
-                                        //solo para casos de prueba
-                                        */
-                                        ;
-                                
-        }
-        if ($tipo_traslado == 1) {
-            $hotel_id = request('origen_id_1');
-            $aeropuerto_id = request('destino_id_1');
-            $fecha_filter = Traslado::whereDate('fecha_inicio', '>=',$fecha_inicio)
-                                    ->whereDate('fecha_termino', '<',$fecha_limite)
-                                    ->pluck('id');
-
-            $traslados = Traslado::all()->where('tipo',1)
-                                        /*->where('capacidad','>=',$capacidad)
-                                        ->where('aeropuerto_id',$aeropuerto_id)
-                                        ->where('hotel_id',$hotel_id)
-                                        ->whereIn('id',$fecha_filter);
-
-                                        //Solo para casos de prueba
-                                        */
-                                      ;
-        }
+        request()->session()->put('busqueda.traslado', [
+            'costo' => 0,
+            'capacidad' => request('capacidad'),
+            'costo_persona' => 0
+        ]);
 
         return view('modulos.ReservaTraslado.reservas.index', compact('traslados'));
-
-
     }
 
     /**
@@ -75,9 +49,14 @@ class ReservaTrasladosController extends Controller
      */
     public function create(Traslado $traslado)
     {
-        $capacidad_p = request()->session()->get('busqueda.traslado.costo_persona');
+        $capacidad_p = $traslado->precio_persona;
+
+
+        request()->session()->put('busqueda.traslado.costo_persona' , $traslado->precio_persona);
         request()->session()->put('busqueda.traslado.costo' , $traslado->precio_persona * $capacidad_p);
         request()->session()->put('busqueda.traslado.id', $traslado->id );
+
+        $traslado->load('hotel', 'aeropuerto');
 
         return view('modulos.ReservaTraslado.reservas.create', compact('traslado'));
 
@@ -93,20 +72,19 @@ class ReservaTrasladosController extends Controller
     {
 
         $reserva = new ReservaTraslado([
-            'cantidad_pasajeros' => request()->session()->get('busqueda.traslado.costo_persona'),
+            'cantidad_pasajeros' => request()->session()->get('busqueda.traslado.capacidad'),
             'fecha_reserva'=> Carbon::now(),
             'descuento'=> 1,
             'costo' => request()->session()->get('busqueda.traslado.costo'),
-            'traslado_id' => request('id'),
+            'traslado_id' => request()->session()->get('busqueda.traslado.id'),
             'orden_compra_id' => null,
         ]);
 
         if ($reserva) {
             $response = ['success' => 'Añadido al carrito con éxito!'];
         } else {
-            $response = ['error' => 'Ups, hubo un problema... intenta de nuevo'];
+            $response = ['error' => 'Hubo un problema... intenta de nuevo'];
         }
-        /*
 
         //por preguntar
         request()->session()->push('reservas', [
@@ -115,7 +93,6 @@ class ReservaTrasladosController extends Controller
               'detalle' => $reserva->load('traslado')
             ]
         ]);
-        */
 
         return redirect('/cart')->with($response);
 

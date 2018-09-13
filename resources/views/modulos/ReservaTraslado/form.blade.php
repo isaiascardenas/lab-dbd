@@ -23,10 +23,10 @@
                 <div class="col">
                     <label for="hotel_id">Origen</label>
                     <div class="form-group">
-                        <select id="origen_id_1" name="origen_id_1" class="form-control selectpicker" title="Hotel" data-live-search="true">
+                        <select id="origen_id_1" name="hotel_id_1" class="form-control selectpicker" title="Hotel" data-live-search="true">
                             @foreach ($hoteles as $hotel)
                                 <option value="{{ $hotel->id }}">
-                                {{ $hotel->nombre }}
+                                {{ $hotel->nombre }}, {{ $hotel->ciudad->nombre }}
                                 </option>
                             @endforeach
                         </select>
@@ -36,10 +36,10 @@
                 <div class="col">
                     <label for="aeropuerto_id">Destino</label>
                     <div class="form-group">
-                        <select id="destino_id_1" name="destino_id_1" class="form-control selectpicker" title="Aeropuerto" data-live-search="true">
+                        <select id="destino_id_1" name="aeropuerto_id_1" class="form-control selectpicker" title="Aeropuerto" data-live-search="true">
                             @foreach ($aeropuertos as $aeropuerto)
                                 <option value="{{ $aeropuerto->id }}">
-                                {{ $aeropuerto->nombre . ", " . $aeropuerto->codigo }}
+                                {{ $aeropuerto->nombre }} ({{ $aeropuerto->codigo }}), {{ $aeropuerto->ciudad->nombre }}
                                 </option>
                             @endforeach
                         </select>
@@ -53,7 +53,7 @@
                 <div class="col">
                     <label for="hotel_id">Origen</label>
                     <div class="form-group">
-                        <select id="origen_id_0" name="origen_id_0" class="form-control selectpicker" title="Aeropuerto" data-live-search="true">
+                        <select id="origen_id_0" name="aeropuerto_id_0" class="form-control selectpicker" title="Aeropuerto" data-live-search="true">
                             @foreach ($aeropuertos as $aeropuerto)
                                 <option value="{{ $aeropuerto->id }}">
                                 {{ $aeropuerto->nombre . ", " . $aeropuerto->codigo }}
@@ -66,7 +66,7 @@
                 <div class="col">
                     <label for="aeropuerto_id">Destino</label>
                     <div class="form-group">
-                        <select id="destino_id_0" name="destino_id_0" class="form-control selectpicker" title="Hotel" data-live-search="true">
+                        <select id="destino_id_0" name="hotel_id_0" class="form-control selectpicker" title="Hotel" data-live-search="true">
                             @foreach ($hoteles as $hotel)
                                 <option value="{{ $hotel->id }}">
                                 {{ $hotel->nombre }}
@@ -111,7 +111,7 @@
 
 <script>
     $(".A-H").hide();
-    let fechaIniciof = flatpickr('#fecha_traslado', {
+    let fechaInicioT = flatpickr('#fecha_traslado', {
         enableTime: false,
         dateFormat: "d-m-Y",
         minDate: "today",

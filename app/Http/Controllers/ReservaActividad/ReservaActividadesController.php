@@ -27,7 +27,7 @@ class ReservaActividadesController extends Controller
       $actividades = $actividades->filter(function ($actividad) {
           $total_ninos = $actividad->reservaActividades->pluck('capacidad_ninos')->sum();
           $total_ninos = $actividad->reservaActividades->pluck('capacidad_adultos')->sum();
-          
+
           return $actividad->max_ninos >= $total_ninos + request('cantidad_ninos') &&
               $actividad->max_ninos >= $total_ninos + request('cantidad_ninos');
       });
