@@ -17,5 +17,10 @@ class CiudadesSeeder extends Seeder
         	'id' => 999,
         	'nombre' => 'Santiago',
         	'pais_id' => 999]);
+
+         Ciudad::create([
+            'id' => 888,
+            'nombre' => 'Valparaiso',
+            'pais_id' => 999]);
     }
 }
